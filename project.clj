@@ -8,7 +8,8 @@
                  [com.fzakaria/slf4j-timbre "0.3.21"]
                  [reagent "0.10.0"]
                  [re-frame "1.1.2"]]
-  :plugins [[lein-shadow "0.4.0"]]
+  :plugins [[lein-shadow "0.4.0"]
+            [cider/cider-nrepl "0.25.9"]]
   :main ^:skip-aot xiana-experiment-flexiana.core
   :uberjar-name "xiana-experiment-flexiana.jar"
   :source-paths ["src/backend" "src/frontend" "src/shared"]
