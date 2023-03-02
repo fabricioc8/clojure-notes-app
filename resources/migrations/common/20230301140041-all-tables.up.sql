@@ -98,7 +98,7 @@ CREATE TABLE plans(
     max_notes integer NOT NULL,
     max_chars integer NOT NULL,
     max_users integer NOT NULL,
-    CONSTRAINT plan_team_id_fk FOREIGN KEY (team_id) REFERENCES teams(id)
+    CONSTRAINT plans_team_id_fk FOREIGN KEY (team_id) REFERENCES teams(id)
 )
 --;;
 
