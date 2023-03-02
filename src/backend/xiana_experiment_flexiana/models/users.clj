@@ -21,7 +21,8 @@
                {:insert-into :team-users
                 :values [team-users-params]}
                {:insert-into :subscriptions
-                :values [subscriptions-params]}]}))
+                :values [subscriptions-params]}]
+     :transaction? true}))
 
 (defn insert-user-by-invitation [params]
   (let [new-user-id (next-uuid)
@@ -34,7 +35,8 @@
     {:queries [{:insert-into :users
                 :values [users-params]}
                {:insert-into :team-users
-                :values [team-users-params]}]}))
+                :values [team-users-params]}]
+     :transaction? true}))
 
 (defn select-user [user-id]
   {:queries [{:select [:*]
