@@ -2,6 +2,7 @@
   (:gen-class)
   (:require
     [xiana-experiment-flexiana.core :refer [->system app-cfg]]
+    [xiana.db :as db]
     [clojure.tools.logging :refer [*tx-agent-levels*]]
     [clojure.tools.namespace.repl :refer [refresh-all]]
     [piotr-yuxuan.closeable-map :refer [closeable-map]]
@@ -10,6 +11,18 @@
     [state :refer [dev-sys]]))
 
 (alter-var-root #'*tx-agent-levels* conj :debug :trace)
+
+(defn ds []
+  (get-in @dev-sys [:db :datasource]))
+
+(defn execute
+  [query]
+  (db/execute (ds) query))
+
+(comment
+  (execute {:select [:*]
+            :from   [:migrations]})
+  )
 
 (def dev-app-config
   app-cfg)
