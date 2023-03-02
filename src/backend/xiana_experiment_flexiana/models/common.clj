@@ -99,3 +99,10 @@
     (cond-> params
       (:id params) (update :id ->UUID)
       (:team-id params) (update :team-id ->UUID))))
+
+(defn ->invoice [params]
+  (let [params (select-keys params [:id :team-id :amount-usd :subscription-id])]
+    (cond-> params
+      (:id params) (update :id ->UUID)
+      (:team-id params) (update :team-id ->UUID)
+      (:subscription-id params) (update :subscription-id ->UUID))))
