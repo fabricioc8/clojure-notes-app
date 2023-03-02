@@ -85,3 +85,10 @@
     (cond-> params
       (:id params) (update :id ->UUID)
       (:team-id params) (update :team-id ->UUID))))
+
+(defn ->message [params]
+  (let [params (select-keys params [:id :ticket-id :user-id :message])]
+    (cond-> params
+      (:id params) (update :id ->UUID)
+      (:ticket-id params) (update :ticket-id ->UUID)
+      (:user-id params) (update :user-id ->UUID))))
