@@ -50,3 +50,36 @@
 
 (defn nest [sentence]
   (sql/call :_nest sentence))
+
+(defn ->user
+  [params]
+  (let [params (select-keys params [:id :email :password :enabled :user-role :api-token])]
+    (cond-> params
+      (:id params) (update :id ->UUID)
+      (:team-id params) (update :team-id ->UUID))))
+
+(defn ->team
+  [params]
+  (let [params (select-keys params [:id :name :enabled])]
+    (cond-> params
+      (:id params) (update :id ->UUID))))
+
+(defn ->team-user
+  [params]
+  (let [params (select-keys params [:team_id :user-id :team-role])]
+    (cond-> params
+      (:team-id params) (update :team-id ->UUID)
+      (:user-id params) (update :user-id ->UUID))))
+
+(defn ->subscription [params]
+  (let [params (select-keys params [:id :team-id :plan-id :canceled])]
+    (cond-> params
+      (:id params) (update :id ->UUID)
+      (:plan-id params) (update :plan-id ->UUID))))
+
+(defn ->note
+  [params]
+  (let [params (select-keys params [:id :team-id :is-public :name :content])]
+    (cond-> params
+      (:id params) (update :id ->UUID)
+      (:team-id params) (update :team-id ->UUID))))

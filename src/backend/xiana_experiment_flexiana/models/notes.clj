@@ -1,15 +1,8 @@
 (ns backend.xiana-experiment-flexiana.models.notes
   (:require
-   [backend.xiana-experiment-flexiana.models.common :refer [->UUID next-uuid]]
+   [backend.xiana-experiment-flexiana.models.common :refer [->UUID next-uuid] :as mc]
    [honeysql.core :as sql]
    [honeysql.helpers :as sqlh]))
-
-(defn- ->note
-  [params]
-  (let [params (select-keys params [:id :team-id :is-public :name :content])]
-    (cond-> params
-      (:id params) (update :id ->UUID)
-      (:team-id params) (update :team-id ->UUID))))
 
 (defn insert-note [params]
   (let [new-note-id (next-uuid)
@@ -34,7 +27,7 @@
 
 (defn update-note [note-id params]
   {:queries [{:update :notes
-              :set (->note params)
+              :set (mc/->note params)
               :where [:= :id (->UUID note-id)]}]})
 
 (defn selete-note [note-id]
