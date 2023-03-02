@@ -23,6 +23,15 @@
               :from [:notes]
               :where [:= :id (->UUID note-id)]}]})
 
+(defn select-all-notes []
+  {:queries [{:select [:*]
+              :from [:notes]}]})
+
+(defn select-team-notes [team-id]
+  {:queries [{ :select [:*]
+              :from [:notes]
+              :where [:= :team-id (->UUID team-id)]}]})
+
 (defn update-note [note-id params]
   {:queries [{:update :notes
               :set (->note params)
