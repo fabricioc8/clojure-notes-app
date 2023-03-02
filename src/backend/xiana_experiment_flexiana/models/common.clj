@@ -63,7 +63,7 @@
       (:id params) (update :id ->UUID))))
 
 (defn ->team-user [params]
-  (let [params (select-keys params [:team_id :user-id :team-role])]
+  (let [params (select-keys params [:team-id :user-id :team-role])]
     (cond-> params
       (:team-id params) (update :team-id ->UUID)
       (:user-id params) (update :user-id ->UUID))))
