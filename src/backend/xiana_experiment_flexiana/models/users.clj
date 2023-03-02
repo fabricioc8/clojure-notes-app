@@ -62,16 +62,16 @@
                {:insert-into :team-users
                 :values [team-users-params]}]}))
 
-(defn get-user [user-id]
+(defn select-user [user-id]
   {:queries [{:select [:*]
               :from [:users]
               :where [:= :id (->UUID user-id)]}]})
 
-(defn get-all-users []
+(defn select-all-users []
   {:queries [{:select [:*]
               :from [:users]}]})
 
-(defn get-team-users [team-id]
+(defn select-team-users [team-id]
   {:queries [{:with [:tu {:select [:user-id]
                           :from [:team-users]
                           :where [:= :team-id (->UUID team-id)]}]
@@ -79,10 +79,10 @@
               :from [:users]
               :where [:in :id :tu.user-id]}]})
 
-(defn put-user [user-id params]
+(defn update-user [user-id params]
   {:queries [{:update :users
-              :where [:= :id (->UUID user-id)]
-              :set (->user params)}]})
+              :set (->user params)
+              :where [:= :id (->UUID user-id)]}]})
 
 (defn delete-user [user-id]
   {:queries [{:delete-from :users
