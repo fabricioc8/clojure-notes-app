@@ -1,9 +1,15 @@
+CREATE TYPE user_role AS ENUM (
+    'admin',
+    'user'
+)
+--;;
 
 CREATE TABLE users(
     id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
     email varchar(200) NOT NULL UNIQUE,
     password varchar(60) NOT NULL,
     enabled bool NOT NULL DEFAULT true,
+    user_role user_role DEFAULT 'user' NOT NULL,
     api_token uuid NOT NULL DEFAULT uuid_generate_v4()
 )
 --;;
@@ -25,7 +31,7 @@ CREATE TYPE team_role AS ENUM (
 CREATE TABLE team_users(
     team_id uuid NOT NULL,
     user_id uuid NOT NULL,
-    role team_role NOT NULL,
+    team_role team_role NOT NULL,
     CONSTRAINT team_users_team_id_fk FOREIGN KEY (team_id) REFERENCES teams(id),
     CONSTRAINT team_users_user_id_fk FOREIGN KEY (user_id) REFERENCES users(id)
 )
