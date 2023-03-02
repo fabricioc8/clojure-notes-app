@@ -16,3 +16,16 @@
   {:queries [{:select [:*]
               :from [:content-pages]
               :where [:= :id (->UUID content-page-id)]}]})
+
+(defn select-all-content-pages []
+  {:queries [{:select [:*]
+              :from [:content-pages]}]})
+
+(defn update-content-apge [content-page-id params]
+  {:queries [{:update :content-pages
+              :set [(select-keys params [:path :content])]
+              :where [:= :id (->UUID content-page-id)]}]})
+
+(defn delete-content-page [content-page-id]
+  {:queries [{:delete-from :content-pages
+              :where [:= :id (->UUID content-page-id)]}]})
