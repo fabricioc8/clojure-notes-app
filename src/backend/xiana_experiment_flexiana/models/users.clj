@@ -7,19 +7,23 @@
 (defn insert-user-by-themselve [params]
   (let [new-user-id (next-uuid)
         new-team-id (next-uuid)
+        new-plan-id (next-uuid)
         new-subscription-id (next-uuid)
         user-params (-> params
                         (assoc :id new-user-id)
                         mc/->user)
         new-team (mc/->team {:id new-team-id :name "New team"})
         team-users-params (mc/->team-user {:user-id new-user-id :team-id new-team-id :team-role "admin"})
-        subscriptions-params (mc/->subscription {:id new-subscription-id :plan-id "cambiar por id del plan free"})]
+        plan-params (mc/->plan {:name "Free" :price 0 :max-notes 3 :max-chars 100 :max-users 2 :team-id new-team-id})
+        subscriptions-params (mc/->subscription {:id new-subscription-id :plan-id new-plan-id})]
     {:queries [{:insert-into :users
                 :values [user-params]}
                {:insert-into :teams
                 :values [new-team]}
                {:insert-into :team-users
                 :values [team-users-params]}
+               {:insert-into :plans
+                :values [plan-params]}
                {:insert-into :subscriptions
                 :values [subscriptions-params]}]
      :transaction? true}))

@@ -92,3 +92,10 @@
       (:id params) (update :id ->UUID)
       (:ticket-id params) (update :ticket-id ->UUID)
       (:user-id params) (update :user-id ->UUID))))
+
+(defn ->plan [params]
+  (let [params (select-keys params [:id :name :price-usd :price-per-user :public
+                                    :team-id :max-notes :max-chars :max-users])]
+    (cond-> params
+      (:id params) (update :id ->UUID)
+      (:team-id params) (update :team-id ->UUID))))
