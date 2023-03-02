@@ -7,7 +7,8 @@
 (defn insert-note [params]
   (let [new-note-id (next-uuid)
         note-params (-> params
-                        (assoc :id new-note-id))]
+                        (assoc :id new-note-id)
+                        mc/->note)]
     {:queries [{:insert-into :notes
                 :values [note-params]}]}))
 
