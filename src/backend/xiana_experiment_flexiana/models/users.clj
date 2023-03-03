@@ -52,18 +52,13 @@
               :from [:users]}]})
 
 (defn select-team-users [team-id]
-  {:queries [{:with [:tu {:select [:user-id]
-                          :from [:team-users]
-                          :where [:= :team-id (->UUID team-id)]}]
-              :select [:*]
+  {:queries [{:select [:*]
               :from [:users]
-              :where [:in :id :tu.user-id]}]})
+              :where [:in :id {:select [:user-id]
+                               :from [:team-users]
+                               :where [:= :team-id (->UUID team-id)]}]}]})
 
 (defn update-user [user-id params]
   {:queries [{:update :users
               :set (mc/->user params)
-              :where [:= :id (->UUID user-id)]}]})
-
-(defn delete-user [user-id]
-  {:queries [{:delete-from :users
               :where [:= :id (->UUID user-id)]}]})
