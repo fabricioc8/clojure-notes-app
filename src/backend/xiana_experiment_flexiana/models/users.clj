@@ -13,9 +13,9 @@
                         (assoc :id new-user-id)
                         mc/->user)
         new-team (mc/->team {:id new-team-id :name "New team"})
-        team-users-params (mc/->team-user {:user-id new-user-id :team-id new-team-id :team-role "admin"})
-        plan-params (mc/->plan {:name "Free" :price 0 :max-notes 3 :max-chars 100 :max-users 2 :team-id new-team-id})
-        subscriptions-params (mc/->subscription {:id new-subscription-id :plan-id new-plan-id})]
+        team-users-params (mc/->team-user {:user-id new-user-id :team-id new-team-id :team-role "team-admin"})
+        plan-params (mc/->plan {:id new-plan-id :name "Free" :price-usd 0 :max-notes 3 :max-chars 100 :max-users 2 :team-id new-team-id})
+        subscriptions-params (mc/->subscription {:id new-subscription-id :team-id new-team-id :plan-id new-plan-id})]
     {:queries [{:insert-into :users
                 :values [user-params]}
                {:insert-into :teams

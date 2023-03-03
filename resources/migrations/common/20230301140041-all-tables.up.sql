@@ -4,6 +4,9 @@ CREATE TYPE user_role AS ENUM (
 )
 --;;
 
+CREATE CAST (varchar AS user_role) WITH INOUT AS ASSIGNMENT;
+--;;
+
 CREATE TABLE users(
     id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
     email varchar(200) NOT NULL UNIQUE,
@@ -26,6 +29,9 @@ CREATE TYPE team_role AS ENUM (
     'team-editor',
     'team-viewer'
 )
+--;;
+
+CREATE CAST (varchar AS team_role) WITH INOUT AS ASSIGNMENT;
 --;;
 
 CREATE TABLE team_users(
