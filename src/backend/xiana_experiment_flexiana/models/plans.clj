@@ -25,5 +25,5 @@
 
 (defn update-plan [plan-id params]
   {:queries [{:update :plans
-              :set [(mc/->plan params)]
+              :set (mc/->plan params)
               :where [:= :id (->UUID plan-id)]}]})

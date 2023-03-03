@@ -128,7 +128,7 @@ CREATE TABLE subscriptions(
 CREATE TABLE invoices(
     id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
     team_id uuid NOT NULL,
-    amount_usd numeric(18,2),
+    amount_usd numeric(18,2) NOT NULL,
     subscription_id uuid NOT NULL,
     CONSTRAINT invoices_team_id_fk FOREIGN KEY (team_id) REFERENCES teams(id),
     CONSTRAINT invoices_subscription_id_fk FOREIGN KEY (subscription_id) REFERENCES subscriptions(id)

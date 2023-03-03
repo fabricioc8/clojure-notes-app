@@ -12,7 +12,9 @@
         user-params (-> params
                         (assoc :id new-user-id)
                         mc/->user)
-        new-team (mc/->team {:id new-team-id :name "New team"})
+        new-team (-> params
+                     (assoc :id new-team-id)
+                     mc/->team)
         team-users-params (mc/->team-user {:user-id new-user-id :team-id new-team-id :team-role "team-admin"})
         plan-params (mc/->plan {:id new-plan-id :name "Free" :price-usd 0 :max-notes 3 :max-chars 100 :max-users 2 :team-id new-team-id})
         subscriptions-params (mc/->subscription {:id new-subscription-id :team-id new-team-id :plan-id new-plan-id})]

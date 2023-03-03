@@ -22,7 +22,7 @@
               :from [:notes]}]})
 
 (defn select-team-notes [team-id]
-  {:queries [{ :select [:*]
+  {:queries [{:select [:*]
               :from [:notes]
               :where [:= :team-id (->UUID team-id)]}]})
 
@@ -31,6 +31,6 @@
               :set (mc/->note params)
               :where [:= :id (->UUID note-id)]}]})
 
-(defn selete-note [note-id]
+(defn delete-note [note-id]
   {:queries [{:delete-from :notes
               :where [:= :id (->UUID note-id)]}]})

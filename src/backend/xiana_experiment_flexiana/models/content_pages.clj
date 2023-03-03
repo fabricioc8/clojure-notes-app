@@ -23,7 +23,7 @@
 
 (defn update-content-apge [content-page-id params]
   {:queries [{:update :content-pages
-              :set [(select-keys params [:path :content])]
+              :set (select-keys params [:path :content])
               :where [:= :id (->UUID content-page-id)]}]})
 
 (defn delete-content-page [content-page-id]

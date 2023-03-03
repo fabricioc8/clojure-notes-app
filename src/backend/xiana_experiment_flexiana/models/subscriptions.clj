@@ -4,16 +4,18 @@
    [honeysql.core :as sql]
    [honeysql.helpers :as sqlh]))
 
-(defn select-subscription [team-id]
+(defn select-current-team-subscription [team-id]
   {:queries [{:select [:*]
               :from [:subscriptions]
-              :where [:= :team-id (->UUID team-id)]}]})
+              :where [:and
+                      [:= :team-id (->UUID team-id)]
+                      [:= :canceled false ]]}]})
 
 (defn select-all-subscriptions []
   {:queries [{:select [:*]
               :from [:subscriptions]}]})
 
-(defn update-subscription [team-id params]
+(defn update-subscription [subscription-id params]
   {:queries [{:update :subscriptions
-              :set [(mc/->subscription params)]
-              :where [:= :team-id (->UUID team-id)]}]})
+              :set (mc/->subscription params)
+              :where [:= :id (->UUID subscription-id)]}]})

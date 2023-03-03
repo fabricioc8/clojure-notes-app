@@ -17,7 +17,7 @@
               :from [:tickets]
               :where [:= :team-id (->UUID team-id)]}]})
 
-(defn update-ticket [team-id params]
+(defn update-ticket [ticket-id params]
   {:queries [{:update :tickets
-              :set [(mc/->ticket params)]
-              :where [:= :team-id (->UUID team-id)]}]})
+              :set (mc/->ticket params)
+              :where [:= :id (->UUID ticket-id)]}]})

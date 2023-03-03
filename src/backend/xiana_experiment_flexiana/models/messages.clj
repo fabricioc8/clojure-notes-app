@@ -4,7 +4,7 @@
    [honeysql.core :as sql]
    [honeysql.helpers :as sqlh]))
 
-(defn insert-message [params]
+(defn insert-ticket-message [params]
   (let [new-message-id (next-uuid)
         message-params (-> params
                            (assoc :id new-message-id)

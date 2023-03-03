@@ -15,5 +15,5 @@
 
 (defn update-team [team-id params]
   {:queries [{:update :teams
-              :set [(mc/->team params)]
+              :set (mc/->team params)
               :where [:= :id (->UUID team-id)]}]})
