@@ -6,7 +6,7 @@
   (-> state
       (assoc :db-queries (mes-mod/insert-ticket-message params))))
 
-(defn select-ticket messages [state]
+(defn select-ticket-messages [state]
   (let [ticket-id (-> state :request-data :match :path-params :id)]
     (-> state
         (assoc :db-queries (mes-mod/select-ticket-messages ticket-id)))))
