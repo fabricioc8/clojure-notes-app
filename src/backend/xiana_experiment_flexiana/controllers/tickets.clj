@@ -1,17 +1,21 @@
 (ns backend.xiana-experiment-flexiana.controllers.tickets
   (:require
-   [backend.xiana-experiment-flexiana.models.tickets :as tick-mod]))
+   [backend.xiana-experiment-flexiana.models.tickets :as model]
+   [backend.xiana-experiment-flexiana.views.tickets :as view]))
 
 (defn insert-ticket [{{params :body-params} :request :as state}]
   (-> state
-      (assoc :db-queries (tick-mod/insert-ticket params))))
+      (assoc :db-queries (model/insert-ticket params))
+      (assoc :view view/tickets)))
 
 (defn select-team-tickets [state]
-  (let [team-id (-> state :request-data :match :path-params :id)]
+  (let [team-id (-> state :request-data :match :path-params :team-id)]
     (-> state
-        (assoc :db-queries (tick-mod/select-team-tickets team-id)))))
+        (assoc :db-queries (model/select-team-tickets team-id))
+        (assoc :view view/tickets))))
 
 (defn update-ticket [{{params :body-params} :request :as state}]
-  (let [ticket-id (-> state :request-data :match :path-params :id)]
+  (let [ticket-id (-> state :request-data :match :path-params :ticket-id)]
     (-> state
-        (assoc :db-queries (tick-mod/update-ticket ticket-id params)))))
+        (assoc :db-queries (model/update-ticket ticket-id params))
+        (assoc :view view/tickets))))
