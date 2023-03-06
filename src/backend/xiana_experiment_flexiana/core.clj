@@ -22,17 +22,23 @@
       db/migrate!
       ws/start))
 
+(def controller-interceptors
+  [(interceptors/muuntaja)
+   interceptors/params
+
+   session/guest-session-interceptor
+   #_session/interceptor
+
+   interceptors/view
+   default-view/interceptor
+   interceptors/side-effect
+   db/db-access
+   rbac/interceptor])
+
 (def app-cfg
   {:routes r/routes
    :router-interceptors     []
-   :controller-interceptors [(interceptors/muuntaja)
-                             interceptors/params
-                             session/guest-session-interceptor
-                             interceptors/view
-                             default-view/interceptor
-                             interceptors/side-effect
-                             db/db-access
-                             rbac/interceptor]})
+   :controller-interceptors controller-interceptors})
 
 (defn -main
   [& _args]

@@ -1,6 +1,6 @@
 (ns xiana-experiment-flexiana.interceptors.default-view
   (:require
-   [backend.app.views.common :as views]))
+   [xiana-experiment-flexiana.views.common :as views]))
 
 (def interceptor
   ;; Applies `views/default` function to `state` if nor `view` nor

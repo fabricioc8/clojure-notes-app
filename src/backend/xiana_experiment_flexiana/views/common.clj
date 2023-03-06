@@ -11,3 +11,8 @@
 (defn not-allowed
   [state]
   (assoc state :response {:status 401 :body "You don't have rights to do this"}))
+
+(defn default
+  [{{db-results :db-data} :response-data :as state}]
+  (response state {:data (first db-results)}))
+
