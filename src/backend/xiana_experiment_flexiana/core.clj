@@ -24,7 +24,7 @@
   [["/" {:action #'index/handle-index}]
    ["/re-frame" {:action #'re-frame/handle-index}]
    ["/assets/*" (ring/create-resource-handler {:path "/"})]
-   ["/api}" {}
+   ["/api" {}
     ["/invoices" {:get {:action #'inv-con/select-all-invoices}
                   :post {:action #'inv-con/insert-invoice}}]
     ["/team-invoices/:team-id" {:get {:action #'inv-con/select-team-invoices}}]
@@ -40,7 +40,7 @@
 
     ["/plans" {:post {:action #'pla-con/insert-plan}
                :get {:action #'pla-con/select-all-plans}}]
-    ["/plans/:team-id" {:get {:action #'pla-con/select-team-plans}}]
+    ["/plans/teams/:team-id" {:get {:action #'pla-con/select-team-plans}}]
     ["/plans/:plan-id" {:put {:action #'pla-con/update-plan}}]
 
     ["/team-subscription/:team-id" {:get {:action #'sub-con/select-current-team-subscription}}]
