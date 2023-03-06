@@ -1,7 +1,7 @@
-(ns backend.xiana-experiment-flexiana.controllers.tickets
+(ns xiana-experiment-flexiana.controllers.tickets
   (:require
-   [backend.xiana-experiment-flexiana.models.tickets :as model]
-   [backend.xiana-experiment-flexiana.views.tickets :as view]))
+   [xiana-experiment-flexiana.models.tickets :as model]
+   [xiana-experiment-flexiana.views.tickets :as view]))
 
 (defn insert-ticket [{{params :body-params} :request :as state}]
   (-> state

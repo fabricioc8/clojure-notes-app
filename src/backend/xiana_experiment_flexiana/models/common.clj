@@ -1,4 +1,4 @@
-(ns backend.xiana-experiment-flexiana.models.common
+(ns xiana-experiment-flexiana.models.common
   (:require
    [honeysql.core :as sql]
    [honeysql.format :as sqlf])

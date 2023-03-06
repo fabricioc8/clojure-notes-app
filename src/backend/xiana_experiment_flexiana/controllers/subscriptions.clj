@@ -1,7 +1,7 @@
-(ns backend.xiana-experiment-flexiana.controllers.subscriptions
+(ns xiana-experiment-flexiana.controllers.subscriptions
   (:require
-   [backend.xiana-experiment-flexiana.models.subscriptions :as model]
-   [backend.xiana-experiment-flexiana.views.subscriptions :as view]))
+   [xiana-experiment-flexiana.models.subscriptions :as model]
+   [xiana-experiment-flexiana.views.subscriptions :as view]))
 
 (defn select-current-team-subscription [state]
   (let [team-id (-> state :request-data :match :path-params :team-id)]

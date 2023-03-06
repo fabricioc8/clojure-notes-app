@@ -1,4 +1,4 @@
-(ns backend.xiana-experiment-flexiana.views.tickets
+(ns xiana-experiment-flexiana.views.tickets
   (:require
    [xiana-experiment-flexiana.views.common :as views]))
 

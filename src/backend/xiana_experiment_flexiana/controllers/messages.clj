@@ -1,7 +1,7 @@
-(ns backend.xiana-experiment-flexiana.controllers.messages
+(ns xiana-experiment-flexiana.controllers.messages
   (:require
-   [backend.xiana-experiment-flexiana.models.messages :as model]
-   [backend.xiana-experiment-flexiana.views.messages :as view]))
+   [xiana-experiment-flexiana.models.messages :as model]
+   [xiana-experiment-flexiana.views.messages :as view]))
 
 (defn insert-ticket-message [{{params :body-params} :request :as state}]
   (-> state

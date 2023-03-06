@@ -1,7 +1,7 @@
-(ns backend.xiana-experiment-flexiana.controllers.notes
+(ns xiana-experiment-flexiana.controllers.notes
   (:require
-   [backend.xiana-experiment-flexiana.models.notes :as model]
-   [backend.xiana-experiment-flexiana.views.notes :as view]))
+   [xiana-experiment-flexiana.models.notes :as model]
+   [xiana-experiment-flexiana.views.notes :as view]))
 
 (defn insert-note [{{params :body-params} :request :as state}]
   (-> state

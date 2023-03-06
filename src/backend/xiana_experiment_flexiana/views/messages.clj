@@ -1,4 +1,4 @@
-(ns backend.xiana-experiment-flexiana.views.messages
+(ns xiana-experiment-flexiana.views.messages
   (:require
    [xiana-experiment-flexiana.views.common :as views]))
 

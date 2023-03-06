@@ -1,7 +1,7 @@
-(ns backend.xiana-experiment-flexiana.controllers.content-pages
+(ns xiana-experiment-flexiana.controllers.content-pages
   (:require
-   [backend.xiana-experiment-flexiana.models.content-pages :as model]
-   [ backend.xiana-experiment-flexiana.views.content-pages :as view]))
+   [xiana-experiment-flexiana.models.content-pages :as model]
+   [xiana-experiment-flexiana.views.content-pages :as view]))
 
 (defn insert-content-page [{{params :body-params} :request :as state}]
   (-> state

@@ -1,6 +1,6 @@
-(ns backend.xiana-experiment-flexiana.models.subscriptions
+(ns xiana-experiment-flexiana.models.subscriptions
   (:require
-   [backend.xiana-experiment-flexiana.models.common :refer [->UUID] :as mc]
+   [xiana-experiment-flexiana.models.common :refer [->UUID] :as mc]
    [honeysql.core :as sql]
    [honeysql.helpers :as sqlh]))
 

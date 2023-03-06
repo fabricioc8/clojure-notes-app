@@ -1,6 +1,6 @@
-(ns backend.xiana-experiment-flexiana.models.tickets
+(ns xiana-experiment-flexiana.models.tickets
   (:require
-   [backend.xiana-experiment-flexiana.models.common :refer [->UUID next-uuid] :as mc]
+   [xiana-experiment-flexiana.models.common :refer [->UUID next-uuid] :as mc]
    [honeysql.core :as sql]
    [honeysql.helpers :as sqlh]))
 

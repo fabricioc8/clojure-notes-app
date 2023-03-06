@@ -1,6 +1,6 @@
-(ns backend.xiana-experiment-flexiana.models.content-pages
+(ns xiana-experiment-flexiana.models.content-pages
   (:require
-   [backend.xiana-experiment-flexiana.models.common :refer [->UUID next-uuid] :as mc]
+   [xiana-experiment-flexiana.models.common :refer [->UUID next-uuid] :as mc]
    [honeysql.core :as sql]
    [honeysql.helpers :as sqlh]))
 

@@ -1,7 +1,7 @@
-(ns backend.xiana-experiment-flexiana.controllers.plans
+(ns xiana-experiment-flexiana.controllers.plans
   (:require
-   [backend.xiana-experiment-flexiana.models.plans :as model]
-   [backend.xiana-experiment-flexiana.views.plans :as view]))
+   [xiana-experiment-flexiana.models.plans :as model]
+   [xiana-experiment-flexiana.views.plans :as view]))
 
 (defn insert-plan [{{params :body-params} :request :as state}]
   (-> state

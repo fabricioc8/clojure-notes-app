@@ -1,7 +1,7 @@
-(ns backend.xiana-experiment-flexiana.controllers.users
+(ns xiana-experiment-flexiana.controllers.users
   (:require
-   [backend.xiana-experiment-flexiana.models.users :as model]
-   [backend.xiana-experiment-flexiana.views.users :as view]))
+   [xiana-experiment-flexiana.models.users :as model]
+   [xiana-experiment-flexiana.views.users :as view]))
 
 (defn insert-user-by-themselve [{{params :body-params} :request :as state}]
   (-> state

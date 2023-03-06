@@ -1,7 +1,7 @@
-(ns backend.xiana-experiment-flexiana.controllers.teams
+(ns xiana-experiment-flexiana.controllers.teams
   (:require
-   [backend.xiana-experiment-flexiana.models.teams :as model]
-   [backend.xiana-experiment-flexiana.views.teams :as view]))
+   [xiana-experiment-flexiana.models.teams :as model]
+   [xiana-experiment-flexiana.views.teams :as view]))
 
 (defn select-team [state]
   (let [team-id (-> state :request-data :match :path-params :team-id)]

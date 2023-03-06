@@ -1,4 +1,4 @@
-(ns backend.xiana-experiment-flexiana.common
+(ns xiana-experiment-flexiana.common
   (:require
    [clojure.set :refer [rename-keys]]
    [clojure.string :as str]

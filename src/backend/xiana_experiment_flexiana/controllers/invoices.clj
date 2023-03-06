@@ -1,7 +1,7 @@
-(ns backend.xiana-experiment-flexiana.controllers.invoices
+(ns xiana-experiment-flexiana.controllers.invoices
   (:require
-   [backend.xiana-experiment-flexiana.models.invoices :as model]
-   [backend.xiana-experiment-flexiana.views.invoices :as view]))
+   [xiana-experiment-flexiana.models.invoices :as model]
+   [xiana-experiment-flexiana.views.invoices :as view]))
 
 (defn insert-invoice [{{params :body-params} :request :as state}]
   (-> state
