@@ -1,5 +1,6 @@
 (ns xiana-experiment-flexiana.controllers.re-frame
-  (:require [ring.util.response :as ring]))
+  (:require
+   [ring.util.response :as ring]))
 
 (defn handle-index
   [state]
