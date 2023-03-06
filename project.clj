@@ -7,6 +7,7 @@
                  [thheller/shadow-cljs "2.20.2"]
                  [com.fzakaria/slf4j-timbre "0.3.21"]
                  [cljs-ajax "0.8.4"]
+                 [day8.re-frame/http-fx "0.2.3"]
                  [reagent "0.10.0"]
                  [re-frame "1.1.2"]]
   :plugins [[lein-shadow "0.4.0"]
