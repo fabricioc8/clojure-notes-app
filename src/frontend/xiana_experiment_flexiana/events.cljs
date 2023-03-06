@@ -1,9 +1,36 @@
 (ns xiana-experiment-flexiana.events
   (:require
    [re-frame.core :as re-frame]
+   [ajax.core :as ajax]
+   [day8.re-frame.http-fx]
    [xiana-experiment-flexiana.db :as db]))
+
+(defn url [tail] (str "http://localhost:3000" tail))
 
 (re-frame/reg-event-db
  ::initialize-db
  (fn [_ _]
-   db/default-db))
+   (let [_ (prn "INI")]
+     db/default-db)))
+
+(re-frame/reg-event-db
+ ::failure
+ (fn [_ _]
+   (prn "failure")))
+
+(re-frame/reg-event-db
+ ::load-teams-success
+ (fn [db [_ response]]
+   (let [teams (-> response :data :teams first)]
+     (assoc db :teams teams))))
+
+(re-frame/reg-event-fx
+ ::load-teams
+ (fn [_ _]
+   {:http-xhrio {:uri            (url "/api/teams")
+                 :method          :get
+                 :response-format (ajax/json-response-format {:keywords? true})
+                 ;:format (ajax/json-request-format)
+                 :on-success      [::load-teams-success]
+                 :on-failure      [::failure]}}))
+
