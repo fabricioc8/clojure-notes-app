@@ -10,7 +10,14 @@
    [xiana-experiment-flexiana.controllers.users :as us-con]
    [xiana-experiment-flexiana.controllers.index :as index]
    [xiana-experiment-flexiana.controllers.re-frame :as re-frame]
+   [ring.util.response :as r]
    [reitit.ring :as ring]))
+
+(defn a
+  [state]
+  (assoc state
+         :response
+         (r/response "aaa1")))
 
 (def routes
   [["/" {:action #'index/handle-index}]
