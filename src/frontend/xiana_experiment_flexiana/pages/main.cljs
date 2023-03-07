@@ -1,4 +1,4 @@
-(ns xiana-experiment-flexiana.views
+(ns xiana-experiment-flexiana.pages.main
   (:require
    [re-frame.core :as rf]
    [xiana-experiment-flexiana.events :as events]

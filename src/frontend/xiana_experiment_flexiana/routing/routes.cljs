@@ -3,7 +3,7 @@
    [bidi.bidi :as bidi]
    [xiana-experiment-flexiana.events.users :as users]
    [re-frame.core :as rf]
-   [shared.routes  :refer [frontend-routes]]))
+   [routes  :refer [frontend-routes]]))
 
 (def routes
   ["/" frontend-routes])
