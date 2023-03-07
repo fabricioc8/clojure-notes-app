@@ -8,7 +8,6 @@
    [xiana-experiment-flexiana.controllers.teams :as team-con]
    [xiana-experiment-flexiana.controllers.tickets :as tick-con]
    [xiana-experiment-flexiana.controllers.users :as us-con]
-   [xiana-experiment-flexiana.controllers.index :as index]
    [xiana-experiment-flexiana.controllers.re-frame :as re-frame]
    [ring.util.response :as r]
    [reitit.ring :as ring]))
@@ -20,8 +19,7 @@
          (r/response "aaa1")))
 
 (def routes
-  [;["/" {:action #'index/handle-index}]
-   ["/" {:action #'re-frame/handle-index}]
+  [["/" {:action #'re-frame/handle-index}]
    ["/assets/*" (ring/create-resource-handler {:path "/"})]
    ["/api" {}
     ["/invoices" {:get {:action #'inv-con/select-all-invoices}
