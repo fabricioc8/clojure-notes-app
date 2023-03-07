@@ -2,10 +2,9 @@
   (:require
    [reagent.dom :as rdom]
    [re-frame.core :as rf]
-   [xiana-experiment-flexiana.events :as events]
+   [xiana-experiment-flexiana.events.init :as events]
    [xiana-experiment-flexiana.views :as views]
    [xiana-experiment-flexiana.config :as config]))
-
 
 (defn dev-setup []
   (when config/debug?

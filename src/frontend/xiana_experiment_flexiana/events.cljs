@@ -2,16 +2,9 @@
   (:require
    [re-frame.core :as rf]
    [ajax.core :as ajax]
-   [day8.re-frame.http-fx]
-   [xiana-experiment-flexiana.db :as db]))
+   [day8.re-frame.http-fx]))
 
 (defn url [tail] (str "http://localhost:3000" tail))
-
-(rf/reg-event-db
- ::initialize-db
- (fn [_ _]
-   (let [_ (prn "INI")]
-     db/default-db)))
 
 (rf/reg-event-db
  ::failure
