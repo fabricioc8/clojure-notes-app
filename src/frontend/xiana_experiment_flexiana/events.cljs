@@ -33,4 +33,3 @@
                  ;:format (ajax/json-request-format)
                  :on-success      [::load-teams-success]
                  :on-failure      [::failure]}}))
-

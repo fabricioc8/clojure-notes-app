@@ -6,6 +6,8 @@
                  [org.clojure/tools.namespace "1.3.0"]
                  [thheller/shadow-cljs "2.20.2"]
                  [com.fzakaria/slf4j-timbre "0.3.21"]
+                 [bidi "2.1.6"]
+                 [kibu/pushy "0.3.8"]
                  [cljs-ajax "0.8.4"]
                  [day8.re-frame/http-fx "0.2.3"]
                  [reagent "0.10.0"]
