@@ -2,12 +2,14 @@
   (:require
    [re-frame.core :as rf]
    [xiana-experiment-flexiana.events :as events]
-   [xiana-experiment-flexiana.subs :as subs]))
+   [xiana-experiment-flexiana.subs :as subs]
+   [xiana-experiment-flexiana.pages.home.view :as home]))
 
 (defn main-panel []
   (rf/dispatch [::events/load-teams])
-  (let [name (rf/subscribe [::subs/name])
-        teams (rf/subscribe [::subs/teams])]
-    [:div
-     [:h1 "Hello from " @name]
-     [:h1 "Teams" @teams]]))
+  #_(let [name (rf/subscribe [::subs/name])
+          teams (rf/subscribe [::subs/teams])]
+      [:div
+       [:h1 "Hello from " @name]
+       [:h1 "Teams" @teams]])
+  [home/page])
