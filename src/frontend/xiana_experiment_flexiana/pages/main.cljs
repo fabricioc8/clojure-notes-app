@@ -3,7 +3,8 @@
    [re-frame.core :as rf]
    [xiana-experiment-flexiana.events :as events]
    [xiana-experiment-flexiana.subs :as subs]
-   [xiana-experiment-flexiana.pages.home.view :as home]))
+   [xiana-experiment-flexiana.pages.home.view :as home]
+   [xiana-experiment-flexiana.pages.board.view]))
 
 (defn main-panel []
   (rf/dispatch [::events/load-teams])

@@ -20,8 +20,8 @@
          (r/response "aaa1")))
 
 (def routes
-  [["/" {:action #'index/handle-index}]
-   ["/re-frame" {:action #'re-frame/handle-index}]
+  [;["/" {:action #'index/handle-index}]
+   ["/" {:action #'re-frame/handle-index}]
    ["/assets/*" (ring/create-resource-handler {:path "/"})]
    ["/api" {}
     ["/invoices" {:get {:action #'inv-con/select-all-invoices}

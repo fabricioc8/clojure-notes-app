@@ -55,7 +55,7 @@
 ;;     [side-menu/panel side-menu-entries]]])
 
 (defn page []
-  (r/with-let [current-page @(rf/subscribe [::subs/current-page])]
+  (r/with-let [current-page (rf/subscribe [::subs/current-page])]
     [:div {:class    "font-frankie h-screen flex overflow-hidden bg-white"
            ;:on-click #(rf/dispatch [::search-events/show-results (= "global-search-input" (-> % .-target .-id))])
            }
@@ -73,7 +73,7 @@
        ;[breadcrumb]
        ;[delete-confirmation-modal]
        ;[confirmation-modal]
-       (:page current-page)
+       (:page @current-page)
        ;[sp/panel!]
        ]]]))
 
