@@ -1,4 +1,4 @@
-(ns shared.routes)
+(ns routes)
 
 (def frontend-routes
   {""                                                    :board
