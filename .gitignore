@@ -47,3 +47,4 @@ docs/db-doc
 .envrc.local
 start.backend.PID
 .history
+shadow-cljs.edn
