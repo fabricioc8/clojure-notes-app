@@ -174,3 +174,5 @@
   (-> s
       (.normalize "NFD")
       (str/replace #"[\u0300-\u036f]" "")))
+
+(def url (partial str "http://localhost:3000"))

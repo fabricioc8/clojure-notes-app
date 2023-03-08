@@ -2,9 +2,10 @@
   (:require
    [re-frame.core :as rf]
    [ajax.core :as ajax]
+   [xiana-experiment-flexiana.util.seq :as util]
    [day8.re-frame.http-fx]))
 
-(defn url [tail] (str "http://localhost:3000" tail))
+
 
 (rf/reg-event-db
  ::failure
@@ -16,11 +17,12 @@
  (fn [db [_ response]]
    (let [teams (-> response :data :teams first)]
      (assoc db :teams teams))))
+;;ver porque no carga todos los equipos si le saco el first
 
 (rf/reg-event-fx
  ::load-teams
  (fn [_ _]
-   {:http-xhrio {:uri            (url "/api/teams")
+   {:http-xhrio {:uri            (util/url "/api/teams")
                  :method          :get
                  :response-format (ajax/json-response-format {:keywords? true})
                  ;:format (ajax/json-request-format)
