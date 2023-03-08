@@ -70,6 +70,14 @@
       ;[user-menu]
       [:main {:id "main" :tab-index -1 :class "flex-1 relative overflow-y-auto focus:outline-none"}
        [:p "Home page"]
+       [:button {:on-click #(rf/dispatch [:navigate (url-for :dashboard)])}
+        "Go to board"]
+       [:button {:on-click #(rf/dispatch [:navigate (url-for :api-management)])}
+        "Go to board"]
+       [:button {:on-click #(rf/dispatch [:navigate (url-for :settings)])}
+        "Go to board"]
+       [:button {:on-click #(rf/dispatch [:navigate (url-for :admin-teams)])}
+        "Go to board"]
        ;[breadcrumb]
        ;[delete-confirmation-modal]
        ;[confirmation-modal]
