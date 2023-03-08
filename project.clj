@@ -20,6 +20,7 @@
              :tailwind-config  "tailwind.config.js"
              :styles [{:src "base.css"
                        :dst "main.css"}]}
+  :hooks [leiningen.tailwind]
   :main ^:skip-aot xiana-experiment-flexiana.core
   :uberjar-name "xiana-experiment-flexiana.jar"
   :source-paths ["src/backend" "src/frontend" "src/shared"]
