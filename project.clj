@@ -13,7 +13,13 @@
                  [reagent "0.10.0"]
                  [re-frame "1.1.2"]]
   :plugins [[lein-shadow "0.4.0"]
-            [cider/cider-nrepl "0.25.9"]]
+            [cider/cider-nrepl "0.25.9"]
+            [lein-tailwind "0.1.2"]]
+  :tailwind {:tailwind-dir "src/frontend/xiana_experiment_flexiana"
+             :output-dir   "resources/public/assets"
+             :tailwind-config  "tailwind.config.js"
+             :styles [{:src "base.css"
+                       :dst "main.css"}]}
   :main ^:skip-aot xiana-experiment-flexiana.core
   :uberjar-name "xiana-experiment-flexiana.jar"
   :source-paths ["src/backend" "src/frontend" "src/shared"]
