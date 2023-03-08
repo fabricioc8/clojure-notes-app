@@ -38,24 +38,25 @@
 
     ["/plans" {:post {:action #'pla-con/insert-plan}
                :get {:action #'pla-con/select-all-plans}}]
-    ["/plans/teams/:team-id" {:get {:action #'pla-con/select-team-plans}}]
+    ["/team-plans/:team-id" {:get {:action #'pla-con/select-team-plans}}]
     ["/plans/:plan-id" {:put {:action #'pla-con/update-plan}}]
 
     ["/team-subscription/:team-id" {:get {:action #'sub-con/select-current-team-subscription}}]
     ["/subscriptions" {:get {:action #'sub-con/select-all-subscriptions}}]
     ["/subscriptions/:subscription-id" {:put {:action #'sub-con/update-subscription}}]
 
-    ["/teams/:team-id" {:get {:action #'team-con/select-team}
-                        :put {:action #'team-con/update-team}}]
     ["/teams" {:get {:action #'team-con/select-all-teams}}]
+    ["/teams/:team-id" {:get {:action #'team-con/select-team}
+                        :put {:action #'team-con/update-team}}] 
 
     ["/tickets" {:post {:action #'tick-con/insert-ticket}}]
     ["/team-tickets/:team-id" {:get {:action #'tick-con/select-team-tickets}}]
     ["/tickets/:ticket-id" {:put {:action #'tick-con/update-ticket}}]
-    ["/register-user" {:post {:action #'us-con/insert-user-by-themselve}}]
 
+    ["/register-user" {:post {:action #'us-con/insert-user-by-themselve}}]
     ["/invite-user" {:post {:action #'us-con/insert-user-by-invitation}}]
     ["/users" {:get {:action #'us-con/select-all-users}}]
     ["/users/:user-id" {:get {:action #'us-con/select-user}
                         :put {:action #'us-con/update-user}}]
+    ["/user-team/:user-id" {:get {:action #'us-con/select-user-team}}]
     ["/team-users/:team-id" {:get {:action #'us-con/select-team-users}}]]])

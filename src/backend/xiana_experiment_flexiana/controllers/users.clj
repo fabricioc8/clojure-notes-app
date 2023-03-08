@@ -24,14 +24,20 @@
       (assoc :db-queries (model/select-all-users))
       (assoc :view view/users)))
 
-(defn select-team-users [state] 
-  (let [team-id (-> state :request-data :match :path-params :team-id)]
-    (-> state
-        (assoc :db-queries (model/select-team-users team-id))
-        (assoc :view view/users))))
-
 (defn update-user [{{params :body-params} :request :as state}] 
   (let [user-id (-> state :request-data :match :path-params :user-id)]
     (-> state
         (assoc :db-queries (model/update-user user-id params))
+        (assoc :view view/users))))
+
+(defn select-user-team [state]
+  (let [user-id (-> state :request-data :match :path-params :user-id)]
+    (-> state
+        (assoc :db-queries (model/select-user-team user-id))
+        (assoc :view view/users))))
+
+(defn select-team-users [state]
+  (let [team-id (-> state :request-data :match :path-params :team-id)]
+    (-> state
+        (assoc :db-queries (model/select-team-users team-id))
         (assoc :view view/users))))

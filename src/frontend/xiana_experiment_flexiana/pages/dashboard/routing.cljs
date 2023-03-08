@@ -2,9 +2,14 @@
   (:require
    [xiana-experiment-flexiana.routing.core :as routing]
    [xiana-experiment-flexiana.events.notes :as notes]
+   [xiana-experiment-flexiana.subs.users :as subs-users]
+   [xiana-experiment-flexiana.events.users :as users]
    [re-frame.core :as rf]))
 
 (defmethod routing/handle-route :dashboard
   [arg]
-  (rf/dispatch [::notes/select-team-notes "3c033fb5-162c-4bb7-b8ea-8a4a26019409"])
+  (let [user-id @(rf/subscribe [::subs-users/session-user-id])
+        _ (rf/dispatch [::users/select-user-team user-id])
+        team-id @(rf/subscribe [::subs-users/user-team])]
+    (rf/dispatch [::notes/select-team-notes team-id]))
   (:action arg))

@@ -22,3 +22,19 @@
                  :on-success [::users-loaded]
                  ;:on-failure [::http/http-error] USAR EL DE events.http
                  }}))
+
+(rf/reg-event-db
+ ::user-team-selected
+ (fn [db [_ response]]
+   (let [team (-> response :data :users first)]
+     (assoc-in db [:entity :team] team))))
+
+(rf/reg-event-fx
+ ::select-user-team
+ (fn [_ [_ user-id]]
+   {:http-xhrio {:uri (util/url "/api/user-team/" user-id)
+                 :method :get
+                 :response-format (ajax/json-response-format {:keywords? true})
+                 :on-success [::user-team-selected]
+                 ;:on-failure [::http/http-error]
+                 }}))

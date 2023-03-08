@@ -10,6 +10,7 @@
     [:div "Dashboard page"
      [:div {:class "flex-col"}
       (for [n notes]
+        ^{:key (:notes/id n)}
         [:p (:notes/content n)])]]))
 
 (defmethod routing/resolve-view :dashboard [_] [page])

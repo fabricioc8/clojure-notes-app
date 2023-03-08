@@ -7,14 +7,13 @@
 (rf/reg-event-db
  ::team-notes-selected
  (fn [db [_ response]]
-   (prn "RRR" response)
-   #_(let []
-       (assoc-in db []))))
+   (prn "TTNN")
+   (let [notes (-> response :data :notes)]
+     (assoc-in db [:entity :notes] notes))))
 
 (rf/reg-event-fx
  ::select-team-notes
  (fn [_ [_ team-id]]
-   (prn "FX")
    {:http-xhrio {:uri (util/url "/api/team-notes/" team-id)
                  :method :get
                  :response-format (ajax/json-response-format {:keywords? true})

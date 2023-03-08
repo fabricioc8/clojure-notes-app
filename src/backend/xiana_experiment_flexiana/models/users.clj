@@ -53,6 +53,19 @@
   {:queries [{:select [:*]
               :from [:users]}]})
 
+(defn update-user [user-id params]
+  {:queries [{:update :users
+              :set (mc/->user params)
+              :where [:= :id (->UUID user-id)]}]})
+
+(defn select-user-team [user-id]
+  {:queries [{:select [:t.id :t.name :t.enabled]
+              :from [[:team-users :tu]
+                     [:teams :t]]
+              :where [:and
+                      [:= :tu.user-id (->UUID user-id)] 
+                      [:= :tu.team-id :t.id]]}]})
+
 (defn select-team-users [team-id]
   {:queries [{:select [:*]
               :from [:users]
@@ -60,7 +73,3 @@
                                :from [:team-users]
                                :where [:= :team-id (->UUID team-id)]}]}]})
 
-(defn update-user [user-id params]
-  {:queries [{:update :users
-              :set (mc/->user params)
-              :where [:= :id (->UUID user-id)]}]})
