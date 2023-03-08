@@ -34,6 +34,7 @@
     ["/notes/:note-id" {:get {:action #'not-con/select-note}
                         :put {:action #'not-con/update-note}
                         :delete {:action #'not-con/delete-note}}]
+    ["/team-notes/:team-id" {:get {:action #'not-con/select-team-notes}}]
 
     ["/plans" {:post {:action #'pla-con/insert-plan}
                :get {:action #'pla-con/select-all-plans}}]
