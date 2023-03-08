@@ -3,6 +3,7 @@
    [re-frame.core :as rf]
    [xiana-experiment-flexiana.events :as events]
    [xiana-experiment-flexiana.subs :as subs]
+   [xiana-experiment-flexiana.subs.users :as subs-users]
    [xiana-experiment-flexiana.pages.home.view :as home]
    [xiana-experiment-flexiana.pages.dashboard.view]
    [xiana-experiment-flexiana.pages.api-management.view]
@@ -25,4 +26,8 @@
       [:div
        [:h1 "Hello from " @name]
        [:h1 "Teams" @teams]])
-  [home/page])
+  (let [user-id @(rf/subscribe [::subs-users/session-user-id])]
+    (if user-id 
+      [home/page]
+      [:div "Missing user-id"])))
+

@@ -7,7 +7,6 @@
 (rf/reg-event-db
  ::team-notes-selected
  (fn [db [_ response]]
-   (prn "TTNN")
    (let [notes (-> response :data :notes)]
      (assoc-in db [:entity :notes] notes))))
 

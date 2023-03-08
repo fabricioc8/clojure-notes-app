@@ -10,4 +10,4 @@
 (rf/reg-sub
  ::user-team
  (fn [db _]
-   (get-in db [:entity :team :teams/id])))
+   (get-in db [:entity :team :id])))

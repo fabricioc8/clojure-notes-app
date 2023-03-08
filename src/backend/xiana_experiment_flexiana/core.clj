@@ -5,6 +5,7 @@
     [xiana.config :as config]
     [xiana.db :as db]
     [xiana.interceptor :as interceptors]
+    [next.jdbc.result-set]
     [xiana.rbac :as rbac]
     [xiana.route :as routes]
     [xiana.session :as session]
@@ -38,7 +39,8 @@
 (def app-cfg
   {:routes r/routes
    :router-interceptors     []
-   :controller-interceptors controller-interceptors})
+   :controller-interceptors controller-interceptors
+   :xiana/jdbc-opts         {:builder-fn next.jdbc.result-set/as-unqualified-lower-maps}})
 
 (defn -main
   [& _args]
