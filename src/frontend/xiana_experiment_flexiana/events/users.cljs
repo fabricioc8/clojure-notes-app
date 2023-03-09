@@ -38,3 +38,21 @@
                  :on-success [::user-team-selected]
                  ;:on-failure [::http/http-error]
                  }}))
+
+(rf/reg-event-db
+ ::team-users-selected
+ (fn [db [_ response]]
+   (let [team-users (-> response :data :users)]
+     (assoc-in db [:entity :team-users] team-users))))
+
+(rf/reg-event-fx
+ ::select-team-users
+ (fn [{:keys [db]} _]
+   (let [team-id (-> db :session :team :id)]
+     {:http-xhrio {:uri (util/url "/api/team-users/" team-id)
+                   :method :get
+                   :response-format (ajax/json-response-format {:keywords? true})
+                   :format (ajax/json-request-format)
+                   :on-success [::team-users-selected]
+                 ;:on-failure [::http/http-error]
+                   }})))
