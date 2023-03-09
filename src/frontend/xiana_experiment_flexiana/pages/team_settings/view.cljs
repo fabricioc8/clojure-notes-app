@@ -23,13 +23,16 @@
 
 (defn team-users-table []
   (let [team-users @(rf/subscribe [::subs-users/team-users])]
-    [:table
-     [:tbody
-      (for [tu team-users]
-        ^{:key (random-uuid)}
-        [:tr
-         [:td (:email tu)]
-         [:td (:user-role tu)]])]]))
+    [:<>
+     [:span {:class "text-xl"}
+      (str "Team (" (count team-users) "/" ")")]
+     [:table
+      [:tbody
+       (for [tu team-users]
+         ^{:key (:id tu)}
+         [:tr
+          [:td (:email tu)]
+          [:td (:team-role tu)]])]]]))
 
 (defn page []
   (let [team @(rf/subscribe [::subs-users/user-team])]

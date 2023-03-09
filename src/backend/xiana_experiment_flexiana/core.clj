@@ -40,7 +40,7 @@
   {:routes r/routes
    :router-interceptors     []
    :controller-interceptors controller-interceptors
-   :xiana/jdbc-opts         {:builder-fn next.jdbc.result-set/as-unqualified-lower-maps}})
+   :xiana/jdbc-opts         {:builder-fn next.jdbc.result-set/as-unqualified-kebab-maps}})
 
 (defn -main
   [& _args]
