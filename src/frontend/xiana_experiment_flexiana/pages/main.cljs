@@ -20,7 +20,7 @@
    [xiana-experiment-flexiana.admin-pages.admin-users.view]))
 
 (defn main-panel []
-  (rf/dispatch [::events/load-teams])
+  ;(rf/dispatch [::events/load-teams])
   #_(let [name (rf/subscribe [::subs/name])
           teams (rf/subscribe [::subs/teams])]
       [:div
@@ -30,4 +30,3 @@
     (if user-id 
       [home/page]
       [:div "Missing user-id"])))
-

@@ -13,4 +13,4 @@
  ::user-team
  :<- [::subs-db/session]
  (fn [session _]
-   (get-in session [:team :user-team-id])))
+   (get session :team)))
