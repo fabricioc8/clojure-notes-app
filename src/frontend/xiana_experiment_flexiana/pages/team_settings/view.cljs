@@ -7,14 +7,16 @@
   [:div {:class "py-1 max-w-max flex gap-2"}
    [tc/basic-field-input {:type "text"
                           :name "team-name"
-                          :placeholder "Team name..."}]
+                          :placeholder "Team name..."
+                          :value "xxx"}]
    [tc/primary-button {:content "Save"
                        :on-click #(prn "btn")}]])
 
 (defn page []
-  [:div {:class "p-6"}
-   [:span {:class "text-xl pb-4"};;check
-    "Team Settings"]
-   [team-name-form]])
+  (let []
+    [:div {:class "p-6"}
+     [:span {:class "text-xl pb-4"};;check
+      "Team Settings"]
+     [team-name-form]]))
 
 (defmethod routing/resolve-view :team-settings [_] [page])

@@ -75,7 +75,7 @@
 
 (defn static-sidebar []
   [:div {:class "md:flex md:flex-shrink-0"}
-   [:div {:class "flex flex-col w-28"}
+   [:div {:class "flex flex-col w-48"};;check
     [panel side-menu-entries]]])
 
 (defn page []
