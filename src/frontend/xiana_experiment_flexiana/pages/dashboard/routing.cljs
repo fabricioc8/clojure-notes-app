@@ -8,8 +8,8 @@
 
 (defmethod routing/handle-route :dashboard
   [arg]
-  (let [user-id @(rf/subscribe [::subs-users/session-user-id])
-        _ (rf/dispatch [::users/select-user-team user-id])
-        team-id @(rf/subscribe [::subs-users/user-team])]
-    (rf/dispatch [::notes/select-team-notes team-id]))
+  ;; (let [user-id @(rf/subscribe [::subs-users/session-user-id])
+  ;;       _ (rf/dispatch [::users/select-user-team user-id])
+  ;;       team-id @(rf/subscribe [::subs-users/user-team])]
+  ;;   (rf/dispatch [::notes/select-team-notes team-id]))
   (:action arg))
