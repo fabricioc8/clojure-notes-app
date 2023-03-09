@@ -36,7 +36,8 @@
    [:div {:class "py-1 max-w-max flex gap-2"}
     [tc/basic-field-input {:type "text" 
                            :placeholder "Title..."
-                           :value ""}]
+                           :value ""
+                           :on-change #()}]
     [tc/primary-button {:content "Create new note" 
                         :on-click #(prn "btn")}]]])
 
