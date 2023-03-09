@@ -54,6 +54,27 @@
    [team-plans-table]
    [:span {:class "text-xl font-bold"}
     "Invoices"]
-   [invoices-table]])
+   [invoices-table]
+   [:span {:class "text-xl font-bold"}
+    "Billing details"]
+   [:div {:class "flex"}
+    [tc/text-area {:width "w-64"
+                   :name "address-detail"
+                   :placeholder "Address"
+                   :default-value ""}]
+    [:div {:class "max-w-max"}
+     [tc/basic-field-input {:type "text"
+                            :name "vat-input"
+                            :placeholder "VAT"
+                            :value (or #_@(rf/subscribe :view) #_@(rf/subscribe :entity))
+                            :on-change #()}]
+     [tc/selector {:values [1]
+                   :name "country-selector"
+                   :on-change #()
+                   :default-value (or #_@(rf/subscribe :view) #_@(rf/subscribe :entity))}]]
+    [tc/primary-button
+     {:content "Save billing info"
+      :on-click #()}]]])
+;;FALTAN BILL-DETAILS ENDPOINTS
 
 (defmethod routing/resolve-view :billing [_] [page])

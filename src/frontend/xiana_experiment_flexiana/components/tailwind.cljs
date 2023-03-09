@@ -56,3 +56,16 @@
               ^{:key (random-uuid)}
               [:td {:class "whitespace-nowrap px-3 py-4 text-sm text-gray-500"}
                cell])])]]]]]]])
+
+(defn text-area [{:keys [name width placeholder default-value]}]
+  [:div {:class "mt-2"}
+   [:textarea
+    {;:rows         "{4}"
+     :name         name
+     :id           name
+     :placeholder  placeholder
+     :class        ["block rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
+                               placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5
+                               sm:text-sm sm:leading-6"
+                    width]
+     :defaultValue default-value}]])

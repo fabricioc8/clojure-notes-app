@@ -19,7 +19,7 @@
   :page is a reagent component containing the page to be displayed"
 
   [side-menu-entries]
-  [:div {:class "flex-initial space-y-5 flex flex-col z-40 flex-shrink-0 bg-dark-main pt-6 pb-4 overflow-y-auto w-28 fixed h-screen"}
+  [:div {:class "flex-initial space-y-5 flex flex-col z-40 flex-shrink-0 bg-dark-main pt-6 pb-4 overflow-y-auto w-28 fixed h-full"}
    (let [active-window (rf/subscribe [::subs/current-page])]
      [:nav {#_#_:class "flex-1 px-2 space-y-1" :data-ci :app-nav}
       (doall
@@ -80,12 +80,12 @@
 
 (defn page []
   (r/with-let [current-page (rf/subscribe [::subs/current-page])]
-    [:div {:class    "font-frankie h-screen flex-col overflow-hidden bg-white"
+    [:div {:class    "font-frankie h-full flex-col overflow-hidden bg-white"
            ;:on-click #(rf/dispatch [::search-events/show-results (= "global-search-input" (-> % .-target .-id))])
            }
      [:div {:class "h-10"}
       "menu bar"]
-     [:div {:class "flex h-screen"}
+     [:div {:class "flex h-full"}
       [static-sidebar]
       [:div {:class "flex w-0 flex-1 overflow-hidden"}
       ;[stages/modal]
