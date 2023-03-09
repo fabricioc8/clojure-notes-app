@@ -5,7 +5,14 @@
    [honeysql.helpers :as sqlh]))
 
 (defn select-current-team-subscription [team-id]
-  {:queries [{:select [:*]
+  {:queries [{:select [:s.id :s.team-id [:p.id :plan-id] :p.max-users]
+              :from [[:subscriptions :s]
+                     [:plans :p]]
+              :where [:and
+                      [:= :s.team-id (->UUID team-id)]
+                      [:= :s.canceled false]
+                      [:= :s.plan-id :p.id]]}
+             #_{:select [:*]
               :from [:subscriptions]
               :where [:and
                       [:= :team-id (->UUID team-id)]

@@ -5,6 +5,7 @@
    [xiana-experiment-flexiana.pages.team-settings.subs :as ts-subs]
    [xiana-experiment-flexiana.pages.team-settings.routing]
    [xiana-experiment-flexiana.subs.users :as subs-users]
+   [xiana-experiment-flexiana.subs.subscriptions :as subs-subscriptions]
    [xiana-experiment-flexiana.events.teams :as events-teams]
    [xiana-experiment-flexiana.components.tailwind :as tc]
    [re-frame.core :as rf]))
@@ -22,10 +23,11 @@
                                      (rf/dispatch [::events-teams/update-team {:name new-team-name}]))}]]))
 
 (defn team-users-table []
-  (let [team-users @(rf/subscribe [::subs-users/team-users])]
+  (let [team-users @(rf/subscribe [::subs-users/team-users])
+        current-subscription @(rf/subscribe [::subs-subscriptions/select-current-subscription])]
     [:<>
      [:span {:class "text-xl"}
-      (str "Team (" (count team-users) "/" ")")]
+      (str "Team (" (count team-users) "/" (:max-users current-subscription) ")")]
      [:table
       [:tbody
        (for [tu team-users]
