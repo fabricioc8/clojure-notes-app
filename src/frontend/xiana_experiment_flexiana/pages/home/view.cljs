@@ -74,9 +74,10 @@
     :url (url-for :tikets)}])
 
 (defn static-sidebar []
-  [:div {:class "md:flex md:flex-shrink-0"}
-   [:div {:class "flex flex-col w-48"};;check
-    [panel side-menu-entries]]])
+  [:div {:class "w-48" #_"md:flex md:flex-shrink-0 w-48"}
+   #_[:div {:class "flex flex-col w-48"};;check
+    [panel side-menu-entries]]
+   [panel side-menu-entries]])
 
 (defn page []
   (r/with-let [current-page (rf/subscribe [::subs/current-page])]
