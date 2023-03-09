@@ -10,4 +10,14 @@
 (rf/reg-event-db
  ::reset-team-name-input
  (fn [db _]
-   (update-in db [:view :team-settings] dissoc :team-name-input)))
+   (update db :view dissoc :team-settings)))
+
+(rf/reg-event-db
+ ::invite-email-input
+ (fn [db [_ value]]
+   (assoc-in db [:view :team-settings :invite-email-input] value)))
+
+(rf/reg-event-db
+ ::team-role-selector
+ (fn [db [_ value]]
+   (assoc-in db [:view :team-settings :team-role-selector] value)))
