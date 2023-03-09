@@ -31,13 +31,13 @@
             "Edit"]]]]])]))
 
 (defn note-form []
-  [:div {:class "py-4 max-w-max"}
-   [tc/basic-field-input {:type "text" 
-                          :name "note-title"
-                          :label "Create new note"
-                          :placeholder "Title..."}]
-   [tc/primary-button {:content "Create new note" 
-                       :on-click #(prn "btn")}]])
+  [:<>
+   [tc/input-label {:name "note-title" :label "Create new note"}]
+   [:div {:class "py-1 max-w-max flex gap-2"}
+    [tc/basic-field-input {:type "text" 
+                           :placeholder "Title..."}]
+    [tc/primary-button {:content "Create new note" 
+                        :on-click #(prn "btn")}]]])
 
 (defn page []
   [:div {:class "p-3"}
