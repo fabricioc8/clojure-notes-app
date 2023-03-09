@@ -12,4 +12,5 @@
   ;;       _ (rf/dispatch [::users/select-user-team user-id])
   ;;       team-id @(rf/subscribe [::subs-users/user-team])]
   ;;   (rf/dispatch [::notes/select-team-notes team-id]))
+  (rf/dispatch [::notes/select-team-notes])
   (:action arg))
