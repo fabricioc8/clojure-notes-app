@@ -146,6 +146,19 @@
   [m f]
   (reduce-kv #(assoc %1 %2 (f %3)) {} m))
 
+(defn sort-map-vals
+  "Given a hash map and a vector of same keywords of the map, produces a vector
+   with the values of the map sorted by the order specifed in the vector arg"
+  [m order]
+  (loop [m m
+         o order
+         r []]
+    (if (empty? o)
+      r
+      (recur (dissoc m (first o))
+             (rest o)
+             (vec (conj r ((first o) m)))))))
+
 (defn merge-with-json
   "Returns a function that merges a clojure map with a javascript one.
    It returns as a javascript object"
