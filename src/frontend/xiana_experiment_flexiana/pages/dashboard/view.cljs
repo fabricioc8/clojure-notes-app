@@ -40,7 +40,7 @@
                        :on-click #(prn "btn")}]])
 
 (defn page []
-  (rf/dispatch [::notes/select-team-notes "3c033fb5-162c-4bb7-b8ea-8a4a26019409"])
+  (rf/dispatch [::notes/select-team-notes #_"3c033fb5-162c-4bb7-b8ea-8a4a26019409"])
   [:div {:class "p-3"}
    [note-form]
    [notes-board]])

@@ -12,10 +12,11 @@
 
 (rf/reg-event-fx
  ::select-team-notes
- (fn [_ [_ team-id]]
-   {:http-xhrio {:uri (util/url "/api/team-notes/" team-id)
-                 :method :get
-                 :response-format (ajax/json-response-format {:keywords? true})
-                 :on-success [::team-notes-selected]
+ (fn [{:keys [db]} _]
+   (let [team-id (-> db :session :user-team-id)]
+     {:http-xhrio {:uri (util/url "/api/team-notes/" team-id)
+                   :method :get
+                   :response-format (ajax/json-response-format {:keywords? true})
+                   :on-success [::team-notes-selected]
                  ;:on-failure [::http/http-error]
-                 }}))
+                   }})))

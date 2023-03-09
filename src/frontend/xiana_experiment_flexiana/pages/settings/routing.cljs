@@ -6,5 +6,4 @@
 
 (defmethod routing/handle-route :tasks
   [arg]
-  (rf/dispatch [::notes/select-team-notes "3c033fb5-162c-4bb7-b8ea-8a4a26019409"])
   (:action arg))
