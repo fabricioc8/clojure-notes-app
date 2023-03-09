@@ -14,3 +14,9 @@
  :<- [::subs-db/session]
  (fn [session _]
    (get session :team)))
+
+(rf/reg-sub
+ ::team-users
+ :<- [::subs-db/entity]
+ (fn [entity _]
+   (get entity :team-users)))

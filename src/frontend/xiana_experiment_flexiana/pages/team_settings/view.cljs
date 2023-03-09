@@ -21,11 +21,22 @@
                          :on-click #(when (seq new-team-name)
                                      (rf/dispatch [::events-teams/update-team {:name new-team-name}]))}]]))
 
+(defn team-users-table []
+  (let [team-users @(rf/subscribe [::subs-users/team-users])]
+    [:table
+     [:tbody
+      (for [tu team-users]
+        ^{:key (random-uuid)}
+        [:tr
+         [:td (:email tu)]
+         [:td (:user-role tu)]])]]))
+
 (defn page []
   (let [team @(rf/subscribe [::subs-users/user-team])]
     [:div {:class "p-6"}
      [:span {:class "text-xl pb-4"};;check
       "Team Settings"]
-     [team-name-form (:name team)]]))
+     [team-name-form (:name team)]
+     [team-users-table]]))
 
 (defmethod routing/resolve-view :team-settings [_] [page])
