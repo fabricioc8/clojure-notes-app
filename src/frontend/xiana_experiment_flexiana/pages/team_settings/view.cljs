@@ -5,6 +5,7 @@
    [xiana-experiment-flexiana.pages.team-settings.subs :as ts-subs]
    [xiana-experiment-flexiana.pages.team-settings.routing]
    [xiana-experiment-flexiana.subs.users :as subs-users]
+   [xiana-experiment-flexiana.events.teams :as events-teams]
    [xiana-experiment-flexiana.components.tailwind :as tc]
    [re-frame.core :as rf]))
 
@@ -17,7 +18,8 @@
                             :value (or new-team-name team-name)
                             :on-change #(rf/dispatch [::ts-events/team-name-input (-> % .-target .-value)])}]
      [tc/primary-button {:content "Save"
-                         :on-click #(prn "btn")}]]))
+                         :on-click #(when (seq new-team-name)
+                                     (rf/dispatch [::events-teams/update-team {:name new-team-name}]))}]]))
 
 (defn page []
   (let [team @(rf/subscribe [::subs-users/user-team])]
