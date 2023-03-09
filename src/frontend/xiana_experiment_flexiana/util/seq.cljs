@@ -19,6 +19,9 @@
   [sec id f & kv]
   (apply update-by sec (comp #{id} :id) f kv))
 
+(defn remove-record-by-id [coll id]
+  (remove #(= (:id %) id) coll))
+
 (defn associate-by
   "Same as clojure.core/group-by except that
    it expects a single element in the grouping,
