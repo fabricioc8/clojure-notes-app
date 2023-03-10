@@ -26,15 +26,16 @@
     [:<>
      [:span {:class "text-xl font-bold"}
       "Support"]
-     [tc/data-table {:titles ["Ticket name" "Messages" "Actions"]
-                     :items (for [t team-tickets]
-                              ^{:key (random-uuid)}
-                              [(:name t)
-                               "no implementado"
-                               [tc/primary-button
-                                {:content "Open"
-                                 :on-click #(rf/dispatch [:navigate (url-for :ticket-chat
-                                                                      :ticket-id (:id t))])}]])}]]))
+     [tc/data-table
+      {:titles ["Ticket name" "Messages" "Actions"]
+       :items (for [t team-tickets]
+                ^{:key (random-uuid)}
+                [(:name t)
+                 "no implementado"
+                 [tc/primary-button
+                  {:content "Open"
+                   :on-click #(rf/dispatch [:navigate (url-for :ticket-chat
+                                                               :ticket-id (:id t))])}]])}]]))
 
 (defn page []
   [:div {:class "p-6"}

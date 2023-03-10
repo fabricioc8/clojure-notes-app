@@ -1,9 +1,11 @@
 (ns xiana-experiment-flexiana.pages.dashboard.view
   (:require
-   [xiana-experiment-flexiana.routing.core :as routing]
+   [xiana-experiment-flexiana.routing.core :as routing :refer [url-for]]
    [xiana-experiment-flexiana.subs.notes :as subs-notes]
+   [xiana-experiment-flexiana.pages.dashboard.subs :as dashboard-subs]
    [xiana-experiment-flexiana.pages.dashboard.routing]
    [xiana-experiment-flexiana.events.notes :as event-notes]
+   [xiana-experiment-flexiana.pages.dashboard.events :as dashboard-events]
    [xiana-experiment-flexiana.components.tailwind :as tc]
    [re-frame.core :as rf]))
 
@@ -27,23 +29,29 @@
             "Delete"]]
           [:div {:class "-ml-px flex w-0 flex-1"}
            [:button {:class "relative inline-flex w-0 flex-1 items-center justify-center gap-x-3
-                             rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"}
+                             rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+                     :on-click #(rf/dispatch [:navigate (url-for :new-note
+                                                                 :note-id id)])}
             "Edit"]]]]])]))
 
 (defn note-form []
-  [:<>
-   [tc/input-label {:name "note-title" :label "Create new note"}]
-   [:div {:class "py-1 max-w-max flex gap-2"}
-    [tc/basic-field-input {:type "text" 
-                           :placeholder "Title..."
-                           :value ""
-                           :on-change #()}]
-    [tc/primary-button {:content "Create new note" 
-                        :on-click #(prn "btn")}]]])
+  (let [note-title @(rf/subscribe [::dashboard-subs/note-title-input])]
+    [:div {:class "py-1 max-w-max flex gap-2"}
+     [tc/basic-field-input {:type "text"
+                            :placeholder "Title..."
+                            :value note-title
+                            :on-change #(rf/dispatch [::dashboard-events/note-title-input (-> % .-target .-value)])}]
+     [tc/primary-button {:content "Create new note"
+                         :on-click #(when (seq note-title)
+                                      (prn "Navigate..."))}]]))
 
 (defn page []
   [:div {:class "p-3"}
+   [:span {:class "text-xl font-bold"}
+    "New note"]
    [note-form]
+   [:span {:class "text-xl font-bold"}
+    "Team notes"]
    [notes-board]])
 
 (defmethod routing/resolve-view :dashboard [_] [page])
