@@ -19,7 +19,7 @@ CREATE TABLE users(
 
 CREATE TABLE teams(
     id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
-    name varchar(512) NOT NULL,
+    name varchar(512) NOT NULL DEFAULT '',
     enabled bool NOT NULL DEFAULT true
 )
 --;;

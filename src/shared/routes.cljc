@@ -3,7 +3,7 @@
 (def frontend-routes
   {;""                                                      :board1
    ;"candidates-board"                                      :board
-   "" :dashboard
+   ""                                                      :dashboard
    "app"                                                   :dashboard
    ["app/note/" :note-id]                                  :new-note ;subpagina
    "app/api-management"                                    :api-management

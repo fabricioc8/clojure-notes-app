@@ -5,6 +5,7 @@
    [xiana-experiment-flexiana.subs :as subs]
    [xiana-experiment-flexiana.subs.users :as subs-users]
    [xiana-experiment-flexiana.pages.home.view :as home]
+   [xiana-experiment-flexiana.pages.login.view :as login]
    [xiana-experiment-flexiana.pages.dashboard.view]
    [xiana-experiment-flexiana.pages.api-management.view]
    [xiana-experiment-flexiana.pages.billing.view]
