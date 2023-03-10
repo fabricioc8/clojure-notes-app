@@ -9,6 +9,7 @@
    [xiana-experiment-flexiana.events.teams :as events-teams]
    [xiana-experiment-flexiana.events.users :as events-users]
    [xiana-experiment-flexiana.components.tailwind :as tc]
+   [xiana-experiment-flexiana.util.seq :as util]
    [re-frame.core :as rf]))
 
 (defn team-name-form [team-name]
@@ -31,13 +32,10 @@
     [:<>
      [:span {:class "text-xl"}
       (str "Team (" (count team-users) "/" (:max-users current-subscription) ")")]
-     [:table
-      [:tbody
-       (for [tu team-users]
-         ^{:key (:id tu)}
-         [:tr
-          [:td (:email tu)]
-          [:td (:team-role tu)]])]]]))
+     [tc/data-table {:titles ["User" "Role"]
+                     :items (for [u team-users]
+                              ^{:key (random-uuid)}
+                              (util/sort-map-vals u [:email :team-role]))}]]))
 
 (defn invite-user-form [team-id]
   (let [team-roles ["a" "b" "c"] #_@(rf/subscribe [])
