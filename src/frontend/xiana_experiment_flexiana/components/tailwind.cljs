@@ -23,17 +23,18 @@
             :on-click on-click}
    content])
 
-(defn selector [{:keys [name values on-change default-value]}]
-  (let [options (map (fn [v] [:option {:value v} v]) values)]
-    [:div {:class "w-auto"}
-     (into
-      [:select {:id           name
-                :name         name
-                :class    "block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900
+(defn selector [{:keys [name options on-change default-value]}]
+  [:div {:class "w-auto"}
+   (into
+    [:select {:id           name
+              :name         name
+              :class    "block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900
                            ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                :on-change on-change
-                :defaultValue default-value}]
-      options)]))
+              :on-change on-change
+              :defaultValue default-value}]
+    (for [o options]
+      [:option {:value (:value o)}
+       (:label o)]))])
 
 (defn data-table [{:keys [titles items]}]
   [:div {:class "pr-4"}

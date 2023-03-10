@@ -68,13 +68,21 @@
                             :placeholder "VAT"
                             :value (or #_@(rf/subscribe :view) #_@(rf/subscribe :entity))
                             :on-change #()}]
-     [tc/selector {:values [1]
+     [tc/selector {:options [{:value "mexico" :label "Mexico"}
+                             {:value "japan" :label "Japan"}
+                             {:value "norway" :label "Norway"}]
                    :name "country-selector"
                    :on-change #()
                    :default-value (or #_@(rf/subscribe :view) #_@(rf/subscribe :entity))}]]
-    [tc/primary-button
-     {:content "Save billing info"
-      :on-click #()}]]])
+    [:div {:class "max-w-max"}
+     [tc/basic-field-input {:type "text"
+                            :name "company-name"
+                            :placeholder "Company name"
+                            :value (or #_@(rf/subscribe :view) #_@(rf/subscribe :entity))
+                            :on-change #()}]
+     [tc/primary-button
+      {:content "Save billing info"
+       :on-click #()}]]]])
 ;;FALTAN BILL-DETAILS ENDPOINTS
 
 (defmethod routing/resolve-view :billing [_] [page])

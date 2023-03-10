@@ -38,8 +38,10 @@
                               (util/sort-map-vals u [:email :team-role]))}]]))
 
 (defn invite-user-form [team-id]
-  (let [team-roles ["a" "b" "c"] #_@(rf/subscribe [])
-        default-team-role "a"
+  (let [team-roles [{:value "team-admin" :label "Admin"}
+                    {:value "team-editor" :label "Editor"}
+                    {:value "team-viewer" :label "Viewer"}]
+        default-team-role (:value (first team-roles))
         new-user-email @(rf/subscribe [::ts-subs/invite-email-input])
         selected-team-role @(rf/subscribe [::ts-subs/team-role-selector])]
     [:<>
@@ -52,7 +54,7 @@
                              :value (or new-user-email "")
                              :on-change #(rf/dispatch [::ts-events/invite-email-input (-> % .-target .-value)])}]
       [tc/selector {:name   "team-role-selector"
-                    :values team-roles
+                    :options team-roles
                     :on-change #(rf/dispatch [::ts-events/team-role-selector (-> % .-target .-value)])}]
       [tc/primary-button {:content "Save"
                           :on-click #(when (seq new-user-email)
