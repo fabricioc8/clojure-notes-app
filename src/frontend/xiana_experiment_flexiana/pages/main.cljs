@@ -10,6 +10,7 @@
    [xiana-experiment-flexiana.pages.billing.view]
    [xiana-experiment-flexiana.pages.settings.view]
    [xiana-experiment-flexiana.pages.support.view]
+   [xiana-experiment-flexiana.pages.ticket-messages.view]
    [xiana-experiment-flexiana.pages.team-settings.view]
    [xiana-experiment-flexiana.admin-pages.admin-billing.view]
    [xiana-experiment-flexiana.admin-pages.admin-cms.view]

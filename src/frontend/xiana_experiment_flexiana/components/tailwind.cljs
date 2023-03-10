@@ -69,3 +69,15 @@
                                sm:text-sm sm:leading-6"
                     width]
      :defaultValue default-value}]])
+
+(defn items-list [{:keys [user-name message li-key icon]}]
+  [:div
+   [:ul {:role "list", :class "divide-y divide-gray-200"}
+    [:li {:key li-key, :class "py-4"}
+     [:div {:class "flex space-x-3"}
+      [:img {:class "h-6 w-6 rounded-full", :src "" #_icon}]
+      [:div {:class "flex-1 space-y-1"}
+       [:div {:class "flex items-center justify-between"}
+        [:h3 {:class "text-sm font-medium"} user-name]
+        [:p {:class "text-sm text-gray-500"} "time"]]
+       [:p {:class "text-sm text-gray-500"} message]]]]]])
