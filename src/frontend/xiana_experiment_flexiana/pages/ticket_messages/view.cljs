@@ -3,10 +3,7 @@
    [xiana-experiment-flexiana.pages.support.routing]
    [xiana-experiment-flexiana.pages.ticket-messages.routing]
    [xiana-experiment-flexiana.routing.core :as routing]
-   [xiana-experiment-flexiana.pages.support.subs :as support-subs]
-   [xiana-experiment-flexiana.subs.tickets :as subs-tickets]
    [xiana-experiment-flexiana.subs.ticket-messages :as subs-ticket-messages]
-   [xiana-experiment-flexiana.pages.support.events :as support-events]
    [xiana-experiment-flexiana.components.tailwind :as tc]
    [re-frame.core :as rf]))
 
@@ -14,15 +11,17 @@
   (let [ticket-messages @(rf/subscribe [::subs-ticket-messages/ticket-messages])]
     [:div
      (for [t ticket-messages]
-       (let [rid (random-uuid)]
+       (let [rid (random-uuid)
+             author (or @(rf/subscribe [::subs-ticket-messages/message-author (:user-id t)])
+                        "Admin")]
          ^{:key rid}
-         [tc/items-list {:user-name (:user-id t)
+         [tc/items-list {:user-name author
                          :message (:message t)
                          :li-key rid
                          :icon "icon"}]))]))
 
 (defn page []
-  (let [ticket {} #_@(rf/subscribe [])];;sacar de app-db a partir del dispatch en roting
+  (let [ticket @(rf/subscribe [::subs-ticket-messages/ticket])]
     [:div {:class "p-6"}
      [:span {:class "text-xl font-bold"}
       "Ticket: "]
