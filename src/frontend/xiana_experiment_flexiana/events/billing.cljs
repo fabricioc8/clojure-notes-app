@@ -7,7 +7,6 @@
 (rf/reg-event-db
  ::billing-details-selected
  (fn [db [_ response]]
-   (prn)
    (let [invoices (-> response :data :invoices)]
      (assoc-in db [:entity :invoices] invoices))))
 

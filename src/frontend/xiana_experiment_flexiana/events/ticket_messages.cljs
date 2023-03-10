@@ -6,11 +6,10 @@
 
 (rf/reg-event-db
  ::ticket-messages-selected
- (fn [db [_ response]]
-   (let [ticket-messages (-> response :data :messages)
-         db (assoc-in db [:entity :current-ticket-messages] ticket-messages)
-         _ (prn (:entity db))]
-       db )))
+ (fn [db [_ ticket-id response]]
+   (let [ticket-messages (-> response :data :messages)]
+     (assoc-in db [:entity :current-ticket] {:ticket-id ticket-id
+                                             :ticket-messages ticket-messages}))))
 
 (rf/reg-event-fx
  ::select-ticket-messages
@@ -19,6 +18,6 @@
                  :method :get
                  :response-format (ajax/json-response-format {:keywords? true})
                  :format (ajax/json-request-format)
-                 :on-success [::ticket-messages-selected]
+                 :on-success [::ticket-messages-selected ticket-id]
                  ;:on-failure [::http/http-error]
                  }}))
