@@ -12,11 +12,12 @@
 
 (rf/reg-event-fx
  ::sign-up
- (fn [_ [_ email password]]
+ (fn [_ [_ email password team-name]]
    {:http-xhrio {:uri (util/url "/api/register-user")
                  :method :post
                  :params {:email email
-                          :password password}
+                          :password password
+                          :name team-name}
                  :response-format (ajax/json-response-format {:keywords? true})
                  :format (ajax/json-request-format)
                  :on-success [::sign-up-ok]
