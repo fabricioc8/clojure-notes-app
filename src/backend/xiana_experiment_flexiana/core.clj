@@ -6,6 +6,7 @@
     [xiana.db :as db]
     [xiana.interceptor :as interceptors]
     [next.jdbc.result-set]
+    [xiana.cookies :as cookies]
     [xiana.rbac :as rbac]
     [xiana.route :as routes]
     [xiana.session :as session]
@@ -25,6 +26,7 @@
 
 (def controller-interceptors
   [(interceptors/muuntaja)
+   cookies/interceptor
    interceptors/params
 
    session/guest-session-interceptor

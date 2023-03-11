@@ -1,12 +1,14 @@
 (ns xiana-experiment-flexiana.controllers.users
   (:require
    [xiana-experiment-flexiana.models.users :as model]
-   [xiana-experiment-flexiana.views.users :as view]))
+   [xiana-experiment-flexiana.views.users :as view]
+   [xiana-experiment-flexiana.controller-behaviors.login :as cbl]))
 
 (defn insert-user-by-themselve [{{params :body-params} :request :as state}]
   (-> state
       (assoc :db-queries (model/insert-user-by-themselve params))
-      (assoc :view view/users)))
+      (assoc :view view/users)
+      (assoc :side-effect cbl/generate-token)))
 
 (defn insert-user-by-invitation [{{params :body-params} :request :as state}]
   (-> state
