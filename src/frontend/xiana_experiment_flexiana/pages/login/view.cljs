@@ -21,10 +21,8 @@
                 ;:method "POST"
             :autoComplete "do-not-autofill"
             :on-submit #(do (.preventDefault %)
-                            (prn "SUB" (:email @state) (:password @state))
                             (when (and (valid-email? (:email @state))
                                        (valid-password? (:password @state)))
-                              (prn "MANDO")
                               ;(rf/dispatch [::events-login/sign-up (:email @state) (:password @state)])
                               (reset! state {:email ""
                                              :password ""})
@@ -87,8 +85,7 @@
                            (valid-password? (:password @state))
                            (valid-password? (:confirm-password @state))
                            (= (:password @state) (:confirm-password @state))
-                           (valid-team-name? (:team-name @state)))
-          _ (prn @state "VD" valid-data?)]
+                           (valid-team-name? (:team-name @state)))]
       [:form {:class  "space-y-6"
               :action "#"
                 ;:method "POST"
@@ -192,9 +189,7 @@
                 ;:method "POST"
             :autoComplete "do-not-autofill"
             :on-submit #(do (.preventDefault %)
-                            (prn "SUB" (:email @state) (:password @state))
                             (when (valid-email? (:email @state));;tendria que validar en el endpoint si el email existe sino mostrar error
-                              (prn "MANDO")
                               ;(rf/dispatch [::events-login/sign-up (:email @state) (:password @state)])
                               (reset! state {:email ""})
                               ))}

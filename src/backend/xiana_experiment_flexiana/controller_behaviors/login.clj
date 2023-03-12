@@ -33,7 +33,8 @@
   (let [user (ffirst db-results)
         api-token (jwt/sign {:email (:email user)} "secret")]
     (-> state
-        (deep-merge {:response {:cookies {:api-token api-token}
+        (deep-merge {:response {:cookies {:api-token {:value api-token
+                                                      :path "/"}}
                                 :headers {"access-control-expose-headers" "Set-Cookie"}}}))))
 
 {:cookies {:api-token "eyJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InRlc3QrdGVzdGVyQGZyYW5raWUucHJvNiJ9.6iQuv5s4eidVMqym_snBDb11e-hjI0Pg2PkBCRuD5ds"}
