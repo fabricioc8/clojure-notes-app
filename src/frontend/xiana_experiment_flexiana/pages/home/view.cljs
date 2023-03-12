@@ -5,6 +5,7 @@
    [re-frame.core :as rf]
    [xiana-experiment-flexiana.routing.core :as routing :refer [url-for]]
    [xiana-experiment-flexiana.pages.home.subs :as subs]
+   [xiana-experiment-flexiana.events.login :as events-login]
    [xiana-experiment-flexiana.pages.dashboard.view :as dashboard]
    [xiana-experiment-flexiana.pages.api-management.view :as api-management]
    [xiana-experiment-flexiana.pages.settings.view :as settings]
@@ -19,7 +20,8 @@
   :page is a reagent component containing the page to be displayed"
 
   [side-menu-entries]
-  [:div {:class "flex-initial space-y-5 flex flex-col z-40 flex-shrink-0 bg-dark-main pt-6 pb-4 overflow-y-auto w-28 fixed h-full"}
+  [:div {:class "flex-initial space-y-5 flex flex-col z-40 flex-shrink-0 bg-dark-main pt-6
+                 pb-4 overflow-y-auto w-48 fixed h-full"}
    (let [active-window (rf/subscribe [::subs/current-page])]
      [:nav {#_#_:class "flex-1 px-2 space-y-1" :data-ci :app-nav}
       (doall
@@ -74,34 +76,23 @@
     :url (url-for :tikets)}])
 
 (defn static-sidebar []
-  [:div {:class "w-48" #_"md:flex md:flex-shrink-0 w-48"}
-   #_[:div {:class "flex flex-col w-48"};;check
-    [panel side-menu-entries]]
+  [:div {:class "w-48 text-white bg-[#36393D]"}
    [panel side-menu-entries]])
 
 (defn page []
   (r/with-let [current-page (rf/subscribe [::subs/current-page])]
-    [:div {:class    "font-frankie h-full flex-col overflow-hidden bg-white"
-           ;:on-click #(rf/dispatch [::search-events/show-results (= "global-search-input" (-> % .-target .-id))])
-           }
-     [:div {:class "h-10"}
-      "menu bar"]
-     [:div {:class "flex h-full"}
+    [:div {:class "font-frankie h-full flex-col overflow-hidden bg-white"}
+     [:div {:class "h-10 w-full absolute bg-[#3666A7]"}
+      [:div {:class "flex justify-end"} 
+       [:button {:on-click #(rf/dispatch [::events-login/logout])}
+        "Menu"]]]
+     [:div {:class "flex h-screen pt-10"}
       [static-sidebar]
       [:div {:class "flex w-0 flex-1 overflow-hidden"}
       ;[stages/modal]
-      ;[my-settings/modal]
-      ;[assign-questionnaire/modal]
-      ;[assign-test-task/modal]
-      ;[offline/offline-modal]
-      ;[candidate-modal/modal]
       ;[user-menu]
        [:main {:id "main" :tab-index -1 :class "flex-1 relative overflow-y-auto focus:outline-none"}
        ;[breadcrumb]
-       ;[delete-confirmation-modal]
-       ;[confirmation-modal]
-        (:page @current-page)
-       ;[sp/panel!]
-        ]]]]))
+        (:page @current-page)]]]]))
 
 (defmethod routing/resolve-view :home [_] [page])

@@ -24,3 +24,9 @@
                  :on-success [::sign-up-ok]
                  ;:on-failure [::http/http-error]
                  }}))
+
+(rf/reg-event-db
+ ::logout
+ (fn [db _]
+   (update db :session dissoc :user-data)))
+
