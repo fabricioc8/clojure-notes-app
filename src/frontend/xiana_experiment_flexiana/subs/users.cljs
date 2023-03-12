@@ -10,6 +10,18 @@
    (get-in session [:user :user-id])))
 
 (rf/reg-sub
+ ::session-user-data
+ :<- [::subs-db/session]
+ (fn [session _]
+   (get session :user-data)))
+
+(rf/reg-sub
+ ::session-team-team
+ :<- [::subs-db/session]
+ (fn [session _]
+   (get session :team-data)))
+
+(rf/reg-sub
  ::user-team
  :<- [::subs-db/session]
  (fn [session _]

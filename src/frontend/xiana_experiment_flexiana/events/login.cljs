@@ -2,13 +2,14 @@
   (:require
    [re-frame.core :as rf]
    [xiana-experiment-flexiana.util.seq :as util]
-   [ajax.core :as ajax]))
+   [ajax.core :as ajax]
+   [xiana-experiment-flexiana.routing.core :refer [url-for]]))
 
-(rf/reg-event-db
+(rf/reg-event-fx
  ::sign-up-ok
- (fn [db [_ id]]
-   (prn "Sign up response")
-   #_(update-in db [:entity :notes] #(util/remove-record-by-id % id))))
+ (fn [{:keys [db]} [_ {:keys [data]}]]
+   {:db (update db :session merge data)
+    :fx [[:navigate-to (url-for :dashboard)]]}))
 
 (rf/reg-event-fx
  ::sign-up
