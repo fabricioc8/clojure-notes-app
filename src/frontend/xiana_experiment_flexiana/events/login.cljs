@@ -6,7 +6,7 @@
    [xiana-experiment-flexiana.routing.core :refer [url-for]]))
 
 (rf/reg-event-fx
- ::sign-up-ok
+ ::session-ok
  (fn [{:keys [db]} [_ {:keys [data]}]]
    {:db (update db :session merge data)
     :fx [[:navigate-to (url-for :dashboard)]]}))
@@ -21,7 +21,7 @@
                           :name team-name}
                  :response-format (ajax/json-response-format {:keywords? true})
                  :format (ajax/json-request-format)
-                 :on-success [::sign-up-ok]
+                 :on-success [::session-ok]
                  ;:on-failure [::http/http-error]
                  }}))
 
