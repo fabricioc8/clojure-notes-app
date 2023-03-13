@@ -1,11 +1,12 @@
 (ns xiana-experiment-flexiana.pages.dashboard.view
   (:require
-   [xiana-experiment-flexiana.routing.core :as routing :refer [url-for]]
-   [xiana-experiment-flexiana.subs.notes :as subs-notes]
-   [xiana-experiment-flexiana.pages.dashboard.subs :as dashboard-subs]
    [xiana-experiment-flexiana.pages.dashboard.routing]
+   [xiana-experiment-flexiana.routing.core :as routing :refer [url-for]]
    [xiana-experiment-flexiana.events.notes :as event-notes]
    [xiana-experiment-flexiana.pages.dashboard.events :as dashboard-events]
+   [xiana-experiment-flexiana.subs.notes :as subs-notes]
+   [xiana-experiment-flexiana.subs.users :as subs-users]
+   [xiana-experiment-flexiana.pages.dashboard.subs :as dashboard-subs]
    [xiana-experiment-flexiana.components.tailwind :as tc]
    [re-frame.core :as rf]))
 
@@ -35,7 +36,8 @@
             "Edit"]]]]])]))
 
 (defn note-form []
-  (let [note-title @(rf/subscribe [::dashboard-subs/note-title-input])]
+  (let [note-title @(rf/subscribe [::dashboard-subs/note-title-input])
+        team-data @(rf/subscribe [::subs-users/session-team-data])]
     [:div {:class "py-1 max-w-max flex gap-2"}
      [tc/basic-field-input {:type "text"
                             :placeholder "Title..."
@@ -43,10 +45,10 @@
                             :on-change #(rf/dispatch [::dashboard-events/note-title-input (-> % .-target .-value)])}]
      [tc/primary-button {:content "Create new note"
                          :on-click #(when (seq note-title)
-                                      (prn "Navigate..."))}]]))
+                                      (rf/dispatch [::event-notes/insert-new-note note-title (:team-id team-data)]))}]]))
 
 (defn page []
-  [:div {:class "p-3"}
+  [:div {:class "p-6"}
    [:span {:class "text-xl font-bold"}
     "New note"]
    [note-form]

@@ -1,6 +1,7 @@
 (ns xiana-experiment-flexiana.events.login
   (:require
    [re-frame.core :as rf]
+   [xiana-experiment-flexiana.events.notes :as events-notes]
    [xiana-experiment-flexiana.util.seq :as util]
    [ajax.core :as ajax]
    [xiana-experiment-flexiana.routing.core :refer [url-for]]))
@@ -9,7 +10,8 @@
  ::session-ok
  (fn [{:keys [db]} [_ {:keys [data]}]]
    {:db (update db :session merge data)
-    :fx [[:navigate-to (url-for :dashboard)]]}))
+    :fx [[:navigate-to (url-for :dashboard)]
+         [:dispatch [::events-notes/select-team-notes (-> data :team-data :team-id)]]]}))
 
 (rf/reg-event-fx
  ::sign-up

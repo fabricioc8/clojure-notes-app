@@ -1,6 +1,7 @@
 (ns xiana-experiment-flexiana.events.notes
   (:require
    [re-frame.core :as rf]
+   [xiana-experiment-flexiana.routing.core :as routing :refer [url-for]]
    [xiana-experiment-flexiana.util.seq :as util]
    [ajax.core :as ajax]))
 
@@ -12,15 +13,14 @@
 
 (rf/reg-event-fx
  ::select-team-notes
- (fn [{:keys [db]} _]
-   (let [team-id (-> db :session :team :id)]
-     {:http-xhrio {:uri (util/url "/api/team-notes/" team-id)
-                   :method :get
-                   :response-format (ajax/json-response-format {:keywords? true})
-                   :format (ajax/json-request-format)
-                   :on-success [::team-notes-selected]
+ (fn [_ [_ team-id]]
+   {:http-xhrio {:uri (util/url "/api/team-notes/" team-id)
+                 :method :get
+                 :response-format (ajax/json-response-format {:keywords? true})
+                 :format (ajax/json-request-format)
+                 :on-success [::team-notes-selected]
                  ;:on-failure [::http/http-error]
-                   }})))
+                 }}))
 
 (rf/reg-event-db
  ::note-deleted
@@ -37,4 +37,26 @@
                  :on-success [::note-deleted note-id]
                  ;:on-failure [::http/http-error]
                  }}))
-;(rf/dispatch [::delete-note "7dc83523-835e-4663-b7dc-12a4d65a7d79"])
+
+(rf/reg-event-fx
+ ::new-note-inserted
+ (fn [{:keys [db]} [_ response]]
+   (let [note (-> response :data :notes first)]
+     {:db (-> db
+              (update-in [:entity :notes] conj note)
+              (assoc-in [:view :new-note :note-title-input-edit] (:name note)))
+      :dispatch [:navigate (url-for :new-note
+                                    :note-id (:id note))]})))
+
+(rf/reg-event-fx
+ ::insert-new-note
+ (fn [_ [_ name team-id]]
+   {:http-xhrio {:uri "/api/notes"
+                 :method :post
+                 :params {:name name
+                          :team-id team-id}
+                 :response-format (ajax/json-response-format {:keywords? true})
+                 :format (ajax/json-request-format)
+                 :on-success [::new-note-inserted]
+                 ;:on-failure [::http/http-error]
+                 }}))

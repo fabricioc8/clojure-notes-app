@@ -8,5 +8,5 @@
 (defmethod routing/handle-route :dashboard
   [arg]
   (rf/dispatch [::dashboard-events/reset-note-title-input])
-  (rf/dispatch [::notes/select-team-notes])
+  ;(rf/dispatch [::notes/select-team-notes])
   (:action arg))
