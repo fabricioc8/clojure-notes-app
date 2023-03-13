@@ -39,3 +39,24 @@
                    :on-success [::team-tickets-messages-selected]
                  ;:on-failure [::http/http-error]
                    }})))
+
+(rf/reg-event-db
+ ::ticket-message-inserted
+ (fn [db [_ response]]
+   (let [ticket-message (-> response :data :messages first)]
+     (update-in db [:entity :current-ticket :ticket-messages] conj ticket-message))))
+
+(rf/reg-event-fx
+ ::insert-ticket-message
+ (fn [{:keys [db]} [_ ticket-id message]]
+   (let [user-id (-> db :session :user-data :id)]
+     {:http-xhrio {:uri "/api/ticket-messages"
+                   :method :post
+                   :params {:ticket-id ticket-id
+                            :user-id user-id
+                            :message message}
+                   :response-format (ajax/json-response-format {:keywords? true})
+                   :format (ajax/json-request-format)
+                   :on-success [::ticket-message-inserted]
+                 ;:on-failure [::http/http-error]
+                   }})))
