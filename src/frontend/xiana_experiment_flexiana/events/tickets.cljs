@@ -41,3 +41,21 @@
                    :on-success [::ticket-inserted]
                  ;:on-failure [::http/http-error]
                    }})))
+
+(rf/reg-event-db
+ ::ticket-inserted
+ (fn [db [_ response]]
+   (let [ticket (-> response :data :tickets)]
+     (update-in db [:entity :tickets] #(util/replace-by :id % ticket)))))
+
+(rf/reg-event-fx
+ ::update-ticket
+ (fn [_ [_ ticket-id resolved]]
+   {:http-xhrio {:uri (util/url "/api/tickets/" ticket-id)
+                 :method :put
+                 :params {:resolved resolved}
+                 :response-format (ajax/json-response-format {:keywords? true})
+                 :format (ajax/json-request-format)
+                 :on-success [::ticket-inserted]
+                 ;:on-failure [::http/http-error]
+                 }}))

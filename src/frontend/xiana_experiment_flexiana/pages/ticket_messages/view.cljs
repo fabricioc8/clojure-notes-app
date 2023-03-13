@@ -3,6 +3,7 @@
    [xiana-experiment-flexiana.pages.support.routing]
    [xiana-experiment-flexiana.pages.ticket-messages.routing] 
    [xiana-experiment-flexiana.routing.core :as routing]
+   [xiana-experiment-flexiana.events.tickets :as events-tickets]
    [xiana-experiment-flexiana.events.ticket-messages :as events-ticket-messages]
    [xiana-experiment-flexiana.subs.ticket-messages :as subs-ticket-messages]
    [xiana-experiment-flexiana.components.tailwind :as tc]
@@ -31,10 +32,11 @@
         :name "message-content"
         :placeholder "Message content..."
         :default-value ""
-      ;:max-lenght (str max-chars)
+        :disabled (:resolved ticket)
         :value @message-content
         :on-change #(reset! message-content (-> % .-target .-value))}]
-     [tc/primary-button {:content "Send message"
+     [tc/primary-button {:class "w-36"
+                         :content "Send message"
                          :on-click #(when (seq @message-content)
                                       (rf/dispatch [::events-ticket-messages/insert-ticket-message
                                                     (:id ticket) @message-content])
@@ -53,9 +55,9 @@
         " (Unresolved)")]
      [messages-list]
      [message-text-area ticket]
-    ;;  [tc/primary-button {:content "Mark as resolved"
-    ;;                      :on-click #(when (seq note-title)
-    ;;                                   (rf/dispatch [::event-notes/insert-new-note note-title (:team-id team-data)]))}]
-     ]))
+     [tc/primary-button {:class "w-36"
+                         :disabled (:resolved ticket)
+                         :content "Mark as resolved"
+                         :on-click #(rf/dispatch [::events-tickets/update-ticket (:id ticket) true])}]]))
 
 (defmethod routing/resolve-view :ticket-chat [_] [page])
