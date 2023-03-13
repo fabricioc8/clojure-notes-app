@@ -1,10 +1,11 @@
 (ns xiana-experiment-flexiana.pages.support.view
   (:require
    [xiana-experiment-flexiana.pages.support.routing]
-   [xiana-experiment-flexiana.pages.support.subs :as support-subs]
    [xiana-experiment-flexiana.routing.core :as routing :refer [url-for]]
-   [xiana-experiment-flexiana.subs.tickets :as subs-tickets]
    [xiana-experiment-flexiana.pages.support.events :as support-events]
+   [xiana-experiment-flexiana.pages.support.subs :as support-subs]
+   [xiana-experiment-flexiana.subs.tickets :as subs-tickets]
+   [xiana-experiment-flexiana.subs.teams :as subs-teams]
    [xiana-experiment-flexiana.components.tailwind :as tc]
    [re-frame.core :as rf]))
 
@@ -30,12 +31,13 @@
       {:titles ["Ticket name" "Messages" "Actions"]
        :items (for [t team-tickets]
                 ^{:key (random-uuid)}
-                [(:name t)
-                 "no implementado"
-                 [tc/primary-button
-                  {:content "Open"
-                   :on-click #(rf/dispatch [:navigate (url-for :ticket-chat
-                                                               :ticket-id (:id t))])}]])}]]))
+                (let [ticket-messages-number @(rf/subscribe [::subs-teams/ticket-messages-number (:id t)])]
+                  [(str (:name t) (if (:resolved t) " (resolved)" " (unresolved)"))
+                   ticket-messages-number
+                   [tc/primary-button
+                    {:content "Open"
+                     :on-click #(rf/dispatch [:navigate (url-for :ticket-chat
+                                                                 :ticket-id (:id t))])}]]))}]]))
 
 (defn page []
   [:div {:class "p-6"}

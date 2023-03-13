@@ -2,6 +2,7 @@
   (:require
    [xiana-experiment-flexiana.routing.core :as routing]
    [xiana-experiment-flexiana.events.tickets :as events-tickets]
+   [xiana-experiment-flexiana.events.ticket-messages :as events-ticket-messages]
    [xiana-experiment-flexiana.pages.support.events :as support-events]
    [re-frame.core :as rf]))
 
@@ -9,4 +10,5 @@
   [arg]
   (rf/dispatch [::support-events/reset-ticket-name-input])
   (rf/dispatch [::events-tickets/select-team-tickets])
+  (rf/dispatch [::events-ticket-messages/select-team-tickets-messages])
   (:action arg))

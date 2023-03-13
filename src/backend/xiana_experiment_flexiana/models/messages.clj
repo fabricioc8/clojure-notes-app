@@ -16,3 +16,10 @@
   {:queries [{:select [:*]
               :from [:ticket-messages]
               :where [:= :ticket-id (->UUID ticket-id)]}]})
+
+(defn select-team-tickets-messages [team-id]
+  {:queries [{:select [:*]
+              :from [:ticket-messages]
+              :where [:in :ticket-id {:select [:id]
+                                      :from [:tickets]
+                                      :where [:= :team-id (->UUID team-id)]}]}]})

@@ -13,3 +13,9 @@
     (-> state
         (assoc :db-queries (model/select-ticket-messages ticket-id))
         (assoc :view view/messages))))
+
+(defn select-team-tickets-messages [state]
+  (let [team-id (-> state :request-data :match :path-params :team-id)]
+    (-> state
+        (assoc :db-queries (model/select-team-tickets-messages team-id))
+        (assoc :view view/messages))))

@@ -27,8 +27,9 @@
                   :post {:action #'inv-con/insert-invoice}}]
     ["/team-invoices/:team-id" {:get {:action #'inv-con/select-team-invoices}}]
 
-    ["/ticket-message" {:post {:action #'mes-con/insert-ticket-message}}]
+    ["/ticket-messages" {:post {:action #'mes-con/insert-ticket-message}}]
     ["/ticket-messages/:ticket-id" {:get {:action #'mes-con/select-ticket-messages}}]
+    ["/team-tickets-messages/:team-id" {:get {:action #'mes-con/select-team-tickets-messages}}]
 
     ["/notes" {:post {:action #'not-con/insert-note}
                :get {:action #'not-con/select-all-notes}}]
