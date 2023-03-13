@@ -21,4 +21,23 @@
                    :on-success [::team-tickets-selected]
                  ;:on-failure [::http/http-error]
                    }})))
-;(rf/dispatch [::select-team-tickets])
+
+(rf/reg-event-db
+ ::ticket-inserted
+ (fn [db [_ response]]
+   (let [ticket (-> response :data :tickets first)]
+     (update-in db [:entity :tickets] conj ticket))))
+
+(rf/reg-event-fx
+ ::insert-ticket
+ (fn [{:keys [db]} [_ name]]
+   (let [team-id (-> db :session :team-data :team-id)]
+     {:http-xhrio {:uri "/api/tickets"
+                   :method :post
+                   :params {:name name
+                            :team-id team-id}
+                   :response-format (ajax/json-response-format {:keywords? true})
+                   :format (ajax/json-request-format)
+                   :on-success [::ticket-inserted]
+                 ;:on-failure [::http/http-error]
+                   }})))

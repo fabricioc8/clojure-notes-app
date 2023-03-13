@@ -3,6 +3,7 @@
    [xiana-experiment-flexiana.pages.support.routing]
    [xiana-experiment-flexiana.routing.core :as routing :refer [url-for]]
    [xiana-experiment-flexiana.pages.support.events :as support-events]
+   [xiana-experiment-flexiana.events.tickets :as events-tickets]
    [xiana-experiment-flexiana.pages.support.subs :as support-subs]
    [xiana-experiment-flexiana.subs.tickets :as subs-tickets]
    [xiana-experiment-flexiana.subs.teams :as subs-teams]
@@ -20,7 +21,9 @@
                              :value ticket-name
                              :on-change #(rf/dispatch [::support-events/ticket-name-input (-> % .-target .-value)])}]
       [tc/primary-button {:content "Create new ticket"
-                          :on-click #(prn "btn")}]]]))
+                          :on-click #(when (seq ticket-name)
+                                       (rf/dispatch [::events-tickets/insert-ticket ticket-name])
+                                       (rf/dispatch [::support-events/reset-ticket-name-input]))}]]]))
 
 (defn tickets-table []
   (let [team-tickets @(rf/subscribe [::subs-tickets/select-team-tickets])]
