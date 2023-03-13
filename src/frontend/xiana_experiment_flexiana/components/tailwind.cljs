@@ -59,7 +59,7 @@
               [:td {:class "whitespace-nowrap px-3 py-4 text-sm text-gray-500"}
                cell])])]]]]]]])
 
-(defn text-area [{:keys [name width placeholder default-value value on-change]}]
+(defn text-area [{:keys [name width placeholder default-value value on-change max-lenght]}]
   [:div {:class "mt-2"}
    [:textarea
     {;:rows         "{4}"
@@ -70,6 +70,7 @@
                                placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5
                                sm:text-sm sm:leading-6"
                     width]
+     :maxLenght    max-lenght
      :defaultValue default-value
      :value        value
      :on-change    on-change}]])
