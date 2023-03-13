@@ -4,6 +4,7 @@
    [xiana-experiment-flexiana.pages.team-settings.events :as ts-events]
    [xiana-experiment-flexiana.events.users :as events-users]
    [xiana-experiment-flexiana.events.subscriptions :as events-subscriptions]
+   [xiana-experiment-flexiana.events.teams :as events-teams]
    [re-frame.core :as rf]))
 
 (defmethod routing/handle-route :team-settings
@@ -11,4 +12,5 @@
   (rf/dispatch [::events-users/select-team-users])
   (rf/dispatch [::ts-events/reset-team-name-input])
   (rf/dispatch [::events-subscriptions/select-current-subscription])
+  (rf/dispatch [::events-teams/select-user-team])
   (:action arg))

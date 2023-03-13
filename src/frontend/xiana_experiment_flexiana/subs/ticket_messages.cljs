@@ -3,7 +3,7 @@
    [re-frame.core :as rf]
    [xiana-experiment-flexiana.subs.tickets :as subs-tickets]
    [xiana-experiment-flexiana.util.seq :as util]
-   [xiana-experiment-flexiana.subs.users :as subs-users]
+   [xiana-experiment-flexiana.subs.teams :as subs-teams]
    [xiana-experiment-flexiana.subs.app-db :as subs-db]))
 
 (rf/reg-sub
@@ -24,7 +24,7 @@
 
 (rf/reg-sub
  ::message-author
- :<- [::subs-users/team-users]
+ :<- [::subs-teams/team-users]
  (fn [team-users [_ user-id]]
    (->> team-users
         (util/seek #(= (:id %) user-id))

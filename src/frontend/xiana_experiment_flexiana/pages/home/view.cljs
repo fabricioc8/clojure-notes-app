@@ -94,5 +94,3 @@
        [:main {:id "main" :tab-index -1 :class "flex-1 relative overflow-y-auto focus:outline-none"}
        ;[breadcrumb]
         (:page @current-page)]]]]))
-
-(defmethod routing/resolve-view :home [_] [page])

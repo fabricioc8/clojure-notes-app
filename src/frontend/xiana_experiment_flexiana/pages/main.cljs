@@ -20,7 +20,6 @@
    [xiana-experiment-flexiana.admin-pages.admin-users.view]))
 
 (defn main-panel []
-  ;(rf/dispatch [::events/load-teams])
   (let [user-data @(rf/subscribe [::subs-users/session-user-data])]
     (if user-data
       [home/page]

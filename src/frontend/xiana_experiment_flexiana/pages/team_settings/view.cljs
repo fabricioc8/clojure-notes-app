@@ -1,13 +1,14 @@
 (ns xiana-experiment-flexiana.pages.team-settings.view
   (:require
-   [xiana-experiment-flexiana.routing.core :as routing]
-   [xiana-experiment-flexiana.pages.team-settings.events :as ts-events]
-   [xiana-experiment-flexiana.pages.team-settings.subs :as ts-subs]
    [xiana-experiment-flexiana.pages.team-settings.routing]
-   [xiana-experiment-flexiana.subs.users :as subs-users]
-   [xiana-experiment-flexiana.subs.subscriptions :as subs-subscriptions]
+   [xiana-experiment-flexiana.routing.core :as routing]
    [xiana-experiment-flexiana.events.teams :as events-teams]
    [xiana-experiment-flexiana.events.users :as events-users]
+   [xiana-experiment-flexiana.pages.team-settings.events :as ts-events]
+   [xiana-experiment-flexiana.subs.subscriptions :as subs-subscriptions]
+   [xiana-experiment-flexiana.subs.users :as subs-users]
+   [xiana-experiment-flexiana.subs.teams :as subs-teams]
+   [xiana-experiment-flexiana.pages.team-settings.subs :as ts-subs]
    [xiana-experiment-flexiana.components.tailwind :as tc]
    [xiana-experiment-flexiana.util.seq :as util]
    [re-frame.core :as rf]))
@@ -27,7 +28,7 @@
                                       (rf/dispatch [::events-teams/update-team {:name new-team-name}]))}]]))
 
 (defn team-users-table []
-  (let [team-users @(rf/subscribe [::subs-users/team-users])
+  (let [team-users @(rf/subscribe [::subs-teams/team-users])
         current-subscription @(rf/subscribe [::subs-subscriptions/select-current-subscription])]
     [:<>
      [:span {:class "text-xl"}
