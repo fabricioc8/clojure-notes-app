@@ -33,7 +33,7 @@
         :max-lenght (str max-chars)
         :value note-content
         :on-change #(rf/dispatch [::view-events/note-content-text-area
-                                  (-> % .-target .-value)])}]
+                                  max-chars (-> % .-target .-value)])}]
       [:span {:class "block"}
        (str "Limit: " (count note-content) "/" max-chars)]
       [:span {:class "block"}

@@ -9,10 +9,11 @@
 
 (rf/reg-event-db
  ::note-content-text-area
- (fn [db [_ value]]
-   (assoc-in db [:view :new-note :note-content-text-area] (if (> (count value) 100)
-                                                            (reduce str (butlast value))
-                                                            value))))
+ (fn [db [_ max-chars value]]
+   (assoc-in db [:view :new-note :note-content-text-area]
+             (if (> (count value) max-chars)
+               (reduce str (butlast value))
+               value))))
 
 (rf/reg-event-db
  ::is-public?
