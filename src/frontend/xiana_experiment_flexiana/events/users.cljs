@@ -56,3 +56,23 @@
                    :on-success [::team-users-selected]
                  ;:on-failure [::http/http-error]
                    }})))
+
+(rf/reg-event-db
+ ::user-updated
+ (fn [db [_ response]]
+   (prn "RESPONSE" response)
+   #_(let [team-users (-> response :data :users)]
+     (assoc-in db [:entity :team-users] team-users))))
+
+(rf/reg-event-fx
+ ::update-user
+ (fn [{:keys [db]} [_ params]]
+   (let [user-id (-> db :session :user-data :id)]
+     {:http-xhrio {:uri (util/url "/api/users/" user-id)
+                   :method :put
+                   :params params
+                   :response-format (ajax/json-response-format {:keywords? true})
+                   :format (ajax/json-request-format)
+                   :on-success [::user-updated]
+                 ;:on-failure [::http/http-error]
+                   }})))

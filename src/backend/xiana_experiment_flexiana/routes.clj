@@ -51,7 +51,7 @@
                                :put {:action #'bil-con/ss}}]
     ["/teams" {:get {:action #'team-con/select-all-teams}}]
     ["/teams/:team-id" {:get {:action #'team-con/select-team}
-                        :put {:action #'team-con/update-team}}] 
+                        :put {:action #'team-con/update-team}}]
 
     ["/tickets" {:post {:action #'tick-con/insert-ticket}}]
     ["/team-tickets/:team-id" {:get {:action #'tick-con/select-team-tickets}}]

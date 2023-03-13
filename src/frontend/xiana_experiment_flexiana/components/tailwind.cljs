@@ -4,7 +4,7 @@
   [:label {:htmlFor name, :class "block text-sm font-medium leading-6 text-gray-900"}
    label])
 
-(defn basic-field-input [{:keys [type name placeholder value on-change]}]
+(defn basic-field-input [{:keys [type name placeholder value on-change min-length]}]
   [:div
    [:input {:type        type
             :name        name
@@ -13,11 +13,12 @@
                            ring-inset ring-gray-300placeholder:text-gray-400 focus:ring-2
                            focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2"
             :placeholder placeholder
+            :min-length min-length
             :value       value
             :on-change   on-change}]])
 
-(defn primary-button [{:keys [content on-click class]}]
-  [:button {:type  "button"
+(defn primary-button [{:keys [content on-click class type]}]
+  [:button {:type  (or type "button")
             :class (str "rounded-md bg-white py-2 px-3 text-sm font-semibold text-gray-900
                          shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 "
                         class)
