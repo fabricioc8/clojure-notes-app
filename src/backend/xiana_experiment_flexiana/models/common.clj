@@ -80,6 +80,11 @@
       (:id params) (update :id ->UUID)
       (:team-id params) (update :team-id ->UUID))))
 
+(defn ->update-note [params]
+  (let [params (select-keys params [:id :is-public :name :content])]
+    (cond-> params
+      (:id params) (update :id ->UUID))))
+
 (defn ->ticket [params]
   (let [params (select-keys params [:id :team-id :name :resolved])]
     (cond-> params

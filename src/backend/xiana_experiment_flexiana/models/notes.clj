@@ -28,7 +28,7 @@
 
 (defn update-note [note-id params]
   {:queries [{:update :notes
-              :set (mc/->note params)
+              :set (mc/->update-note params)
               :where [:= :id (->UUID note-id)]}]})
 
 (defn delete-note [note-id]

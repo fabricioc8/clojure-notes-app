@@ -44,7 +44,10 @@
    (let [note (-> response :data :notes first)]
      {:db (-> db
               (update-in [:entity :notes] conj note)
-              (assoc-in [:view :new-note :note-title-input-edit] (:name note)))
+              (assoc-in [:view :new-note] {:note-title-input-edit (:name note)
+                                           :note-id (:id note)
+                                           :is-public? false
+                                           :note-content-text-area ""}))
       :dispatch [:navigate (url-for :new-note
                                     :note-id (:id note))]})))
 
@@ -58,5 +61,26 @@
                  :response-format (ajax/json-response-format {:keywords? true})
                  :format (ajax/json-request-format)
                  :on-success [::new-note-inserted]
+                 ;:on-failure [::http/http-error]
+                 }}))
+
+(rf/reg-event-fx
+ ::note-updated
+ (fn [{:keys [db]} [_ response]]
+   (let [notes (-> response :data :notes)]
+     {:db (-> db
+              (update-in [:entity :notes] #(util/replace-by :id % notes))
+              (update :view dissoc :new-note))
+      :dispatch [:navigate (url-for :dashboard)]})))
+
+(rf/reg-event-fx
+ ::update-note
+ (fn [_ [_ note-id params]];;is-public, name, content
+   {:http-xhrio {:uri (util/url "/api/notes/" note-id)
+                 :method :put
+                 :params params
+                 :response-format (ajax/json-response-format {:keywords? true})
+                 :format (ajax/json-request-format)
+                 :on-success [::note-updated]
                  ;:on-failure [::http/http-error]
                  }}))
