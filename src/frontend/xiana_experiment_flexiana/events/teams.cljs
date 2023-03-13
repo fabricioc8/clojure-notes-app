@@ -13,7 +13,7 @@
 (rf/reg-event-fx
  ::update-team
  (fn [{:keys [db]} [_ params]]
-   (let [team-id (-> db :session :team :id)]
+   (let [team-id (-> db :session :team-data :team-id)]
      {:http-xhrio {:uri (util/url "/api/teams/" team-id)
                    :method :put
                    :params params

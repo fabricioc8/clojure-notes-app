@@ -13,7 +13,7 @@
 (rf/reg-event-fx
  ::select-current-subscription
  (fn [{:keys [db]} _]
-   (let [team-id (-> db :session :team :id)]
+   (let [team-id (-> db :session :team-data :team-id)]
      {:http-xhrio {:uri (util/url "/api/team-subscription/" team-id)
                    :method :get
                    :response-format (ajax/json-response-format {:keywords? true})
