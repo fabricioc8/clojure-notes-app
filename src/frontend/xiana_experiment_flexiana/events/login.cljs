@@ -30,3 +30,15 @@
  (fn [db _]
    (update db :session dissoc :user-data)))
 
+(rf/reg-event-fx
+ ::login
+ (fn [_ [_ email password]]
+   {:http-xhrio {:uri "api/login"
+                 :method :post
+                 :params {:email email
+                          :password password}
+                 :response-format (ajax/json-response-format {:keywords? true})
+                 :format (ajax/json-request-format)
+                 :on-success [::session-ok]
+                 ;:on-failure [::http/http-error]
+                 }}))

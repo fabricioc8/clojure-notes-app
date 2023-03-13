@@ -44,6 +44,16 @@
                 :values [team-users-params]}]
      :transaction? true}))
 
+(defn login [params]
+  {:queries [{:select [:*]
+              :from [:users]
+              :where [:= :email (:email params)]}
+             {:select [:team-id :team-role]
+              :from [:team-users]
+              :where [:in :user-id {:select [:id]
+                                    :from [:users]
+                                    :where [:= :email (:email params)]}]}]})
+
 (defn select-user [user-id]
   {:queries [{:select [:*]
               :from [:users]

@@ -59,6 +59,8 @@
 
     ["/register-user" {:post {:action #'us-con/insert-user-by-themselve}}]
     ["/invite-user" {:post {:action #'us-con/insert-user-by-invitation}}]
+    ["/login" {:post {:action #'us-con/login}}]
+
     ["/users" {:get {:action #'us-con/select-all-users}}]
     ["/users/:user-id" {:get {:action #'us-con/select-user}
                         :put {:action #'us-con/update-user}}]

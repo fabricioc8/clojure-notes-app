@@ -23,10 +23,8 @@
             :on-submit #(do (.preventDefault %)
                             (when (and (valid-email? (:email @state))
                                        (valid-password? (:password @state)))
-                              ;(rf/dispatch [::events-login/sign-up (:email @state) (:password @state)])
-                              (reset! state {:email ""
-                                             :password ""})
-                              ))}
+                              (rf/dispatch [::events-login/login (:email @state) (:password @state)])
+                              (reset! state {:email "" :password ""})))}
      [:div
       [:label {:for   "email"
                :class "block text-sm font-medium leading-6 text-gray-900"}
