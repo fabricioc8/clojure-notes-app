@@ -11,11 +11,10 @@
    (get entity :team-plans)))
 
 (rf/reg-sub
- ::team-plan-name
+ ::current-team-plan
  :<- [::team-plans]
  :<- [::subs-subscriptions/select-current-subscription]
  (fn [[team-plans current-subscription] _]
    (->> team-plans
-        (filter (fn [p] (= (:id p) (:plan-id current-subscription))))
-        first
-        :name)))
+        (filter #(= (:id %) (:plan-id current-subscription)))
+        first)))

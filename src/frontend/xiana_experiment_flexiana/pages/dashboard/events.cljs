@@ -8,11 +8,6 @@
  (fn [db [_ input]]
    (assoc-in db [:view :dashboard :note-title-input] input)))
 
-(rf/reg-event-db
- ::reset-note-title-input
- (fn [db _]
-   (update-in db [:view :dashboard] dissoc :note-title-input)))
-
 (rf/reg-event-fx
  ::provide-update-note
  (fn [{:keys [db]} [_ values]]

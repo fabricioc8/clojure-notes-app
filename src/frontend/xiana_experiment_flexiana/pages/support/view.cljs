@@ -23,7 +23,7 @@
       [tc/primary-button {:content "Create new ticket"
                           :on-click #(when (seq ticket-name)
                                        (rf/dispatch [::events-tickets/insert-ticket ticket-name])
-                                       (rf/dispatch [::support-events/reset-ticket-name-input]))}]]]))
+                                       (rf/dispatch [::support-events/ticket-name-input ""]))}]]]))
 
 (defn tickets-table []
   (let [team-tickets @(rf/subscribe [::subs-tickets/select-team-tickets])]

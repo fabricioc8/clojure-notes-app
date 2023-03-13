@@ -2,6 +2,8 @@
   (:require
    [re-frame.core :as rf]
    [xiana-experiment-flexiana.events.notes :as events-notes]
+   [xiana-experiment-flexiana.events.subscriptions :as events-subscriptions]
+   [xiana-experiment-flexiana.events.plans :as events-plans]
    [xiana-experiment-flexiana.util.seq :as util]
    [ajax.core :as ajax]
    [xiana-experiment-flexiana.routing.core :refer [url-for]]))
@@ -11,7 +13,9 @@
  (fn [{:keys [db]} [_ {:keys [data]}]]
    {:db (update db :session merge data)
     :fx [[:navigate-to (url-for :dashboard)]
-         [:dispatch [::events-notes/select-team-notes (-> data :team-data :team-id)]]]}))
+         [:dispatch-n (list [::events-notes/select-team-notes (-> data :team-data :team-id)]
+                            [::events-subscriptions/select-current-subscription]
+                            [::events-plans/select-team-plans])]]}))
 
 (rf/reg-event-fx
  ::sign-up

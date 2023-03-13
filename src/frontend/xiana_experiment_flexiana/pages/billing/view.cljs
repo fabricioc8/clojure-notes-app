@@ -17,12 +17,11 @@
                                                 :max-notes nil
                                                 :max-chars nil
                                                 :max-users nil}])
-        current-plan @(rf/subscribe [::subs-subscriptions/select-current-subscription])
-        current-plan-name @(rf/subscribe [::subs-plans/team-plan-name])]
+        current-plan @(rf/subscribe [::subs-plans/current-team-plan])]
     [:div
      [:span "Your team is currently on: "]
      [:span {:class "font-bold"};check
-      current-plan-name]
+      (:name current-plan)]
      [:span " plan"]
      [tc/data-table
       {:titles ["Name" "Price" "Max notes" "Char limit" "Max members" "Actions"]
@@ -30,7 +29,7 @@
                 ^{:key (random-uuid)}
                 (conj (util/sort-map-vals p [:name :price-usd :max-notes :max-chars :max-users])
                       (cond
-                        (= (:id p) (:plan-id current-plan)) "Active plan"
+                        (= (:id p) (:id current-plan)) "Active plan"
                         (= (:name p) "Enterpise") [tc/primary-button {:content "Contact us"
                                                                       :on-click #()}]
                         :else [tc/primary-button {:content "Upgrade"
