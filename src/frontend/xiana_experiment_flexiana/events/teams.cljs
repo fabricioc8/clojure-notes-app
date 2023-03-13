@@ -8,7 +8,7 @@
  ::team-updated
  (fn [db [_ response]]
    (let [team (-> response :data :teams first)]
-     (assoc-in db [:session :team] team))))
+     (assoc-in db [:entity :user-team] team))))
 
 (rf/reg-event-fx
  ::update-team

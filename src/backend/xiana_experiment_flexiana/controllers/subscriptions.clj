@@ -19,3 +19,8 @@
     (-> state
         (assoc :db-queries (model/update-subscription subscription-id params))
         (assoc :view view/subscriptions))))
+
+(defn insert-subscription [{{params :body-params} :request :as state}]
+  (-> state
+      (assoc :db-queries (model/insert-subscription params))
+      (assoc :view view/insert-subscription)))

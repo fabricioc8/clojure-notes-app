@@ -71,7 +71,7 @@
                                placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:py-1.5
                                sm:text-sm sm:leading-6"
                     width]
-     :maxLenght    max-lenght
+     :maxlenght    max-lenght
      :defaultValue default-value
      :value        value
      :on-change    on-change}]])

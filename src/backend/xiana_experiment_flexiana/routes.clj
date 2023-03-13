@@ -43,7 +43,8 @@
     ["/plans/:plan-id" {:put {:action #'pla-con/update-plan}}]
 
     ["/team-subscription/:team-id" {:get {:action #'sub-con/select-current-team-subscription}}]
-    ["/subscriptions" {:get {:action #'sub-con/select-all-subscriptions}}]
+    ["/subscriptions" {:get {:action #'sub-con/select-all-subscriptions}
+                       :post {:action #'sub-con/insert-subscription}}]
     ["/subscriptions/:subscription-id" {:put {:action #'sub-con/update-subscription}}]
 
     ["/billing" {:post {:action #'bil-con/ss}}]

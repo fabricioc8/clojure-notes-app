@@ -4,3 +4,6 @@
 
 (defn subscriptions [{{db-results :db-data} :response-data :as state}]
   (views/response state {:data {:subscriptions (first db-results)}}))
+
+(defn insert-subscription [{{db-results :db-data} :response-data :as state}]
+  (views/response state {:data {:subscriptions (second db-results)}}))

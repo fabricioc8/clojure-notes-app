@@ -3,6 +3,7 @@
    [xiana-experiment-flexiana.routing.core :as routing]
    [xiana-experiment-flexiana.pages.billing.routing]
    [xiana-experiment-flexiana.components.tailwind :as tc]
+   [xiana-experiment-flexiana.events.subscriptions :as events-subscriptions]
    [xiana-experiment-flexiana.subs.plans :as subs-plans]
    [xiana-experiment-flexiana.subs.invoices :as subs-invoices]
    [xiana-experiment-flexiana.subs.subscriptions :as subs-subscriptions]
@@ -23,16 +24,18 @@
      [:span {:class "font-bold"};check
       current-plan-name]
      [:span " plan"]
-     [tc/data-table {:titles ["Name" "Price" "Max notes" "Char limit" "Max members" "Actions"]
-                     :items (for [p team-plans-enterpise]
-                              ^{:key (random-uuid)}
-                              (conj (util/sort-map-vals p [:name :price-usd :max-notes :max-chars :max-users])
-                                    (cond
-                                      (= (:id p) (:plan-id current-plan)) "Active plan"
-                                      (= (:name p) "Enterpise") [tc/primary-button {:content "Contact us"
-                                                                                    :on-click #()}]
-                                      :else [tc/primary-button {:content "Upgrade"
-                                                                :on-click #()}])))}]]))
+     [tc/data-table
+      {:titles ["Name" "Price" "Max notes" "Char limit" "Max members" "Actions"]
+       :items (for [p team-plans-enterpise]
+                ^{:key (random-uuid)}
+                (conj (util/sort-map-vals p [:name :price-usd :max-notes :max-chars :max-users])
+                      (cond
+                        (= (:id p) (:plan-id current-plan)) "Active plan"
+                        (= (:name p) "Enterpise") [tc/primary-button {:content "Contact us"
+                                                                      :on-click #()}]
+                        :else [tc/primary-button {:content "Upgrade"
+                                                  :on-click #(rf/dispatch [::events-subscriptions/insert-subscription
+                                                                           (:id p)])}])))}]]))
 
 (defn invoices-table []
   (let [team-invoices @(rf/subscribe [::subs-invoices/team-invoices])

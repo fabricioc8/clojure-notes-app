@@ -21,3 +21,23 @@
                    :on-success [::current-subscription-selected]
                  ;:on-failure [::http/http-error]
                    }})))
+
+(rf/reg-event-db
+ ::subscription-inserted
+ (fn [db [_ response]]
+   (let [subscription (-> response :data :subscriptions first)]
+     (assoc-in db [:entity :current-subscription] subscription))))
+
+(rf/reg-event-fx
+ ::insert-subscription
+ (fn [{:keys [db]} [_ plan-id]]
+   (let [team-id (-> db :session :team-data :team-id)]
+     {:http-xhrio {:uri "/api/subscriptions"
+                   :method :post
+                   :params {:team-id team-id
+                            :plan-id plan-id}
+                   :response-format (ajax/json-response-format {:keywords? true})
+                   :format (ajax/json-request-format)
+                   :on-success [::subscription-inserted]
+                 ;:on-failure [::http/http-error]
+                   }})))

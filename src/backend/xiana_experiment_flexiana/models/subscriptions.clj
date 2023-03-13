@@ -1,6 +1,6 @@
 (ns xiana-experiment-flexiana.models.subscriptions
   (:require
-   [xiana-experiment-flexiana.models.common :refer [->UUID] :as mc]
+   [xiana-experiment-flexiana.models.common :refer [->UUID next-uuid] :as mc]
    [honeysql.core :as sql]
    [honeysql.helpers :as sqlh]))
 
@@ -26,3 +26,14 @@
   {:queries [{:update :subscriptions
               :set (mc/->subscription params)
               :where [:= :id (->UUID subscription-id)]}]})
+
+(defn insert-subscription [params]
+  (let [new-subscription-id (next-uuid)
+        subscription-params (-> params
+                                (assoc :id new-subscription-id)
+                                mc/->subscription)]
+    {:queries [{:update :subscriptions
+                :set {:canceled true}
+                :where [:= :team-id (->UUID (:team-id params))]}
+               {:insert-into :subscriptions
+                :values [subscription-params]}]}))

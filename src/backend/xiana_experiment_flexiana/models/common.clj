@@ -72,6 +72,7 @@
   (let [params (select-keys params [:id :team-id :plan-id :canceled])]
     (cond-> params
       (:id params) (update :id ->UUID)
+      (:team-id params) (update :team-id ->UUID)
       (:plan-id params) (update :plan-id ->UUID))))
 
 (defn ->note [params]
