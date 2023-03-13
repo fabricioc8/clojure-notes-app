@@ -13,7 +13,7 @@
 (defn notes-board []
   (let [notes @(rf/subscribe [::subs-notes/team-notes])]
     [:ul {:role "list", :class "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"};check
-     (for [{:keys [id name content]} notes]
+     (for [{:keys [id name content is-public]} notes]
        ^{:key id}
        [:li {:class "col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow"}
         [:div {:class "flex w-full items-center justify-between space-x-6 p-6"}
@@ -31,8 +31,11 @@
           [:div {:class "-ml-px flex w-0 flex-1"}
            [:button {:class "relative inline-flex w-0 flex-1 items-center justify-center gap-x-3
                              rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
-                     :on-click #(rf/dispatch [:navigate (url-for :new-note
-                                                                 :note-id id)])}
+                     :on-click #(rf/dispatch [::dashboard-events/provide-update-note
+                                              {:id id
+                                               :name name
+                                               :content content
+                                               :is-public is-public}])}
             "Edit"]]]]])]))
 
 (defn note-form []
