@@ -2,7 +2,8 @@
   (:require
    [ajax.core :as ajax]
    [xiana-experiment-flexiana.util.seq :as util]
-   [re-frame.core :as rf]))
+   [re-frame.core :as rf]
+   [clojure.set :as ss]))
 
 (rf/reg-event-db
  ::all-users-selected
@@ -56,17 +57,37 @@
                    }})))
 
 (rf/reg-event-db
+ ::teams-users-selected
+ (fn [db [_ response]]
+   (let [teams-users (-> response :data :users)]
+     (assoc-in db [:entity :teams-users] teams-users))))
+
+(rf/reg-event-fx
+ ::select-teams-users
+ (fn [_ _]
+   {:http-xhrio {:uri "/api/teams-users"
+                 :method :get
+                 :response-format (ajax/json-response-format {:keywords? true})
+                 :format (ajax/json-request-format)
+                 :on-success [::teams-users-selected]
+                 ;:on-failure [::http/http-error]
+                 }}))
+
+(rf/reg-event-db
  ::user-updated
  (fn [db [_ response]]
-   (prn "RESPONSE" response)
-   #_(let [team-users (-> response :data :users)]
-     (assoc-in db [:entity :team-users] team-users))))
+   (let [user (-> response :data :users first)
+         full-user (ss/rename-keys user {:id :user-id
+                                         :enabled :user-enabled})]
+     (-> db
+         (update-in [:entity :users] #(util/replace-by :id % [user]))
+         (update-in [:entity :teams-users] #(util/merge-by :user-id % [full-user]))))))
 
 (rf/reg-event-fx
  ::update-user
  (fn [{:keys [db]} [_ params]]
    (let [user-id (-> db :session :user-data :id)]
-     {:http-xhrio {:uri (util/url "/api/users/" user-id)
+     {:http-xhrio {:uri (util/url "/api/users/" (or (:id params) user-id))
                    :method :put
                    :params params
                    :response-format (ajax/json-response-format {:keywords? true})

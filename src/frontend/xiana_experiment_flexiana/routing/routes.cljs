@@ -11,7 +11,7 @@
 (def ^:export url-for (partial bidi/path-for routes))
 
 (def ^:export global-navigation-events
-  [[::users/load-users]])
+  [])
 
 (defn ^:export dispatch-global-evts []
   (doseq [evt global-navigation-events]

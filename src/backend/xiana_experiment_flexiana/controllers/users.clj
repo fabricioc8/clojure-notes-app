@@ -49,3 +49,8 @@
     (assoc state
            :db-queries (model/select-team-users team-id)
            :view view/users)))
+
+(defn select-teams-users [state]
+  (assoc state
+         :db-queries (model/select-teams-users)
+         :view view/users))

@@ -67,5 +67,5 @@
     ["/users" {:get {:action #'us-con/select-all-users}}]
     ["/users/:user-id" {:get {:action #'us-con/select-user}
                         :put {:action #'us-con/update-user}}]
-    ["/user-team/:user-id" {:get {:action #'us-con/select-user-team}}]
-    ["/team-users/:team-id" {:get {:action #'us-con/select-team-users}}]]])
+    ["/team-users/:team-id" {:get {:action #'us-con/select-team-users}}]
+    ["/teams-users" {:get {:action #'us-con/select-teams-users}}]]])

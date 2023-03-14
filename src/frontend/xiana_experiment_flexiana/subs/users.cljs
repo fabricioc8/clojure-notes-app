@@ -26,3 +26,9 @@
  :<- [::subs-db/entity]
  (fn [entity _]
    (get entity :users)))
+
+(rf/reg-sub
+ ::teams-users
+ :<- [::subs-db/entity]
+ (fn [entity _]
+   (get entity :teams-users)))

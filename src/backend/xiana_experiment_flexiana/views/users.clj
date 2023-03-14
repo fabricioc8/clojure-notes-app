@@ -3,7 +3,8 @@
    [xiana-experiment-flexiana.views.common :as views]))
 
 (defn users [{{db-results :db-data} :response-data :as state}]
-  (views/response state {:data {:users (first db-results)}}))
+  (let [wo-password (map #(dissoc % :password) (first db-results))] 
+    (views/response state {:data {:users wo-password}})))
 
 (defn insert-user-by-themselve [{{db-results :db-data} :response-data :as state}]
   (let [[user-query _ team-user-query] db-results]
