@@ -38,3 +38,21 @@
                  :on-success [::all-plans-selected]
                  ;:on-failure [::http/http-error]
                  }}))
+
+(rf/reg-event-db
+ ::new-plan-inserted
+ (fn [db [_ response]]
+   (let [plan (-> response :data :plans first)]
+     (update-in db [:entity :plans] conj plan))))
+
+(rf/reg-event-fx
+ ::insert-new-plan
+ (fn [_ [_ params]]
+   {:http-xhrio {:uri "/api/plans"
+                 :method :post
+                 :params params
+                 :response-format (ajax/json-response-format {:keywords? true})
+                 :format (ajax/json-request-format)
+                 :on-success [::new-plan-inserted]
+                 ;:on-failure [::http/http-error]
+                 }}))

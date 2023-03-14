@@ -88,3 +88,14 @@
         [:h3 {:class "text-sm font-medium"} user-name]
         [:p {:class "text-sm text-gray-500"} "time"]]
        [:p {:class "text-sm text-gray-500"} message]]]]]])
+
+(defn checkbox [name on-change checked default-checked]
+  [:input {:classname        "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+           :id               name
+           :aria-describedby name
+           :name             name
+           :type             "checkbox"
+           ;:defaultChecked   default-checked
+           :checked          checked
+           ;:value            value
+           :on-change        on-change}])

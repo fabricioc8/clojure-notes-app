@@ -22,8 +22,8 @@
                  (:user-role u)
                  [tc/primary-button
                   {:content "Edit"
-                   :on-click #(rf/dispatch [:navigate (url-for :ticket-chat
-                                                               :ticket-id (:id u))])}]
+                   :on-click #() #_#(rf/dispatch [:navigate (url-for :edit-user
+                                                               :user-id (:user-id u))])}]
                  [tc/primary-button
                   {:content (if (:user-enabled u) "Disable" "Enable")
                    :on-click #(rf/dispatch [::events-users/update-user

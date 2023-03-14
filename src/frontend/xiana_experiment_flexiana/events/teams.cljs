@@ -8,13 +8,15 @@
  ::team-updated
  (fn [db [_ response]]
    (let [team (-> response :data :teams first)]
-     (assoc-in db [:entity :user-team] team))))
+     (-> db
+         (assoc-in [:entity :user-team] team)
+         (update-in [:entity :teams] #(util/replace-by :id % [team]))))))
 
 (rf/reg-event-fx
  ::update-team
  (fn [{:keys [db]} [_ params]]
    (let [team-id (-> db :session :team-data :team-id)]
-     {:http-xhrio {:uri (util/url "/api/teams/" team-id)
+     {:http-xhrio {:uri (util/url "/api/teams/" (or (:id params) team-id))
                    :method :put
                    :params params
                    :response-format (ajax/json-response-format {:keywords? true})
