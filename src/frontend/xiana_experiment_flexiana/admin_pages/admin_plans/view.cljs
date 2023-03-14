@@ -24,7 +24,7 @@
                 (:id p)
                 [tc/primary-button
                  {:content "Edit"
-                  :on-click #(rf/dispatch [:navigate (url-for :ticket-chat
+                  :on-click #()#_#(rf/dispatch [:navigate (url-for :ticket-chat
                                                               :ticket-id (:id p))])}]])}]))
 
 (defn valid-plan? [plan]
