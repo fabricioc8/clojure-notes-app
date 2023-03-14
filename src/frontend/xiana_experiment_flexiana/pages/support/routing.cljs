@@ -8,7 +8,7 @@
 
 (defmethod routing/handle-route :tickets
   [arg]
-  (rf/dispatch [::support-events/ticket-name-input ""])
+  (rf/dispatch [::support-events/ticket-name-input nil])
   (rf/dispatch [::events-tickets/select-team-tickets])
   (rf/dispatch [::events-ticket-messages/select-team-tickets-messages])
   (:action arg))

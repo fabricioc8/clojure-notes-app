@@ -10,7 +10,7 @@
 (defmethod routing/handle-route :team-settings
   [arg]
   (rf/dispatch [::events-users/select-team-users])
-  (rf/dispatch [::ts-events/team-name-input ""])
+  (rf/dispatch [::ts-events/team-name-input nil])
   (rf/dispatch [::events-subscriptions/select-current-subscription])
   (rf/dispatch [::events-teams/select-user-team])
   (:action arg))

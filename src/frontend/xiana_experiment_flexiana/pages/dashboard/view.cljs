@@ -53,7 +53,7 @@
                          :on-click #(when (and (seq note-title)
                                                (not reached-max-notes?))
                                       (rf/dispatch [::event-notes/insert-new-note note-title (:team-id team-data)])
-                                      (rf/dispatch [::dashboard-events/note-title-input ""]))}]]))
+                                      (rf/dispatch [::dashboard-events/note-title-input nil]))}]]))
 
 (defn page []
   (let [team-notes @(rf/subscribe [::subs-notes/team-notes])]
@@ -68,3 +68,15 @@
 (defmethod routing/resolve-view :dashboard [_] [page])
 
 
+
+
+;;como filtrar el dashboard con los tickets que corresponden
+;;los tickets los pueden ver el admin, editor y viewer
+;;puedo tener todos los tickets en el app-db y filtrar solo los del user-id=>team-id(no sirve por performance, tengo que traer cosas que no voy a usar)
+;;tener un endpoint que filtre los tickets en base a el user-id:
+;;-se puede hacer mediante la query sql o tal vez a traves de algun sistema de permisos
+
+;;la pregunta es... tengo que tener un endpoint que dependa del user id y solo traer el equipo al que pertenece proveyendo el id en un evento en el
+;;front
+;;o
+;;llamar al enpoint get teams, y el backend sabe que usuario esta haciendo la llamada y la filtra

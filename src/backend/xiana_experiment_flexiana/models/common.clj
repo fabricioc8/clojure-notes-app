@@ -112,3 +112,9 @@
       (:id params) (update :id ->UUID)
       (:team-id params) (update :team-id ->UUID)
       (:subscription-id params) (update :subscription-id ->UUID))))
+
+(defn ->billing [params]
+  (let [params (select-keys params [:id :team-id :company-name :address :vat])]
+    (cond-> params
+      (:id params) (update :id ->UUID)
+      (:team-id params) (update :team-id ->UUID))))

@@ -48,9 +48,9 @@
                        :post {:action #'sub-con/insert-subscription}}]
     ["/subscriptions/:subscription-id" {:put {:action #'sub-con/update-subscription}}]
 
-    ["/billing" {:post {:action #'bil-con/ss}}]
-    ["/team-billing/:team-id" {:get {:action #'bil-con/ss}
-                               :put {:action #'bil-con/ss}}]
+    ["/billing" {:post {:action #'bil-con/insert-billing}}]
+    ["/team-billing/:team-id" {:get {:action #'bil-con/select-team-billings}
+                               :put {:action #'bil-con/update-billing}}]
     ["/teams" {:get {:action #'team-con/select-all-teams}}]
     ["/teams/:team-id" {:get {:action #'team-con/select-team}
                         :put {:action #'team-con/update-team}}]

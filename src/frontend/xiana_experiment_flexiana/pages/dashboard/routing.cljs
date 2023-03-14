@@ -6,6 +6,10 @@
 
 (defmethod routing/handle-route :dashboard
   [arg]
-  (rf/dispatch [::dashboard-events/note-title-input ""])
-  ;(rf/dispatch [::notes/select-team-notes])
+  (rf/dispatch [::dashboard-events/note-title-input nil])
   (:action arg))
+
+;opciones:
+;usar async-flow aca
+;ver de crear un endpoint general para traer todos los datos de una. de donde agarro el id, donde inserto el dispatch?
+;usar una url con el user id como /app/:user-id y tomarlos de los argumentos como se hizo en candidates

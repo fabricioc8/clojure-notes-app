@@ -3,10 +3,13 @@
    [xiana-experiment-flexiana.routing.core :as routing]
    [xiana-experiment-flexiana.pages.billing.routing]
    [xiana-experiment-flexiana.components.tailwind :as tc]
+   [xiana-experiment-flexiana.pages.billing.events :as view-events]
    [xiana-experiment-flexiana.events.subscriptions :as events-subscriptions]
+   [xiana-experiment-flexiana.events.billing-details :as events-billings]
    [xiana-experiment-flexiana.subs.plans :as subs-plans]
    [xiana-experiment-flexiana.subs.invoices :as subs-invoices]
-   [xiana-experiment-flexiana.subs.subscriptions :as subs-subscriptions]
+   [xiana-experiment-flexiana.pages.billing.subs :as view-subs]
+   [xiana-experiment-flexiana.subs.billing-details :as subs-billing]
    [xiana-experiment-flexiana.util.seq :as util]
    [re-frame.core :as rf]))
 
@@ -49,42 +52,48 @@
                              ^{:key (random-uuid)}
                              (util/sort-map-vals i [:name :month :amount-usd :details]))}]))
 
+(defn billing-form [billing-data]
+  (let [new-billing-data @(rf/subscribe [::view-subs/billing-inputs-values])]
+    [:<>
+     [:span {:class "text-xl font-bold"}
+      "Billing details"]
+     [:div {:class "flex"}
+      [tc/text-area {:width "w-64"
+                     :name "address-detail"
+                     :placeholder "Address"
+                     :value (or (:address new-billing-data) (:address billing-data))
+                     :on-change #(rf/dispatch [::view-events/billing-inputs-values
+                                               :address (-> % .-target .-value)])}]
+      [:div {:class "max-w-max"}
+       [tc/basic-field-input {:type "text"
+                              :name "vat-input"
+                              :placeholder "VAT"
+                              :value (or (:vat new-billing-data) (:vat billing-data))
+                              :on-change #(rf/dispatch [::view-events/billing-inputs-values
+                                                        :vat (-> % .-target .-value)])}]]
+      [:div {:class "max-w-max"}
+       [tc/basic-field-input {:type "text"
+                              :name "company-name"
+                              :placeholder "Company name"
+                              :value (or (:company-name new-billing-data) (:company-name billing-data))
+                              :on-change #(rf/dispatch [::view-events/billing-inputs-values
+                                                        :company-name (-> % .-target .-value)])}]
+       [tc/primary-button
+        {:content "Save billing info"
+         :on-click #(do (if billing-data
+                          (rf/dispatch [::events-billings/update-team-billing-details new-billing-data])
+                          (rf/dispatch [::events-billings/insert-team-billing-details new-billing-data]))
+                        (rf/dispatch [::view-events/reset-billing-input-values]))}]]]]))
+
 (defn page []
-  [:div {:class "p-6"}
-   [:span {:class "text-xl font-bold"}
-    "Billing"]
-   [team-plans-table]
-   [:span {:class "text-xl font-bold"}
-    "Invoices"]
-   [invoices-table]
-   [:span {:class "text-xl font-bold"}
-    "Billing details"]
-   [:div {:class "flex"}
-    [tc/text-area {:width "w-64"
-                   :name "address-detail"
-                   :placeholder "Address"
-                   :default-value ""}]
-    [:div {:class "max-w-max"}
-     [tc/basic-field-input {:type "text"
-                            :name "vat-input"
-                            :placeholder "VAT"
-                            :value (or #_@(rf/subscribe :view) #_@(rf/subscribe :entity))
-                            :on-change #()}]
-     [tc/selector {:options [{:value "mexico" :label "Mexico"}
-                             {:value "japan" :label "Japan"}
-                             {:value "norway" :label "Norway"}]
-                   :name "country-selector"
-                   :on-change #()
-                   :default-value (or #_@(rf/subscribe :view) #_@(rf/subscribe :entity))}]]
-    [:div {:class "max-w-max"}
-     [tc/basic-field-input {:type "text"
-                            :name "company-name"
-                            :placeholder "Company name"
-                            :value (or #_@(rf/subscribe :view) #_@(rf/subscribe :entity))
-                            :on-change #()}]
-     [tc/primary-button
-      {:content "Save billing info"
-       :on-click #()}]]]])
-;;FALTAN BILL-DETAILS ENDPOINTS
+  (let [billing-data @(rf/subscribe [::subs-billing/select-billing-details])]
+    [:div {:class "p-6"}
+     [:span {:class "text-xl font-bold"}
+      "Billing"]
+     [team-plans-table]
+     [:span {:class "text-xl font-bold"}
+      "Invoices"]
+     [invoices-table]
+     [billing-form billing-data]]))
 
 (defmethod routing/resolve-view :billing [_] [page])
