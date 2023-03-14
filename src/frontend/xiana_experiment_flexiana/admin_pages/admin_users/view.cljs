@@ -29,9 +29,11 @@
                    :on-click #(rf/dispatch [::events-users/update-user
                                             {:id (:user-id u)
                                              :enabled (not (:user-enabled u))}])}]
-                 [tc/primary-button
-                  {:content "Make admin"
-                   :on-click #(rf/dispatch [:navigate (url-for :ticket-chat
-                                                               :ticket-id (:id u))])}]])}]]))
+                 (when-not (= (:user-role u) "admin")
+                   [tc/primary-button
+                    {:content "Make admin"
+                     :on-click #(rf/dispatch [::events-users/update-user
+                                              {:id (:user-id u)
+                                               :user-role "admin"}])}])])}]]))
 
 (defmethod routing/resolve-view :admin-users [_] [page])
