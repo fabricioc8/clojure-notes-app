@@ -28,3 +28,12 @@
  :<- [::subs-db/entity]
  (fn [entity _]
    (get entity :teams)))
+
+(rf/reg-sub
+ ::team-name-by-id
+ :<- [::all-teams]
+ (fn [all-teams [_ team-id]]
+   (->> all-teams
+        (filter #(= (:id %) team-id))
+        first
+        :name)))
