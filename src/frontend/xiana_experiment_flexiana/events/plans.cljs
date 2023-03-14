@@ -21,3 +21,20 @@
                    :on-success [::team-selected]
                  ;:on-failure [::http/http-error]
                    }})))
+
+(rf/reg-event-db
+ ::all-plans-selected
+ (fn [db [_ response]]
+   (let [plans (-> response :data :plans)]
+     (assoc-in db [:entity :plans] plans))))
+
+(rf/reg-event-fx
+ ::select-all-plans
+ (fn [_ _]
+   {:http-xhrio {:uri "/api/plans"
+                 :method :get
+                 :response-format (ajax/json-response-format {:keywords? true})
+                 :format (ajax/json-request-format)
+                 :on-success [::all-plans-selected]
+                 ;:on-failure [::http/http-error]
+                 }}))

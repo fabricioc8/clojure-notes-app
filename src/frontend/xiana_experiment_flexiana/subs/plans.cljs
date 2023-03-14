@@ -18,3 +18,9 @@
    (->> team-plans
         (filter #(= (:id %) (:plan-id current-subscription)))
         first)))
+
+(rf/reg-sub
+ ::all-plans
+ :<- [::subs-db/entity]
+ (fn [entity _]
+   (get entity :plans)))

@@ -7,7 +7,7 @@
    [re-frame.core :as rf]))
 
 (defn page []
-  (let [teams @(rf/subscribe [::view-subs/admin-table])]
+  (let [teams @(rf/subscribe [::view-subs/admin-teams-table])]
    [:div {:class "p-6"}
     [:span {:class "text-xl font-bold"}
      "Teams"]
@@ -17,9 +17,9 @@
                ^{:key (random-uuid)}
                [(:id t)
                 (:name t)
-                "PLAN"
+                (:plan t)
                 (:members t)
-                "NOTES"
+                (str (:existing-notes t) "/" (:max-notes t))
                 [tc/primary-button
                  {:content "Open details"
                   :on-click #(rf/dispatch [:navigate (url-for :ticket-chat

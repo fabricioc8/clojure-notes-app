@@ -41,3 +41,21 @@
                    :on-success [::subscription-inserted]
                  ;:on-failure [::http/http-error]
                    }})))
+
+(rf/reg-event-db
+ ::all-subscriptions-selected
+ (fn [db [_ response]]
+   (let [subscriptions (-> response :data :subscriptions)]
+     (assoc-in db [:entity :subscriptions] subscriptions))))
+
+(rf/reg-event-fx
+ ::select-all-subscriptions
+ (fn [_ _]
+   {:http-xhrio {:uri "/api/subscriptions"
+                 :method :get
+                 :response-format (ajax/json-response-format {:keywords? true})
+                 :format (ajax/json-request-format)
+                 :on-success [::all-subscriptions-selected]
+                 ;:on-failure [::http/http-error]
+                 }}))
+(rf/dispatch [::select-all-subscriptions])
