@@ -1,6 +1,7 @@
 (ns xiana-experiment-flexiana.admin-pages.admin-teams.view
   (:require
    [xiana-experiment-flexiana.components.tailwind :as tc]
+   [xiana-experiment-flexiana.events.teams :as events-teams]
    [xiana-experiment-flexiana.admin-pages.admin-teams.subs :as view-subs]
    [xiana-experiment-flexiana.admin-pages.admin-teams.routing]
    [xiana-experiment-flexiana.routing.core :as routing :refer [url-for]]
@@ -21,8 +22,9 @@
                 (:members t)
                 (str (:existing-notes t) "/" (:max-notes t))
                 [tc/primary-button
-                 {:content "Open details"
-                  :on-click #(rf/dispatch [:navigate (url-for :ticket-chat
-                                                              :ticket-id (:id t))])}]])}]]))
+                 {:content (if (:enabled t) "Disable" "Enable")
+                  :on-click #(rf/dispatch [::events-teams/update-team 
+                                           {:id (:id t)
+                                            :enabled (not (:enabled t))}])}]])}]]))
 
 (defmethod routing/resolve-view :admin-teams [_] [page])
