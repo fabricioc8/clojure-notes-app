@@ -55,7 +55,8 @@
     ["/teams/:team-id" {:get {:action #'team-con/select-team}
                         :put {:action #'team-con/update-team}}]
 
-    ["/tickets" {:post {:action #'tick-con/insert-ticket}}]
+    ["/tickets" {:post {:action #'tick-con/insert-ticket}
+                 :get {:action #'tick-con/select-all-tickets}}]
     ["/team-tickets/:team-id" {:get {:action #'tick-con/select-team-tickets}}]
     ["/tickets/:ticket-id" {:put {:action #'tick-con/update-ticket}}]
 

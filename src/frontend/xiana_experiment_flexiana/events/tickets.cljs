@@ -5,10 +5,27 @@
    [ajax.core :as ajax]))
 
 (rf/reg-event-db
+ ::all-tickets-selected
+ (fn [db [_ response]]
+   (let [tickets (-> response :data :tickets)]
+     (assoc-in db [:entity :all-tickets] tickets))))
+
+(rf/reg-event-fx
+ ::select-all-tickets
+ (fn [_ _]
+   {:http-xhrio {:uri "/api/tickets"
+                 :method :get
+                 :response-format (ajax/json-response-format {:keywords? true})
+                 :format (ajax/json-request-format)
+                 :on-success [::all-tickets-selected]
+                 ;:on-failure [::http/http-error]
+                 }}))
+
+(rf/reg-event-db
  ::team-tickets-selected
  (fn [db [_ response]]
    (let [tickets (-> response :data :tickets)]
-     (assoc-in db [:entity :tickets] tickets))))
+     (assoc-in db [:entity :all-tickets] tickets))))
 
 (rf/reg-event-fx
  ::select-team-tickets
@@ -26,7 +43,7 @@
  ::ticket-inserted
  (fn [db [_ response]]
    (let [ticket (-> response :data :tickets first)]
-     (update-in db [:entity :tickets] conj ticket))))
+     (update-in db [:entity :all-tickets] conj ticket))))
 
 (rf/reg-event-fx
  ::insert-ticket
@@ -43,10 +60,10 @@
                    }})))
 
 (rf/reg-event-db
- ::ticket-inserted
+ ::ticket-updated
  (fn [db [_ response]]
    (let [ticket (-> response :data :tickets)]
-     (update-in db [:entity :tickets] #(util/replace-by :id % ticket)))))
+     (update-in db [:entity :all-tickets] #(util/replace-by :id % ticket)))))
 
 (rf/reg-event-fx
  ::update-ticket
@@ -56,6 +73,6 @@
                  :params {:resolved resolved}
                  :response-format (ajax/json-response-format {:keywords? true})
                  :format (ajax/json-request-format)
-                 :on-success [::ticket-inserted]
+                 :on-success [::ticket-updated]
                  ;:on-failure [::http/http-error]
                  }}))

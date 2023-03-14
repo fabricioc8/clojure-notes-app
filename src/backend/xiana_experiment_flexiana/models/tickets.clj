@@ -17,6 +17,10 @@
               :from [:tickets]
               :where [:= :team-id (->UUID team-id)]}]})
 
+(defn select-all-tickets []
+  {:queries [{:select [:*]
+              :from [:tickets]}]})
+
 (defn update-ticket [ticket-id params]
   {:queries [{:update :tickets
               :set (mc/->ticket params)

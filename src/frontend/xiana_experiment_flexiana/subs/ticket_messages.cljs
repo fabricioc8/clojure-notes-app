@@ -15,7 +15,7 @@
 (rf/reg-sub
  ::ticket
  :<- [::subs-db/entity]
- :<- [::subs-tickets/select-team-tickets]
+ :<- [::subs-tickets/select-all-tickets]
  (fn [[entity tickets] _]
    (let [ticket-id (get-in entity [:current-ticket :ticket-id])]
      (->> tickets

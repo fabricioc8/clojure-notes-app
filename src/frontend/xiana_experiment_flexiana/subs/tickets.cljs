@@ -4,7 +4,7 @@
    [xiana-experiment-flexiana.subs.app-db :as subs-db]))
 
 (rf/reg-sub
- ::select-team-tickets
+ ::select-all-tickets
  :<- [::subs-db/entity]
  (fn [entity _]
-   (get entity :tickets)))
+   (get entity :all-tickets)))

@@ -26,7 +26,7 @@
                                        (rf/dispatch [::support-events/ticket-name-input nil]))}]]]))
 
 (defn tickets-table []
-  (let [team-tickets @(rf/subscribe [::subs-tickets/select-team-tickets])]
+  (let [team-tickets @(rf/subscribe [::subs-tickets/select-all-tickets])]
     [:<>
      [:span {:class "text-xl font-bold"}
       "Support"]

@@ -14,6 +14,11 @@
         (assoc :db-queries (model/select-team-tickets team-id))
         (assoc :view view/tickets))))
 
+(defn select-all-tickets [state]
+  (-> state
+      (assoc :db-queries (model/select-all-tickets))
+      (assoc :view view/tickets)))
+
 (defn update-ticket [{{params :body-params} :request :as state}]
   (let [ticket-id (-> state :request-data :match :path-params :ticket-id)]
     (-> state
