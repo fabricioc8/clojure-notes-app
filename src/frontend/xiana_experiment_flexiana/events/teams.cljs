@@ -40,3 +40,20 @@
                    :on-success [::user-team-selected]
                  ;:on-failure [::http/http-error]
                    }})))
+
+(rf/reg-event-db
+ ::all-teams-selected
+ (fn [db [_ response]]
+   (let [teams (-> response :data :teams)]
+     (assoc-in db [:entity :teams] teams))))
+
+(rf/reg-event-fx
+ ::select-all-teams
+ (fn [_ _]
+   {:http-xhrio {:uri             "/api/teams"
+                 :method          :get
+                 :response-format (ajax/json-response-format {:keywords? true})
+                 :format (ajax/json-request-format)
+                 :on-success      [::all-teams-selected]
+                 ;:on-failure      [::failure]
+                 }}))

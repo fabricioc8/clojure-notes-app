@@ -22,3 +22,9 @@
    (->> team-tickets-messages
         (filter #(= (:ticket-id %) ticket-id))
         count)))
+
+(rf/reg-sub
+ ::all-teams
+ :<- [::subs-db/entity]
+ (fn [entity _]
+   (get entity :teams)))

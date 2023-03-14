@@ -6,10 +6,28 @@
    [ajax.core :as ajax]))
 
 (rf/reg-event-db
+ ::all-notes-selected
+ (fn [db [_ response]]
+   (let [notes (-> response :data :notes)]
+     (assoc-in db [:entity :all-notes] notes))))
+
+(rf/reg-event-fx
+ ::select-all-notes
+ (fn [_ _]
+   {:http-xhrio {:uri "/api/notes"
+                 :method :get
+                 :response-format (ajax/json-response-format {:keywords? true})
+                 :format (ajax/json-request-format)
+                 :on-success [::all-notes-selected]
+                 ;:on-failure [::http/http-error]
+                 }}))
+(rf/dispatch [::select-all-notes])
+
+(rf/reg-event-db
  ::team-notes-selected
  (fn [db [_ response]]
    (let [notes (-> response :data :notes)]
-     (assoc-in db [:entity :notes] notes))))
+     (assoc-in db [:entity :team-notes] notes))))
 
 (rf/reg-event-fx
  ::select-team-notes

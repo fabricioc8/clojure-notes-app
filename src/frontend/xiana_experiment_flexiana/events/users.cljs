@@ -5,22 +5,20 @@
    [re-frame.core :as rf]))
 
 (rf/reg-event-db
- ::users-loaded
+ ::all-users-selected
  (fn [db [_ response]]
-   (let [db-users (or (get-in db [:entity :users]) {})
-         loaded-users (util/associate-by :id (get-in response [:data :users]))]
-     (assoc-in db [:entity :users]
-               (merge db-users loaded-users)))))
+   (let [users (-> response :data :users)]
+     (assoc-in db [:entity :users] users))))
 
 (rf/reg-event-fx
- ::load-users
- (fn [_]
-   {};para que llama a users aca? tiene algo que ver con los roles? o es solamente porque se necesitan para app como nombres o notificaciones asociadas?
-   #_{:http-yhrio {:path "/api/users"
+ ::select-all-users
+ (fn [_ _]
+   {:http-xhrio {:uri "/api/users" 
                  :method :get
                  :response-format (ajax/json-response-format {:keywords? true})
-                 :on-success [::users-loaded]
-                 ;:on-failure [::http/http-error] USAR EL DE events.http
+                 :format (ajax/json-request-format)
+                 :on-success [::all-users-selected]
+                 ;:on-failure [::http/http-error]
                  }}))
 
 (rf/reg-event-db

@@ -20,3 +20,9 @@
  :<- [::subs-db/entity]
  (fn [entity _]
    (:user-team entity)))
+
+(rf/reg-sub
+ ::all-users
+ :<- [::subs-db/entity]
+ (fn [entity _]
+   (get entity :users)))
