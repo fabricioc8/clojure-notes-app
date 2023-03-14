@@ -8,3 +8,9 @@
  :<- [::db/entity]
  (fn [entity _]
    (get entity :invoices)))
+
+(rf/reg-sub
+ ::all-invoices
+ :<- [::db/entity]
+ (fn [entity _]
+   (get entity :all-invoices)))

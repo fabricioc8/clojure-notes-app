@@ -39,7 +39,6 @@
 
 (defn new-plan-form []
   (r/with-let [state (r/atom {:price-per-user false})]
-    (prn "STATE" @state)
     (let [teams @(rf/subscribe [::subs-teams/all-teams])
           team-options (map (fn [t] {:label (:name t)
                                      :value (:id t)})

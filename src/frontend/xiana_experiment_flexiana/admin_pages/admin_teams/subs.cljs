@@ -33,5 +33,6 @@
                                               (= (:team-id n) (:id t)))
                                             notes))
                    :max-notes (:max-notes plan)
-                   :plan (:name plan))))
+                   :plan (:name plan)
+                   :price-usd (:price-usd plan))))
         teams)))

@@ -4,6 +4,22 @@
    [xiana-experiment-flexiana.util.seq :as util]
    [ajax.core :as ajax]))
 
+(rf/reg-event-db
+ ::all-invoices-selected
+ (fn [db [_ response]]
+   (let [invoices (-> response :data :invoices)]
+     (assoc-in db [:entity :all-invoices] invoices))))
+
+(rf/reg-event-fx
+ ::select-all-invoices
+ (fn [_ _]
+   {:http-xhrio {:uri "/api/invoices"
+                 :method :get
+                 :response-format (ajax/json-response-format {:keywords? true})
+                 :format (ajax/json-request-format)
+                 :on-success [::all-invoices-selected]
+                 ;:on-failure [::http/http-error]
+                 }}))
 
 (rf/reg-event-db
  ::team-invoices-selected
