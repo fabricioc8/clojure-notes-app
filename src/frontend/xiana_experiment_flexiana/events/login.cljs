@@ -11,11 +11,14 @@
 (rf/reg-event-fx
  ::session-ok
  (fn [{:keys [db]} [_ {:keys [data]}]]
-   {:db (update db :session merge data)
-    :fx [[:navigate-to (url-for :dashboard)]
-         [:dispatch-n (list [::events-notes/select-team-notes (-> data :team-data :team-id)]
-                            [::events-subscriptions/select-current-subscription]
-                            [::events-plans/select-team-plans])]]}))
+   (let [admin? (= (-> data :user-data :user-role) "admin")]
+     {:db (update db :session merge data)
+      :fx [(if admin?
+             [:navigate-to (url-for :admin-dashboard)]
+             [:navigate-to (url-for :dashboard)])
+           [:dispatch-n (list [::events-notes/select-team-notes (-> data :team-data :team-id)]
+                              [::events-subscriptions/select-current-subscription]
+                              [::events-plans/select-team-plans])]]})))
 
 (rf/reg-event-fx
  ::sign-up

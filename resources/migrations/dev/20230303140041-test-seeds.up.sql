@@ -1,16 +1,16 @@
 
 INSERT INTO users (id, email, password, enabled, user_role, api_token)
 VALUES
-('430c1e15-7913-4df0-984f-e9fcf3c59a56', 'admin@gmail.com',         '123',      true,  'admin'::user_role, 'affe35fd-fbfc-49dd-b048-45a1b1727243'),
-('5086a0a4-d5cd-4ca2-89b5-8c61c454cb91', 'admin1-team1@gmail.com',  '456',      true,  'user'::user_role,  '3501c0c1-04b8-4e87-9d80-11728c216fc9'),
-('d9530872-2958-4784-bad7-1feaa984d53e', 'admin2-team1@gmail.com',  'ehqe5g',   true,  'user'::user_role,  '85821c21-cba6-40b2-b40f-ed5e46a14271'),
-('3c77ad3d-cc95-48ba-b09f-e513806cd843', 'editor1-team1@gmail.com', '34g3g',    true,  'user'::user_role,  '9115ba59-cc38-4bdd-a022-e8992ab7db8d'),
-('bf2c27eb-43d4-4158-b9ba-90d5411a7a50', 'viewer1-team1@gmail.com', 'sevaerf',  true,  'user'::user_role,  '0b12eba2-8b6c-43bf-843f-113a672295c0'),
-('e19d2890-161b-458f-9fbb-56138712f700', 'admin1-team2@gmail.com',  'tujty',    true,  'user'::user_role,  '917988d8-1850-4d63-887f-99c0202288b9'),
-('039e86f7-8c7a-4431-b54e-efb4ebd19559', 'admin2-team2@gmail.com',  'lkwd',     false, 'user'::user_role,  '1ca38e7b-8835-4215-ad5a-f349652aa217'),
-('d10b4118-e480-45f7-801b-e3ae67a3bbcb', 'editor1-team2@gmail.com', '34tcse',   true,  'user'::user_role,  '8ecfa449-f54b-4049-af74-9eabe107842f'),
-('b8dc93c0-f091-48ce-98e1-29b438e46fa8', 'editor2-team2@gmail.com', '78biyh',   false, 'user'::user_role,  'b5bbadb4-048e-4696-bad1-4641905a3c40'),
-('cd3f0f65-f6fe-4c3b-b6c5-406cf66a2a0a', 'viewer1-team2@gmail.com', 'q43tvwhr', true,  'user'::user_role,  '04e517d4-a4ae-4264-b326-c7812dffb00d');
+('430c1e15-7913-4df0-984f-e9fcf3c59a56', 'admin@gmail.com',         '11111111',      true,  'admin'::user_role, 'affe35fd-fbfc-49dd-b048-45a1b1727243'),
+('5086a0a4-d5cd-4ca2-89b5-8c61c454cb91', 'admin1-team1@gmail.com',  '22222222',      true,  'user'::user_role,  '3501c0c1-04b8-4e87-9d80-11728c216fc9'),
+('d9530872-2958-4784-bad7-1feaa984d53e', 'admin2-team1@gmail.com',  '33333333',   true,  'user'::user_role,  '85821c21-cba6-40b2-b40f-ed5e46a14271'),
+('3c77ad3d-cc95-48ba-b09f-e513806cd843', 'editor1-team1@gmail.com', '44444444',    true,  'user'::user_role,  '9115ba59-cc38-4bdd-a022-e8992ab7db8d'),
+('bf2c27eb-43d4-4158-b9ba-90d5411a7a50', 'viewer1-team1@gmail.com', '55555555',  true,  'user'::user_role,  '0b12eba2-8b6c-43bf-843f-113a672295c0'),
+('e19d2890-161b-458f-9fbb-56138712f700', 'admin1-team2@gmail.com',  '66666666',    true,  'user'::user_role,  '917988d8-1850-4d63-887f-99c0202288b9'),
+('039e86f7-8c7a-4431-b54e-efb4ebd19559', 'admin2-team2@gmail.com',  '77777777',     false, 'user'::user_role,  '1ca38e7b-8835-4215-ad5a-f349652aa217'),
+('d10b4118-e480-45f7-801b-e3ae67a3bbcb', 'editor1-team2@gmail.com', '88888888',   true,  'user'::user_role,  '8ecfa449-f54b-4049-af74-9eabe107842f'),
+('b8dc93c0-f091-48ce-98e1-29b438e46fa8', 'editor2-team2@gmail.com', '99999999',   false, 'user'::user_role,  'b5bbadb4-048e-4696-bad1-4641905a3c40'),
+('cd3f0f65-f6fe-4c3b-b6c5-406cf66a2a0a', 'viewer1-team2@gmail.com', '00000000', true,  'user'::user_role,  '04e517d4-a4ae-4264-b326-c7812dffb00d');
 --;;
 
 INSERT INTO teams (id, name, enabled)

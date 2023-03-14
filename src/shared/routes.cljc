@@ -12,6 +12,8 @@
    "app/billing"                                           :billing
    "app/help"                                              :tickets
    ["app/help/" :ticket-id]                                :ticket-chat ;subpagina
+
+   
    "admin"                                                 :admin-dashboard
    "admin/support"                                         :admin-tickets
    ;probablemente haga falta un ["admin/support/" :ticket-id] :admin-ticket-chat
