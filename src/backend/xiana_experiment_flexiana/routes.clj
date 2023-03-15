@@ -10,6 +10,7 @@
    [xiana-experiment-flexiana.controllers.tickets :as tick-con]
    [xiana-experiment-flexiana.controllers.users :as us-con]
    [xiana-experiment-flexiana.controllers.re-frame :as re-frame]
+   [xiana-experiment-flexiana.interceptors.session :as token]
    [ring.util.response :as r]
    [reitit.ring :as ring]))
 
@@ -62,7 +63,8 @@
 
     ["/register-user" {:post {:action #'us-con/insert-user-by-themselve}}]
     ["/invite-user" {:post {:action #'us-con/insert-user-by-invitation}}]
-    ["/login" {:post {:action #'us-con/login}}]
+    ["/login" {:post {:action #'us-con/login
+                      :interceptors {:except [token/api-token-session]}}}]
 
     ["/users" {:get {:action #'us-con/select-all-users}}]
     ["/users/:user-id" {:get {:action #'us-con/select-user}

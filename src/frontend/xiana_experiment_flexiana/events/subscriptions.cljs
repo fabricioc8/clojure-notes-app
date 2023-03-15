@@ -58,4 +58,3 @@
                  :on-success [::all-subscriptions-selected]
                  ;:on-failure [::http/http-error]
                  }}))
-(rf/dispatch [::select-all-subscriptions])

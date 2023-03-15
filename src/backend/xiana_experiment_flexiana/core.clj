@@ -5,6 +5,7 @@
     [xiana.config :as config]
     [xiana.db :as db]
     [xiana.interceptor :as interceptors]
+    [xiana-experiment-flexiana.interceptors.session :as token]
     [next.jdbc.result-set]
     [xiana.cookies :as cookies]
     [xiana.rbac :as rbac]
@@ -29,6 +30,7 @@
    cookies/interceptor
    interceptors/params
 
+   token/api-token-session
    session/guest-session-interceptor
    #_session/interceptor
 

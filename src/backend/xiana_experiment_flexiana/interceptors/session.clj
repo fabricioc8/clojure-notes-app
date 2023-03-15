@@ -1,21 +1,16 @@
 (ns xiana-experiment-flexiana.interceptors.session
   (:require
+   [clojure.string :as str]
+   [xiana-experiment-flexiana.views.common :as response]
    [buddy.sign.jwt :as jwt]))
 
-;;este interceptor lo voy a usar cuando la sesion ya esta iniciada para checkear el token y
-;;devolverlo igual si es valido
-;;devolver un error
-(def session
+(def api-token-session
   {:name ::api-token-session
-   :enter (fn [{{token :cookies} :request :as state}]
-            (cond-> state
-              (jwt/unsign token "secret") (assoc-in [:response :api-token?] true)))
-   :leaver "generate-token?"})
-
-#_(throw (ex-info "Missing session data"
-                {:xiana/response
-                 {:body {:message "Invalid or missing session"}
-                  :status 401}}))
+   :enter (fn [state]
+            (let [cookie (-> state :request :headers :cookie)]
+              (if (and cookie (jwt/unsign (str/replace cookie #"api-token=" "") "secret"))
+                state
+                (response/not-allowed state))))})
 
 ;; (t/now)
 
