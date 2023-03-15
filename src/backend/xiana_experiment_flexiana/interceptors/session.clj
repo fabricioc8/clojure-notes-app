@@ -4,35 +4,29 @@
    [xiana-experiment-flexiana.views.common :as response]
    [buddy.sign.jwt :as jwt]))
 
+(defn cookies->map [cookies]
+  (let [separate-cookies (clojure.string/split cookies #"; ")]
+    (reduce merge
+            {}
+            (map (fn [cookie]
+                   (loop [c (reverse (drop-last 2 (clojure.string/split cookie #"=")))
+                          pair (clojure.walk/keywordize-keys
+                                (into {}
+                                      [(vec
+                                        (take-last 2 (clojure.string/split cookie #"=")))]))
+                          res pair]
+                     (cond
+                       (empty? c) res
+                       :else (recur (rest c)
+                                    nil
+                                    {(keyword (first c)) res}))))
+                 separate-cookies))))
+
 (def api-token-session
   {:name ::api-token-session
    :enter (fn [state]
-            (let [cookie (-> state :request :headers :cookie)]
-              (if (and cookie (jwt/unsign (str/replace cookie #"api-token=" "") "secret"))
-                state
+            (let [cookies (-> state :request :headers :cookie)
+                  cookies-map (when cookies (cookies->map cookies))]
+              (if (and (:api-token cookies-map) (jwt/unsign (:api-token cookies-map) "secret"))
+                (assoc-in state [:session-data :users/role] (-> cookies-map :session-data :role))
                 (response/not-allowed state))))})
-
-;; (t/now)
-
-;; (t/>> (t/now) (t/new-duration 1 :seconds))
-;; (jwt/sign {} "a")
-
-;; (try 
-;;   (jwt/unsign "srfwrf" "a")
-;;   (catch clojure.lang.ExceptionInfo e (prn "ef")))
-
-;; ;; Define claims with `:exp` key
-;; (def claims
-;;   {:user 1 :exp (time/plus (time/now) (time/seconds 5))})
-
-;; ;; Serialize and sign a token with previously defined claims
-;; (def token (jwt/sign claims "key"))
-
-;; ;; wait 5 seconds and try unsign it
-
-;; (jwt/unsign token "key")
-;; ;; => ExceptionInfo "Token is older than :exp (1427836475)"
-
-;; ;; use timestamp in the past
-;; (jwt/unsign token "key" {:now (time/minus (time/now) (time/seconds 5))})
-;; ;; => {:user 1}
