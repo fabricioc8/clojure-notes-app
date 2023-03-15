@@ -7,7 +7,7 @@
     (views/response state {:data {:users wo-password}})))
 
 (defn insert-user-by-themselve [{{db-results :db-data} :response-data :as state}]
-  (let [[user-query _ team-user-query] db-results]
+  (let [[user-query team-query team-user-query] db-results]
     (views/response
      state
      {:data {:user-data (-> user-query
@@ -16,7 +16,8 @@
                             (dissoc :api-token))
              :team-data (-> team-user-query
                             first
-                            (dissoc :user-id))}})))
+                            (dissoc :user-id)
+                            (assoc :name (-> team-query first :name)))}})))
 
 (defn login [{{db-results :db-data} :response-data :as state}]
   (let [[user-query team-user-query] db-results]

@@ -48,11 +48,14 @@
   {:queries [{:select [:*]
               :from [:users]
               :where [:= :email (:email params)]}
-             {:select [:team-id :team-role]
-              :from [:team-users]
-              :where [:in :user-id {:select [:id]
-                                    :from [:users]
-                                    :where [:= :email (:email params)]}]}]})
+             {:select [:tu.team-id :tu.team-role :t.name]
+              :from [[:teams :t]
+                     [:team-users :tu]]
+              :where [:and
+                      [:in :tu.user-id {:select [:id]
+                                        :from [:users]
+                                        :where [:= :email (:email params)]}]
+                      [:= :tu.team-id :t.id]]}]})
 
 (defn select-user [user-id]
   {:queries [{:select [:*]
@@ -99,4 +102,3 @@
               :where [:and
                       [:= :u.id :tu.user-id]
                       [:= :tu.team-id :t.id]]}]})
-

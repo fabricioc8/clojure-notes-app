@@ -17,9 +17,9 @@
 
 (rf/reg-sub
  ::user-team
- :<- [::subs-db/entity]
- (fn [entity _]
-   (:user-team entity)))
+ :<- [::subs-db/session]
+ (fn [session _]
+   (:team-data session)))
 
 (rf/reg-sub
  ::all-users

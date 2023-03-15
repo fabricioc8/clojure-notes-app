@@ -9,7 +9,11 @@
  (fn [db [_ response]]
    (let [team (-> response :data :teams first)]
      (-> db
-         (assoc-in [:entity :user-team] team)
+         (update-in [:session :team-data]
+                    (fn [team-data] (if (= (:team-id team-data)
+                                           (:id team))
+                                      (merge team-data team)
+                                      team-data)))
          (update-in [:entity :teams] #(util/replace-by :id % [team]))))))
 
 (rf/reg-event-fx
@@ -22,24 +26,6 @@
                    :response-format (ajax/json-response-format {:keywords? true})
                    :format (ajax/json-request-format)
                    :on-success [::team-updated]
-                 ;:on-failure [::http/http-error]
-                   }})))
-
-(rf/reg-event-db
- ::user-team-selected
- (fn [db [_ response]]
-   (let [team (-> response :data :users first)]
-     (assoc-in db [:entity :user-team] team))))
-
-(rf/reg-event-fx
- ::select-user-team
- (fn [{:keys [db]} [_]]
-   (let [user-id (-> db :session :user-data :id)]
-     {:http-xhrio {:uri (util/url "/api/user-team/" user-id)
-                   :method :get
-                   :response-format (ajax/json-response-format {:keywords? true})
-                   :format (ajax/json-request-format)
-                   :on-success [::user-team-selected]
                  ;:on-failure [::http/http-error]
                    }})))
 
