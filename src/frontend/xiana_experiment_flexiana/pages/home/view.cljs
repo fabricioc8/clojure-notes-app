@@ -121,7 +121,7 @@
      [:div {:class "h-10 w-full absolute bg-[#3666A7]"}
       [:div {:class "flex justify-end"} 
        [:button {:on-click #(rf/dispatch [::events-login/logout])}
-        "Menu"]]]
+        "Logout"]]]
      [:div {:class "flex h-screen pt-10"}
       [static-sidebar]
       [:div {:class "flex w-0 flex-1 overflow-hidden"}

@@ -2,9 +2,6 @@
   (:require
    [ajax.core :as ajax]
    [day8.re-frame.http-fx]
-   [xiana-experiment-flexiana.events.init]
-   ;[frontend.events.local-storage :as ls]
-   ;[frontend.util.cookies :as cookies]
    [re-frame.core :as rf]
    [taoensso.timbre :as log]))
 
