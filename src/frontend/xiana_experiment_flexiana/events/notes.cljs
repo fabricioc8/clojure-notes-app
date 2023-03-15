@@ -21,7 +21,6 @@
                  :on-success [::all-notes-selected]
                  ;:on-failure [::http/http-error]
                  }}))
-(rf/dispatch [::select-all-notes])
 
 (rf/reg-event-db
  ::team-notes-selected
@@ -43,7 +42,7 @@
 (rf/reg-event-db
  ::note-deleted
  (fn [db [_ id]]
-   (update-in db [:entity :notes] #(util/remove-record-by-id % id))))
+   (update-in db [:entity :team-notes] #(util/remove-record-by-id % id))))
 
 (rf/reg-event-fx
  ::delete-note
@@ -61,7 +60,7 @@
  (fn [{:keys [db]} [_ response]]
    (let [note (-> response :data :notes first)]
      {:db (-> db
-              (update-in [:entity :notes] conj note)
+              (update-in [:entity :team-notes] conj note)
               (assoc-in [:view :new-note] {:note-title-input-edit (:name note)
                                            :note-id (:id note)
                                            :is-public? false
@@ -87,7 +86,7 @@
  (fn [{:keys [db]} [_ response]]
    (let [notes (-> response :data :notes)]
      {:db (-> db
-              (update-in [:entity :notes] #(util/replace-by :id % notes))
+              (update-in [:entity :team-notes] #(util/replace-by :id % notes))
               (update :view dissoc :new-note))
       :dispatch [:navigate (url-for :dashboard)]})))
 

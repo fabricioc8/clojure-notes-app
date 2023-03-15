@@ -89,3 +89,14 @@
                                :from [:team-users]
                                :where [:= :team-id (->UUID team-id)]}]}]})
 
+(defn select-teams-users []
+  {:queries [{:select [[:u.id :user-id] :u.email [:u.enabled :user-enabled] :u.user-role
+                       [:t.id :team-id] :t.name [:t.enabled :team-enabled]
+                       :tu.team-role]
+              :from [[:team-users :tu]
+                     [:users :u]
+                     [:teams :t]]
+              :where [:and
+                      [:= :u.id :tu.user-id]
+                      [:= :tu.team-id :t.id]]}]})
+
