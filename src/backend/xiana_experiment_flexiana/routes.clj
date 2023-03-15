@@ -65,6 +65,7 @@
     ["/invite-user" {:post {:action #'us-con/insert-user-by-invitation}}]
     ["/login" {:post {:action #'us-con/login
                       :interceptors {:except [token/api-token-session]}}}]
+    ["/session-open" {:get {:action #'us-con/session-open}}]
 
     ["/users" {:get {:action #'us-con/select-all-users}}]
     ["/users/:user-id" {:get {:action #'us-con/select-user}

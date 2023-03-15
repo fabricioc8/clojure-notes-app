@@ -1,5 +1,7 @@
 (ns xiana-experiment-flexiana.events.init
   (:require
+   [xiana-experiment-flexiana.events.login :as events-login]
+   [ajax.core :as ajax]
    [re-frame.core :as rf]))
 
 (def initial-db
@@ -16,3 +18,19 @@
  ::initialize-db
  (fn [_ _]
    initial-db))
+
+(rf/reg-event-fx
+ ::force-logout
+ (fn [_ _]
+   {:db nil
+    :fx [(rf/dispatch [:navigate "/login"])]}))
+
+(rf/reg-event-fx
+ ::session-open?
+ (fn [_ _]
+   {:http-xhrio {:uri "/api/session-open"
+                 :method :get
+                 :response-format (ajax/json-response-format {:keywords? true})
+                 :format (ajax/json-request-format)
+                 :on-success [::events-login/session-ok]
+                 :on-failure [::force-logout]}}))

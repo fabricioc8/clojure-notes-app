@@ -2,6 +2,8 @@
   (:require
    [xiana-experiment-flexiana.models.users :as model]
    [xiana-experiment-flexiana.views.users :as view]
+   [buddy.sign.jwt :as jwt]
+   [clojure.string :as str]
    [xiana-experiment-flexiana.controller-behaviors.login :as cbl]))
 
 (defn insert-user-by-themselve [{{params :body-params} :request :as state}]
@@ -54,3 +56,10 @@
   (assoc state
          :db-queries (model/select-teams-users)
          :view view/users))
+
+(defn session-open [state]
+  (let [cookie (-> state :request :headers :cookie)
+        user-email (:api-token (jwt/unsign (str/replace cookie #"api-token=" "") "secret"))]
+    (assoc state
+           :db-queries (model/login {:email user-email})
+           :view view/login)))
