@@ -61,7 +61,8 @@
     ["/team-tickets/:team-id" {:get {:action #'tick-con/select-team-tickets}}]
     ["/tickets/:ticket-id" {:put {:action #'tick-con/update-ticket}}]
 
-    ["/register-user" {:post {:action #'us-con/insert-user-by-themselve}}]
+    ["/register-user" {:post {:action #'us-con/insert-user-by-themselve
+                              :interceptors {:except [token/api-token-session]}}}]
     ["/invite-user" {:post {:action #'us-con/insert-user-by-invitation}}]
     ["/login" {:post {:action #'us-con/login
                       :interceptors {:except [token/api-token-session]}}}]
