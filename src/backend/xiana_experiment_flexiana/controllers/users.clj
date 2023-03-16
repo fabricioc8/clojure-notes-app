@@ -30,7 +30,7 @@
   (assoc state
          :db-queries (model/login params)
          :view view/login
-         :side-effect cbl/valid-login?))
+         :side-effect cbl/valid-password?))
 
 (defn select-user [state]
   (let [user-id (-> state :request-data :match :path-params :user-id)]
