@@ -21,7 +21,8 @@
          (r/response "aaa1")))
 
 (def routes
-  [["/" {:action #'re-frame/handle-index}]
+  [["/" {:action #'re-frame/handle-index
+         :interceptors {:except [token/api-token-session]}}]
    ["/assets/*" (ring/create-resource-handler {:path "/"})]
    ["/api" {}
     ["/invoices" {:get {:action #'inv-con/select-all-invoices}

@@ -29,5 +29,3 @@
                  :format (ajax/json-request-format)
                  :on-success [::events-init/session-ok]
                  :on-failure [::events-init/force-logout]}}))
-                 ;:on-failure [::http/http-error]
-                 }}))
