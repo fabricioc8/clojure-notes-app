@@ -21,12 +21,12 @@
 
 (rf/reg-event-fx
  ::force-logout
- (fn [_ _]
-   {:db nil
+ (fn [{:keys [db]} _]
+   {:db (dissoc db :session :view :entity)
     :fx [(rf/dispatch [:navigate "/login"])]}))
 
 (rf/reg-event-fx
- ::session-open?
+ ::session-open
  (fn [_ _]
    {:http-xhrio {:uri "/api/session-open"
                  :method :get

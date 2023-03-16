@@ -3,7 +3,8 @@
    [clojure.set :refer [rename-keys]]
    [clojure.string :as str]
    [clojure.walk :refer [postwalk]]
-   [image-resizer.core :as img-resizer])
+   [buddy.sign.jwt :as jwt]
+   [xiana.db :as db])
   (:import
    (java.io
     ByteArrayInputStream)
@@ -76,13 +77,6 @@
   ([] (fixed-length-password))
   ([n] (fixed-length-password n)))
 
-(defn image-output-stream->resized-buffered-image
-  [image-output-stream width height]
-  (-> image-output-stream
-      .toByteArray
-      ByteArrayInputStream.
-      (img-resizer/resize width height)))
-
 (defn modify-keys
   [m f]
   (rename-keys m (reduce #(assoc %1 %2 (f %2)) {} (keys m))))
@@ -112,3 +106,59 @@
 (defn remove-namespace-from-map
   [m]
   (transform-keys #(-> % name keyword) m))
+
+(defn- deep-merge* [& maps]
+  (let [f (fn [old new]
+            (if (and (map? old) (map? new))
+              (merge-with deep-merge* old new)
+              new))]
+    (if (every? map? maps)
+      (apply merge-with f maps)
+      (last maps))))
+
+(defn deep-merge
+  "Same as clojure.core/merge, except that
+   it recursively applies itself to every nested map.
+   Errors out when called with anything other than maps."
+  [& maps]
+  (let [maps (filter identity maps)]
+    (assert (every? map? maps))
+    (apply merge-with deep-merge* maps)))
+
+(defn generate-cookies [state]
+  (let [email (-> state :request :body-params :email)
+        user (first (db/execute (-> state :deps :db :datasource)
+                                {:select [:u.user-role :tu.team-role]
+                                 :from [[:users :u]
+                                        [:team-users :tu]]
+                                 :where [:and
+                                         [:= :u.email email]
+                                         [:= :u.id :tu.user-id]]}))
+        user-role (if (= "admin" (:user-role user))
+                    "admin"
+                    (:team-role user))
+        api-token (jwt/sign {:api-token email} "secret")]
+    (-> state
+        (deep-merge {:response {:cookies {:api-token {:value api-token
+                                                      :path "/"}
+                                          :session-data {:value {:users/role user-role}
+                                                         :path "/"}}
+                                :headers {"access-control-expose-headers" "Set-Cookie"}}}))))
+
+(defn cookies->map [cookies]
+  (let [separate-cookies (clojure.string/split cookies #"; ")]
+    (reduce merge
+            {}
+            (map (fn [cookie]
+                   (loop [c (reverse (drop-last 2 (clojure.string/split cookie #"=")))
+                          pair (clojure.walk/keywordize-keys
+                                (into {}
+                                      [(vec
+                                        (take-last 2 (clojure.string/split cookie #"=")))]))
+                          res pair]
+                     (cond
+                       (empty? c) res
+                       :else (recur (rest c)
+                                    nil
+                                    {(keyword (first c)) res}))))
+                 separate-cookies))))

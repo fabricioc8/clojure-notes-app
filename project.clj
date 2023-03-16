@@ -9,6 +9,7 @@
                  [bidi "2.1.6"]
                  [kibu/pushy "0.3.8"]
                  [buddy/buddy-sign "3.4.333"]
+                 [com.flexiana/tiny-rbac "0.1.1"]
                  [cljs-ajax "0.8.4"]
                  [day8.re-frame/http-fx "0.2.3"]
                  [com.github.seancorfield/next.jdbc "1.3.858"]

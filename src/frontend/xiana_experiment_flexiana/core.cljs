@@ -14,7 +14,7 @@
 (defn ^:dev/after-load mount-root []
   (rf/clear-subscription-cache!)
   (routing/init-routes!)
-  (rf/dispatch [::events/session-open?])
+  (rf/dispatch [::events/session-open])
   (let [root-el (.getElementById js/document "app")]
     (rdom/unmount-component-at-node root-el)
     (rdom/render [main/main-panel] root-el)))
