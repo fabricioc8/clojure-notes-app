@@ -21,10 +21,15 @@
   (-> (b/add-resource {} :plans)
       (b/add-action :plans [:get :get-all :post :put])
       (b/add-role [:admin :team-admin :team-editor :team-viewer])
-      (b/add-permission :admin :plans [:get :get-all :post :put] :all)
-      (b/add-permission :team-admin :plans [:get :post] :all)
-      (b/add-permission :team-editor :plans :get :all)
-      (b/add-permission :team-viewer :plans :get :all)))
+
+      (b/add-permission :admin :plans :get :all)
+      (b/add-permission :admin :plans :get-all :all)
+      (b/add-permission :admin :plans :post :all)
+      (b/add-permission :admin :plans :put :all)
+
+      (b/add-permission :team-admin :plans :get :own)
+      (b/add-permission :team-admin :plans :post :own)))
+
 (defn ->system
   [app-cfg]
   (-> (config/config app-cfg)
@@ -51,7 +56,7 @@
    interceptors/params
 
    token/api-token-session
-   session/guest-session-interceptor
+   #_session/guest-session-interceptor
    #_session/interceptor
 
    interceptors/view
@@ -69,7 +74,7 @@
                                    (map spa-route-root)))]
    :controller-interceptors controller-interceptors
    :xiana/jdbc-opts         {:builder-fn next.jdbc.result-set/as-unqualified-kebab-maps}
-   :role-set                role-set})
+   :xiana/role-set                role-set})
 
 (defn -main
   [& _args]

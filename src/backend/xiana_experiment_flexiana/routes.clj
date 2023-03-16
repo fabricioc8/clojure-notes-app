@@ -39,10 +39,14 @@
                         :delete {:action #'not-con/delete-note}}]
     ["/team-notes/:team-id" {:get {:action #'not-con/select-team-notes}}]
 
-    ["/plans" {:post {:action #'pla-con/insert-plan}
-               :get {:action #'pla-con/select-all-plans}}]
-    ["/team-plans/:team-id" {:get {:action #'pla-con/select-team-plans}}]
-    ["/plans/:plan-id" {:put {:action #'pla-con/update-plan}}]
+    ["/plans" {:post {:action #'pla-con/insert-plan
+                      :permission :plans/post}
+               :get {:action #'pla-con/select-all-plans
+                     :permission :plans/get-all}}]
+    ["/team-plans/:team-id" {:get {:action #'pla-con/select-team-plans
+                                   :permission :plans/get}}]
+    ["/plans/:plan-id" {:put {:action #'pla-con/update-plan
+                              :permission :plans/put}}]
 
     ["/team-subscription/:team-id" {:get {:action #'sub-con/select-current-team-subscription}}]
     ["/subscriptions" {:get {:action #'sub-con/select-all-subscriptions}
