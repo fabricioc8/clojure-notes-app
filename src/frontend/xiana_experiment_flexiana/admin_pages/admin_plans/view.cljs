@@ -81,7 +81,8 @@
          {:content "Create plan"
           :disabled (not (valid-plan? @state))
           :on-click #(when (valid-plan? @state)
-                       (rf/dispatch [::events-plans/insert-new-plan @state]))}]]
+                       (rf/dispatch [::events-plans/insert-new-plan @state])
+                       (reset! state {:price-per-user false}))}]]
        [:div {:class "flex flex-col"}
         [tc/basic-field-input
          {:type "number"

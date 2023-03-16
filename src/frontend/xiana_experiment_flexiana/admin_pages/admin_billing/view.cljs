@@ -19,8 +19,8 @@
                 (:plan t)
                 [tc/primary-button
                  {:content "Cancel"
-                  :on-click #(rf/dispatch [:navigate (url-for :ticket-chat
-                                                              :ticket-id (:id t))])}]])}]))
+                  :on-click #() #_#(rf/dispatch [:navigate (url-for :ticket-chat
+                                                                    :ticket-id (:id t))])}]])}]))
 (defn invoices-table []
   (let [invoices @(rf/subscribe [::view-subs/invoices-for-billing])]
     [tc/data-table
@@ -41,9 +41,10 @@
   [:div {:class "p-6"}
    [:span {:class "text-xl font-bold"}
     "Billing"]
-   [:span {:class "text-xl font-bold"}
-    "Active subscriptions"]
-   [subscriptions-table]
+   [:div
+    [:span {:class "text-xl font-bold"}
+     "Active subscriptions"]
+    [subscriptions-table]]
    [:span {:class "text-xl font-bold"}
     "Invoices"]
    [invoices-table]])

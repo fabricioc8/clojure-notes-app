@@ -4,6 +4,7 @@
    [xiana-experiment-flexiana.events.subscriptions :as events-subscriptions]
    [xiana-experiment-flexiana.events.plans :as events-plans]
    [xiana-experiment-flexiana.routing.core :refer [url-for]]
+   [xiana-experiment-flexiana.util.cookies :as cookies]
    [ajax.core :as ajax]
    [re-frame.core :as rf]))
 
@@ -36,9 +37,10 @@
 (rf/reg-event-fx
  ::force-logout
  (fn [{:keys [db]} _]
+   (cookies/remove-cookie! :api-token)
+   (cookies/remove-cookie! :session-data)
    {:db (dissoc db :session :view :entity)
     :fx [(rf/dispatch [:navigate "/login"])]}))
-
 (rf/reg-event-fx
  ::session-open
  (fn [_ _]
