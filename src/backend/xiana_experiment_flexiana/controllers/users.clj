@@ -20,7 +20,7 @@
 (defn session-open [state]
   (let [cookies (-> state :request :headers :cookie)
         cookies-map (when cookies (c/cookies->map cookies))
-        user-email (:api-token (jwt/unsign (:api-token cookies-map) "secret"))]
+        user-email (when cookies-map (:api-token (jwt/unsign (:api-token cookies-map) "secret")))]
     (assoc state
            :db-queries (model/login {:email user-email})
            :view view/login)))
