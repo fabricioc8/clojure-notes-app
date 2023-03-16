@@ -63,8 +63,8 @@
    default-view/interceptor
    interceptors/side-effect
    db/db-access
-   ;rbac/interceptor
-   ])
+   rbac/interceptor])
+
 
 (def app-cfg
   {:routes                  r/routes
