@@ -4,9 +4,10 @@
    [reagent.core :as r]
    [re-frame.core :as rf]
    [xiana-experiment-flexiana.routing.core :as routing :refer [url-for]]
-   [xiana-experiment-flexiana.pages.home.subs :as subs]
    [xiana-experiment-flexiana.events.login :as events-login]
+   [xiana-experiment-flexiana.events.init :as events-init]
    [xiana-experiment-flexiana.subs.users :as subs-users]
+   [xiana-experiment-flexiana.pages.home.subs :as subs]
    [xiana-experiment-flexiana.pages.dashboard.view :as dashboard]
    [xiana-experiment-flexiana.pages.api-management.view :as api-management]
    [xiana-experiment-flexiana.pages.settings.view :as settings]
@@ -120,7 +121,7 @@
     [:div {:class "font-frankie h-full flex-col overflow-hidden bg-white"}
      [:div {:class "h-10 w-full absolute bg-[#3666A7]"}
       [:div {:class "flex justify-end"} 
-       [:button {:on-click #(rf/dispatch [::events-login/logout])}
+       [:button {:on-click #(rf/dispatch [::events-init/force-logout])}
         "Logout"]]]
      [:div {:class "flex h-screen pt-10"}
       [static-sidebar]

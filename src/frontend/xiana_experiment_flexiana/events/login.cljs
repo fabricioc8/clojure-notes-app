@@ -1,24 +1,9 @@
 (ns xiana-experiment-flexiana.events.login
   (:require
    [re-frame.core :as rf]
-   [xiana-experiment-flexiana.events.notes :as events-notes]
-   [xiana-experiment-flexiana.events.subscriptions :as events-subscriptions]
-   [xiana-experiment-flexiana.events.plans :as events-plans]
+   [xiana-experiment-flexiana.events.init :as events-init]
    [xiana-experiment-flexiana.util.seq :as util]
-   [ajax.core :as ajax]
-   [xiana-experiment-flexiana.routing.core :refer [url-for]]))
-
-(rf/reg-event-fx
- ::session-ok
- (fn [{:keys [db]} [_ {:keys [data]}]]
-   (let [admin? (= (-> data :user-data :user-role) "admin")]
-     {:db (update db :session merge data)
-      :fx [(if admin?
-             [:navigate-to (url-for :admin-dashboard)]
-             [:navigate-to (url-for :dashboard)])
-           [:dispatch-n (list [::events-notes/select-team-notes (-> data :team-data :team-id)]
-                              [::events-subscriptions/select-current-subscription]
-                              [::events-plans/select-team-plans])]]})))
+   [ajax.core :as ajax]))
 
 (rf/reg-event-fx
  ::sign-up
@@ -30,14 +15,8 @@
                           :name team-name}
                  :response-format (ajax/json-response-format {:keywords? true})
                  :format (ajax/json-request-format)
-                 :on-success [::session-ok]
-                 ;:on-failure [::http/http-error]
-                 }}))
-
-(rf/reg-event-db
- ::logout
- (fn [db _]
-   (update db :session dissoc :user-data)))
+                 :on-success [::events-init/session-ok]
+                 :on-failure [::events-init/force-logout]}}))
 
 (rf/reg-event-fx
  ::login
@@ -48,6 +27,7 @@
                           :password password}
                  :response-format (ajax/json-response-format {:keywords? true})
                  :format (ajax/json-request-format)
-                 :on-success [::session-ok]
+                 :on-success [::events-init/session-ok]
+                 :on-failure [::events-init/force-logout]}}))
                  ;:on-failure [::http/http-error]
                  }}))
