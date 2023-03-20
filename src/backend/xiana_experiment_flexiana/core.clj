@@ -8,7 +8,7 @@
     [xiana-experiment-flexiana.interceptors.session :as token]
     [xiana-experiment-flexiana.interceptors.spa-index :as spa-index]
     [next.jdbc.result-set]
-    [tiny-rbac.builder :as b]
+    [xiana-experiment-flexiana.rbac :as rs]
     [xiana.cookies :as cookies]
     [xiana.rbac :as rbac]
     [xiana.route :as routes]
@@ -16,19 +16,6 @@
     [xiana.webserver :as ws]
     [routes :as fr]
     [xiana.commons :refer [rename-key]]))
-
-(def role-set
-  (-> (b/add-resource {} :plans)
-      (b/add-action :plans [:get :get-all :post :put])
-      (b/add-role [:admin :team-admin :team-editor :team-viewer])
-
-      (b/add-permission :admin :plans :get :all)
-      (b/add-permission :admin :plans :get-all :all)
-      (b/add-permission :admin :plans :post :all)
-      (b/add-permission :admin :plans :put :all)
-
-      (b/add-permission :team-admin :plans :get :own)
-      (b/add-permission :team-admin :plans :post :own)))
 
 (defn ->system
   [app-cfg]
@@ -74,7 +61,7 @@
                                    (map spa-route-root)))]
    :controller-interceptors controller-interceptors
    :xiana/jdbc-opts         {:builder-fn next.jdbc.result-set/as-unqualified-kebab-maps}
-   :xiana/role-set                role-set})
+   #_#_:xiana/role-set          rs/role-set})
 
 (defn -main
   [& _args]
