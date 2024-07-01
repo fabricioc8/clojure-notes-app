@@ -29,6 +29,12 @@ lein release && lein run
 curl http://localhost:3000/
 ```
 
+### Users and passwords:
+- admin@gmail.com 11111111
+- admin1-team1@gmail.com 22222222
+- editor1-team1@gmail.com 44444444
+- viewer1-team1@gmail.com 55555555
+
 ### Start development
 
 Jack in a repl, execute
