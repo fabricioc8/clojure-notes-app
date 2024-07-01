@@ -1,8 +1,9 @@
-# xiana-experiment-flexiana
+# Clojure Notes App
 
-FIXME: description
-
-## Usage
+## Requirements
+- docker
+- docker-compose
+- node
 
 ### Start dockerized PostgreSQL
 
@@ -10,16 +11,22 @@ FIXME: description
 docker-compose up -d
 ```
 
-### Log into psql console
-
-```shell
-psql -U postgres -p 5433 -h localhost
-```
-
 ### Prepare node-dependencies
 
 ```shell
 lein shadow npm-deps
+```
+
+### Build frontend and run the backend
+
+```shell
+lein release && lein run
+```
+
+### Try Clojure Notes App
+
+```shell
+curl http://localhost:3000/
 ```
 
 ### Start development
@@ -31,23 +38,3 @@ Jack in a repl, execute
 ```
 
 It will start up the shadow watch and the backend. It can be used to restart the whole application too.
-
-### Build frontend and run the backend
-
-```shell
-lein release && lein run
-```
-
-### Try xiana-experiment-flexiana
-
-```shell
-curl http://localhost:3000/
-```
-
-### Open re-frame app
-
-open http://localhost:3000/re-frame
-
-### Framework's documentation
-
-[Xiana readme](https://github.com/Flexiana/framework#readme)
